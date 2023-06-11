@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 11:11:52 by abizyane          #+#    #+#             */
 /*   Updated: 2023/08/10 02:45:45 by ahamrad          ###   ########.fr       */
+=======
+/*   By: abizyane <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 11:11:52 by abizyane          #+#    #+#             */
+/*   Updated: 2022/11/01 23:25:35 by abizyane         ###   ########.fr       */
+>>>>>>> ...
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +47,11 @@ char	*ft_strnstr(const char *hst, const char *ndl, size_t len);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strdup(const char *s1);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+<<<<<<< HEAD
 char	*ft_strjoin(char *s1, char *s2);
+=======
+char	*ft_strjoin(char const *s1, char const *s2);
+>>>>>>> ...
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
@@ -50,6 +61,11 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+<<<<<<< HEAD
 int		ft_strcmp(const char *s1, const char *s2);
 
 #endif
+=======
+
+#endif
+>>>>>>> ...

@@ -6,12 +6,17 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 20:17:46 by abizyane          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/08/10 13:36:03 by abizyane         ###   ########.fr       */
+=======
+/*   Updated: 2023/06/10 20:26:26 by abizyane         ###   ########.fr       */
+>>>>>>> ...
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+<<<<<<< HEAD
 void	char_handler(t_token **head, char *line, int *i)
 {
 	int	j;
@@ -76,3 +81,12 @@ t_token	*tokenizer(char *line)
 	}
 	return (free(arr), head);
 }
+=======
+t_token		*tokenizer(char *line)
+{
+
+
+	
+
+}
+>>>>>>> ...

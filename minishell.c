@@ -3,6 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
@@ -90,3 +91,37 @@ int	main(int ac, char *av[], char **env)
 	ft_minishell(&line, &env_head, &cmd_line);
 	free_env(&env_head);
 }
+=======
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
+/*   Updated: 2023/06/10 20:29:28 by abizyane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include"minishell.h"
+
+void	minishell(t_cmdline		*cmd_line)
+{
+
+
+}
+
+int main(int ac, char *av[])
+{
+	char		*line;
+	t_token		*token_head;
+	t_cmdline	*cmd_line;
+
+	line = readline("Minishell >");
+	token_head = tokenizer(line);
+	cmd_line = parse_tokens(token_head);
+	minishell(cmd_line);
+
+
+
+
+
+	return (0);
+}
+>>>>>>> ...

@@ -3,10 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
+<<<<<<< HEAD
 #    By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/19 11:33:24 by abizyane          #+#    #+#              #
 #    Updated: 2023/06/20 20:57:17 by abizyane         ###   ########.fr        #
+=======
+#    By: abizyane <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/10/19 11:33:24 by abizyane          #+#    #+#              #
+#    Updated: 2022/10/28 11:01:44 by abizyane         ###   ########.fr        #
+>>>>>>> ...
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +35,7 @@ HEADER = libft.h
 all : $(NAME)
 
 $(NAME) : $(OBJ)
+<<<<<<< HEAD
 	@ar -rc $(NAME) $(OBJ)
 
 %.o : %.c $(HEADER)
@@ -38,6 +46,18 @@ clean :
 
 fclean : clean
 	@$(RM) $(NAME)
+=======
+	ar -rc $(NAME) $(OBJ)
+
+%.o : %.c $(HEADER)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean :
+	$(RM) $(OBJ)
+
+fclean : clean
+	$(RM) $(NAME)
+>>>>>>> ...
 
 re : fclean all
 
