@@ -82,7 +82,7 @@ t_cmdline	*fill_outstruct(t_token **head)
 				cmd->args = ft_calloc(sizeof(char *), count_args(head));
 			add_args(&cmd, token->line);
 		}
-		else
+		else if (token->type != Pipe)
 			add_redir(&cmd, token);
 		token = token->nxt ;
 	}
