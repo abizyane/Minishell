@@ -17,12 +17,6 @@ void	minishell(t_cmdline		*cmd_line, char ***env)
 	if (handle_multi_cmds(cmd_line, *env) < 0)
 		return ;
 //	(void)cmd_line;
-
-
-
-
-
-
 //	(void)env;
 }
 
