@@ -82,6 +82,7 @@ void	remove_quotes(t_token **token)
 					c = tmp->line[i++];
 					while (tmp->line && tmp->line[i] && tmp->line[i] != c)
 						new_line[j++] = tmp->line[i++];
+//					tmp->s++;
 				}
 				else
 					new_line[j++] = tmp->line[i];
@@ -93,7 +94,6 @@ void	remove_quotes(t_token **token)
 	}
 }
 
-//TODO: open the heredoc here
 void	append_tokens(t_token **token)
 {
 	t_token	*tmp;
@@ -102,8 +102,7 @@ void	append_tokens(t_token **token)
 	tmp = (*token);
 	while (tmp)
 	{
-		if (tmp->nxt && tmp->type == Word && tmp->nxt->type == Word
-			&& tmp->nxt->s == 0)
+		if (tmp->nxt && tmp->type == Word && tmp->nxt->type == Word && tmp->nxt->s == 0)
 		{
 			tmp->line = ft_strjoin(tmp->line, tmp->nxt->line);
 			nxt_tmp = tmp->nxt;
@@ -114,11 +113,12 @@ void	append_tokens(t_token **token)
 			}
 			else
 				tmp->nxt = NULL;
-			free(nxt_tmp->line);
+			freeptr(&nxt_tmp->line);
 			free(nxt_tmp);
 		}
 		else
 			tmp = tmp->nxt;
+
 	}
 }
 

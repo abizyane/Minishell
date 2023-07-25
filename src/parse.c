@@ -28,7 +28,7 @@ void	add_args(t_cmdline **head, char *token)
 	int 		i;
 
 	tmp = last_command(*head);
-	i = 1;
+	i = 0;
 
 	while (tmp->args && tmp->args[i] != 0)
 		i++;
@@ -50,7 +50,7 @@ int	count_args(t_token **head)
 	return (i + 1);
 }
 
-void	add_redir(t_cmdline **head, t_token *token) //TODO: redirections before commands cause problems
+void	add_redir(t_cmdline **head, t_token *token)
 {
 	t_cmdline	*tmp;
 
@@ -96,7 +96,7 @@ void	get_type2(t_token **head)
 	token = (*head);
 	while (token)
 	{
-		if (token->type == Word && (!token->prv || (token->prv && token->prv->type == Pipe)))
+		if (token->type == Word && (!token->prv || (token->prv && token->prv->type == Pipe))) //|| (token->prv->prv && token->prv->prv->type = )
 			token->type = Cmd;
 		else if (token->type == Word && (token->prv->type == Cmd || token->prv->type == Arg || token->prv->type == Fname))
 			token->type = Arg;

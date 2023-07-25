@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/07/25 04:41:42 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/07/25 10:55:07 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,27 @@ int main(int ac, char *av[], char **env)
 		if (line[0] != '\0' && !check_spaces(line))
 		{
 			cmd_line = parse_line(line);
+			while (cmd_line && cmd_line->args)
+			{
+				int k = 0;
+				int f = 0;
+				while (cmd_line->args && cmd_line->args[k])
+				{
+					printf("args[%d]  == %s\n", f, cmd_line->args[k]);
+					f++;
+					k++;
+				}
+				if (cmd_line->redir)
+					while (cmd_line->redir)
+					{
+						printf("first redir filename == %s\n", cmd_line->redir->filename);
+						cmd_line->redir = cmd_line->redir->nxt;
+					}
+				printf("next command\n");
+				cmd_line = cmd_line->nxt;
+			}
 			minishell(cmd_line, &env);
 		}
 		dup2(save_stdin, STDIN_FILENO);
 	}
-	exit(0);
 }
-//			while (cmd_line && cmd_line->args)
-//			{
-//				int k = 0;
-//				int f = 0;
-//				while (cmd_line->args && cmd_line->args[k])
-//				{
-//					printf("args[%d]  == %s\n", f, cmd_line->args[k]);
-//					f++;
-//					k++;
-//				}
-//				if (cmd_line->redir)
-//					while (cmd_line->redir)
-//					{
-//						printf("first redir filename == %s\n", cmd_line->redir->filename);
-//						cmd_line->redir = cmd_line->redir->nxt;
-//					}
-//				printf("next command\n");
-//				cmd_line = cmd_line->nxt;
-//			}

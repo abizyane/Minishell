@@ -106,6 +106,7 @@ void	expand_env_var(t_token **head)
 				}
 			}
 		}
+//		token->s = 0;
 		token = token->nxt;
 	}
 }

@@ -41,6 +41,8 @@ int	read_heredoc(char *dlm, int *fd)
 	exit(0);
 }
 
+//TODO: if there is quotes in the delimiter the input stays the same
+
 void	open_heredoc(t_cmdline **head)
 {
 	t_cmdline	*cmd;
