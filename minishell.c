@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/06/20 20:58:48 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/07/25 04:37:33 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	minishell(t_cmdline		*cmd_line, char ***env)
 	if (handle_multi_cmds(cmd_line, *env) < 0)
 		return ;
 //	(void)cmd_line;
+
 //	(void)env;
 }
 
