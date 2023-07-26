@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+         #
+#    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/06/20 20:57:30 by abizyane         ###   ########.fr        #
+#    Updated: 2023/07/25 23:29:56 by ahamrad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRC = minishell.c \
 	src/redir.c \
 	src/ft_heredoc.c \
 	exec/execution.c \
-	exec/execution_utils.c
+	exec/execution_utils.c \
+	exec/redirections.c \
 
 OBJ = $(SRC:.c=.o)
 

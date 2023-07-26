@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eymn <eymn@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/07/24 01:57:37 by eymn             ###   ########.fr       */
+/*   Updated: 2023/07/26 01:46:34 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char    *get_cmd_path(t_cmdline *cmd, char **envp)
         return (NULL);
     if (cmd->args[0][0] == '/')
         return (get_cmd(cmd));
+    if (cmd->args[0][0] == '.')
+        return cmd->args[0];
     while (envp[i])
     {
         if (ft_strncmp(envp[i], "PATH=", 5) == 0)
@@ -70,6 +72,7 @@ int		handle_multi_cmds(t_cmdline *cmd, char **envp)
 {
     int fd[2];
     int pid;
+    int status;
 
     while (cmd)
     {
@@ -104,6 +107,8 @@ int		handle_multi_cmds(t_cmdline *cmd, char **envp)
     }
     while (wait(NULL) != -1)
         ;
+    if (WIFEXITED(status))
+        return (WEXITSTATUS(status));
     return 0;
 }
 
