@@ -54,26 +54,25 @@ void	add_redir(t_cmdline **head, t_token *token)
 {
 	t_cmdline	*tmp;
 
-	tmp = last_command(*head);
+    if (!(*head))
+        (*head) = lstnew_command(NULL, count_args(&token));
+
+    tmp = last_command(*head);
 	lstadd_redir(&tmp->redir, token);
 }
 
 
-t_cmdline	*fill_outstruct(t_token **head)
+t_cmdline	*fill_outstruct(t_token **head) // TODO: needs to be changed
 {
 	t_cmdline	*cmd;
     t_token		*token;
-	int			cmd_args;
 
 	token = *head;
 	cmd = lstnew_command(NULL, 0);
 	while (token)
 	{
 		if (token->type == Cmd)
-		{
-			cmd_args = count_args(&token);
-			lstadd_command(&cmd, token->line, cmd_args);
-		}
+			lstadd_command(&cmd, token->line, count_args(&token));
 		else if (token->type == Fname)
 			add_redir_fname(&cmd, token->line);
 		else if (token->type == Arg)

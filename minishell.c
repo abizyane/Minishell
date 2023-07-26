@@ -63,11 +63,7 @@ int main(int ac, char *av[], char **env)
 				int k = 0;
 				int f = 0;
 				while (cmd_line->args && cmd_line->args[k])
-				{
-					printf("args[%d]  == %s\n", f, cmd_line->args[k]);
-					f++;
-					k++;
-				}
+					printf("args[%d]  == %s\n", f++, cmd_line->args[k++]);
 				if (cmd_line->redir)
 					while (cmd_line->redir)
 					{
