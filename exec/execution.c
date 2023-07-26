@@ -6,12 +6,11 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/07/26 01:46:34 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/07/26 05:56:15 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 char	*get_cmd(t_cmdline *cmd)
 {
@@ -74,6 +73,7 @@ int		handle_multi_cmds(t_cmdline *cmd, char **envp)
     int pid;
     int status;
 
+    
     while (cmd)
     {
         if (cmd->nxt)
@@ -87,14 +87,16 @@ int		handle_multi_cmds(t_cmdline *cmd, char **envp)
                 dup2(fd[1], STDOUT_FILENO);
                 close(fd[0]);
             }
+            redirections(cmd);
             cmd->path = get_cmd_path(cmd, envp);
-            if (!cmd->path)
-                return (-1);
+            // if (!cmd->path)
+            //     return (127);
             if (execve(cmd->path, cmd->args, envp) == -1)
             {
-                printf("%s\n", strerror(errno));
+                printf("%i\n", errno);
                 perror("execve");
-                exit(EXIT_FAILURE);
+                if (errno == 14)
+                    exit(127);
             }
         }
         else if (cmd->nxt)
@@ -105,7 +107,7 @@ int		handle_multi_cmds(t_cmdline *cmd, char **envp)
         }
         cmd = cmd->nxt;
     }
-    while (wait(NULL) != -1)
+    while (wait(&status) != -1)
         ;
     if (WIFEXITED(status))
         return (WEXITSTATUS(status));

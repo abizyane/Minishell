@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/07/25 23:28:30 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/07/26 05:55:01 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,8 @@ int		handle_multi_cmds(t_cmdline *cmd, char **envp);
 char    **ft_arr_dup(char **arr);
 int     array_len(char **arr);
 void    free_arr(char **arr);
+
+
+void    redirections(t_cmdline *cmd);
 
 #endif

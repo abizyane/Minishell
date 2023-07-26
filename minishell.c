@@ -6,16 +6,16 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/07/25 23:18:03 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/07/26 02:29:52 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
 
-void	minishell(t_cmdline		*cmd_line, char ***env)
+int	minishell(t_cmdline		*cmd_line, char ***env)
 {
-	if (handle_multi_cmds(cmd_line, *env) < 0)
-		return ;
+	int ret = handle_multi_cmds(cmd_line, *env);
+	return ret;
 //	(void)cmd_line;
 //	(void)env;
 }
@@ -58,7 +58,7 @@ int main(int ac, char *av[], char **env)
 		if (line[0] != '\0' && !check_spaces(line))
 		{
 			cmd_line = parse_line(line);
-			minishell(cmd_line, &env);
+			exit_code = minishell(cmd_line, &env);
 		}
 		dup2(save_stdin, STDIN_FILENO);
 	}
