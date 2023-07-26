@@ -71,7 +71,7 @@ t_cmdline	*fill_outstruct(t_token **head) // TODO: needs to be changed
 	cmd = lstnew_command(NULL, 0);
 	while (token)
 	{
-		if (token->type == Cmd)
+		if (token->type == Cmd || (token->type == Pipe && token->nxt->type != Cmd))
 			lstadd_command(&cmd, token->line, count_args(&token));
 		else if (token->type == Fname)
 			add_redir_fname(&cmd, token->line);
