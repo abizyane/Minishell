@@ -80,6 +80,7 @@ t_redir	*lstnew_redir(t_token *token)
 		return (NULL);
 	redir->type = token->type;
 	redir->nxt = NULL;
+	redir->heredoc_flag = 0;
 	return (redir);
 }
 
@@ -124,6 +125,7 @@ t_cmdline	*lstnew_command(char *cmd, int size)
 	command->redir = NULL;
 	command->args = NULL;
 	command->out = 1;
+	command->in = 0;
 	if (cmd)
 	{
 		command->args = ft_calloc(size, sizeof(char *));

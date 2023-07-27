@@ -67,6 +67,7 @@ typedef struct s_redir
 	e_type				type;
 	char				*filename;
 	int 				fd;
+	int 				heredoc_flag;
 	struct s_redir		*nxt;
 }						t_redir;
 
@@ -104,7 +105,9 @@ t_redir					*last_redir(t_redir *head);
 t_cmdline				*lstnew_command(char *cmd, int size);
 void					*freeptr(char **s);
 void					open_heredoc(t_cmdline **head);
-
+char					*replace_var(char *env_var, char *line, int start);
+char 					*remove_ds(char *line, int start);
+char					*expand_vars(char *line);
 
 
 int    	execute_single_cmd(t_cmdline *cmd, char **envp);

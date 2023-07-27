@@ -22,16 +22,20 @@ void	*freeptr(char **s)
 	return (*s);
 }
 
-int	read_heredoc(char *dlm, int *fd)
+int	read_heredoc(t_redir *redir, int *fd)
 {
 	char *line;
+	char *dlm;
 
+	dlm = redir->filename;
 	signal(SIGINT, SIG_DFL);
 	while (1)
 	{
 		line = readline("heredoc $> ");
 		if (!line || !ft_strcmp(line, dlm))
 			break;
+		if (redir->heredoc_flag == 1)
+        	line = expand_vars(line);
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
 		freeptr(&line);
@@ -65,7 +69,7 @@ void	open_heredoc(t_cmdline **head)
 				if (pid < 0)
 					perror("heredoc fork");
 				if (pid == 0)
-					redir->fd = read_heredoc(redir->filename, fd);
+					redir->fd = read_heredoc(redir, fd);
 				else
 				{
 					wait(&status);

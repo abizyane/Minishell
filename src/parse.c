@@ -12,14 +12,18 @@
 
 #include "../minishell.h"
 
-void	add_redir_fname(t_cmdline **head, char *file_name)
+void	add_redir_fname(t_cmdline **head, t_token *token)
 {
 	t_cmdline	*tmp;
 	t_redir		*r_tmp;
+	char 		*file_name;
 
+	file_name = token->line;
 	tmp = last_command(*head);
 	r_tmp = last_redir(tmp->redir);
 	r_tmp->filename = file_name;
+	if (token->prv && token->prv->type == Heredoc && token->s == 0)
+		r_tmp->heredoc_flag = 1;
 }
 
 void	add_args(t_cmdline **head, char *token)
@@ -44,7 +48,8 @@ int	count_args(t_token **head)
 	tmp = *head;
 	while (tmp && tmp->type != Pipe)
 	{
-		i++;
+		if (tmp->type == Arg || tmp->type == Cmd)
+			i++;
 		tmp = tmp->nxt;
 	}
 	return (i + 1);
@@ -54,28 +59,29 @@ void	add_redir(t_cmdline **head, t_token *token)
 {
 	t_cmdline	*tmp;
 
-	tmp = last_command(*head);
+    if (!(*head))
+        (*head) = lstnew_command(NULL, count_args(&token));
+
+    tmp = last_command(*head);
 	lstadd_redir(&tmp->redir, token);
 }
 
 
-t_cmdline	*fill_outstruct(t_token **head)
+t_cmdline	*fill_outstruct(t_token **head) // TODO: needs to be changed
 {
 	t_cmdline	*cmd;
     t_token		*token;
-	int			cmd_args;
 
 	token = *head;
 	cmd = lstnew_command(NULL, 0);
 	while (token)
 	{
 		if (token->type == Cmd)
-		{
-			cmd_args = count_args(&token);
-			lstadd_command(&cmd, token->line, cmd_args);
-		}
+			lstadd_command(&cmd, token->line, count_args(&token));
+		else if (token->type == Pipe && token->nxt->type != Cmd)
+			lstadd_command(&cmd, NULL, count_args(head));
 		else if (token->type == Fname)
-			add_redir_fname(&cmd, token->line);
+			add_redir_fname(&cmd, token);
 		else if (token->type == Arg)
 		{
 			if (!cmd->args)
@@ -89,7 +95,7 @@ t_cmdline	*fill_outstruct(t_token **head)
 	return (cmd);
 }
 
-void	get_type2(t_token **head)
+void	get_token_type(t_token **head)
 {
 	t_token	*token;
 
@@ -109,21 +115,37 @@ void	get_type2(t_token **head)
 t_cmdline	*parse_line(char *line)
 {
 	t_token 	*token_head;
-    t_cmdline	*cmd = NULL;
-//	char *tok[10] = {"WORD", "PIPE", "IN", "HER", "OUT", "APP", "SPA", "CMD", "ARG", "FNAME"};
+	t_cmdline	*cmd = NULL;
 
 	token_head = tokenizer(line);
+	if (check_tokens(&token_head))
+		return (lstclear_tokens(&token_head), NULL);
 	expand_env_var(&token_head);
 	remove_quotes(&token_head);
-	get_type2(&token_head);
+	get_token_type(&token_head);
 	cmd = fill_outstruct(&token_head);
 	open_heredoc(&cmd);
-//	int i = 1;
-//	while (token_head)
-//	{
-//		printf("token n* %d == %s ====== type == %s \n", i++, token_head->line,
-//				tok[token_head->type - 1]);
-//		token_head = token_head->nxt;
-//	}
 	return (cmd);
 }
+
+//t_cmdline	*parse_line(char *line)
+//{
+//	t_token 	*token_head;
+//  t_cmdline	*cmd = NULL;
+////	char *tok[10] = {"WORD", "PIPE", "IN", "HER", "OUT", "APP", "SPA", "CMD", "ARG", "FNAME"};
+//
+//	token_head = tokenizer(line);
+//	expand_env_var(&token_head);
+//	remove_quotes(&token_head);
+//	get_type2(&token_head);
+//	cmd = fill_outstruct(&token_head);
+//	open_heredoc(&cmd);
+////	int i = 1;
+////	while (token_head)
+////	{
+////		printf("token n* %d == %s ====== type == %s \n", i++, token_head->line,
+////				tok[token_head->type - 1]);
+////		token_head = token_head->nxt;
+////	}
+//	return (cmd);
+//}
