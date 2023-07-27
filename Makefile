@@ -6,7 +6,7 @@
 #    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/07/27 03:41:44 by ahamrad          ###   ########.fr        #
+#    Updated: 2023/07/27 22:47:35 by ahamrad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C ./Libft
-	$(CC) -lreadline -L $(CFLAGS) $^ -o $@ -L./Libft -lft
+	$(CC) -lreadline -L./goinfre/ahamrad/homebrew/Cellar/readline/8.2.1/lib/libreadline.a $(CFLAGS) $^ -o $@ -L./Libft -lft
 
 %.o: %.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
