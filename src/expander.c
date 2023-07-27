@@ -106,7 +106,36 @@ void	expand_env_var(t_token **head)
 				}
 			}
 		}
-//		token->s = 0;
 		token = token->nxt;
 	}
+}
+
+char	*expand_vars(char *line)
+{
+	char	*arr;
+	char	*var;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '$' && line[i + 1] && (ft_isalpha(line[i + 1]) || line[i + 1] == '_'))
+		{
+			j = 0;
+			i++;
+			while (line[i + j] && (ft_isalnum(line[i + j]) || line[i + j] == '_'))
+				j++;
+			var = ft_substr(line, i, j);
+			if (!var)
+				continue;
+			arr = replace_var(var, line, --i);
+		}
+		else if (line[i] == '$' && line[i + 1] && ft_isdigit(line[i + 1]))
+			arr = remove_ds(line, i);
+		else
+			i++;
+		}
+            printf("========%s\n", arr);
+	return(freeptr(&line), arr);
 }

@@ -70,6 +70,7 @@ void	remove_quotes(t_token **token)
 	tmp = (*token);
 	while (tmp)
 	{
+		tmp->s = 0;
 		if (tmp->type == Word && has_quates(tmp->line))
 		{
 			new_line = ft_calloc(sizeof(char), ft_strlen(tmp->line));
@@ -82,13 +83,13 @@ void	remove_quotes(t_token **token)
 					c = tmp->line[i++];
 					while (tmp->line && tmp->line[i] && tmp->line[i] != c)
 						new_line[j++] = tmp->line[i++];
-//					tmp->s++;
 				}
 				else
 					new_line[j++] = tmp->line[i];
 				i++;
 			}
 			tmp->line = new_line;
+			tmp->s = 1;
 		}
 		tmp = tmp->nxt;
 	}
