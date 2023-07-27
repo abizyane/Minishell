@@ -6,13 +6,13 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 23:29:11 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/07/26 18:56:11 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/07/26 19:59:27 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    redirections(t_cmdline *cmd)
+int    redirections(t_cmdline *cmd)
 {
     t_redir *tmp;
 
@@ -40,7 +40,7 @@ void    redirections(t_cmdline *cmd)
                 close(tmp->fd);
             }
             else 
-                ft_putendl_fd("No such file or directory", 2);
+                ft_putendl_fd("No such file or directory", STDERR_FILENO);
         }
         // else if (tmp->type == Heredoc)
         // {
@@ -48,4 +48,5 @@ void    redirections(t_cmdline *cmd)
         // }
         tmp = tmp->nxt;
     }
+    return (1);
 }

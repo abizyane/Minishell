@@ -6,7 +6,7 @@
 #    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/07/26 03:11:17 by ahamrad          ###   ########.fr        #
+#    Updated: 2023/07/27 03:41:44 by ahamrad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC = minishell.c \
 	exec/execution.c \
 	exec/execution_utils.c \
 	exec/redirections.c \
+	exec/signals.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -36,9 +37,9 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C ./Libft
-	$(CC) -lreadline $(CFLAGS) $^ -o $@ -L./Libft -lft
+	$(CC) -lreadline -L $(CFLAGS) $^ -o $@ -L./Libft -lft
 
-%.o: %.c $(HEADER)
+%.o: %.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

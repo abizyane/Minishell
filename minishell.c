@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/07/26 02:29:52 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/07/26 20:54:11 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int main(int ac, char *av[], char **env)
 	int save_stdin = dup(STDIN_FILENO);
 	(void)ac;
 	(void)av;
-	signal(SIGINT, SIG_IGN);
+	handle_signals();
 	while (1)
 	{
 		line = readline(GRN" -> "CYN"Minishell "RST);
