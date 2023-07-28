@@ -6,7 +6,7 @@
 #    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/07/27 22:47:35 by ahamrad          ###   ########.fr        #
+#    Updated: 2023/07/28 22:54:31 by ahamrad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRC = minishell.c \
 	exec/execution.c \
 	exec/execution_utils.c \
 	exec/redirections.c \
-	exec/signals.c \
+	#exec/signals.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -37,10 +37,10 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C ./Libft
-	$(CC) -lreadline -L./goinfre/ahamrad/homebrew/Cellar/readline/8.2.1/lib/libreadline.a $(CFLAGS) $^ -o $@ -L./Libft -lft
+	$(CC) -lreadline $(CFLAGS) $^ -o $@ -L./Libft -lft /goinfre/ahamrad/homebrew/Cellar/readline/8.2.1/lib -I /goinfre/ahamrad/homebrew/Cellar/readline/8.2.1/include
 
 %.o: %.c $(HEADER) Makefile
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@ 
 
 clean:
 	make clean -C ./Libft

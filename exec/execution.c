@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/07/26 05:56:15 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/07/28 22:54:10 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ int		handle_multi_cmds(t_cmdline *cmd, char **envp)
         ;
     if (WIFEXITED(status))
         return (WEXITSTATUS(status));
+    if (WIFSIGNALED(status))
+        return (WTERMSIG(status));
     return 0;
 }
 
