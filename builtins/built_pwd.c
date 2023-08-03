@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   built_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/26 20:36:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/01 00:10:06 by ahamrad          ###   ########.fr       */
+/*   Created: 2023/07/12 02:27:10 by ahamrad           #+#    #+#             */
+/*   Updated: 2023/07/31 23:51:25 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    ignore_sigquit(void)
+int    pwd(t_cmdline *cmd)
 {
-    struct sigaction action;
-
-    action.sa_handler = SIG_IGN;
-    sigaction(SIGQUIT, &action, NULL);
-}
-
-void    sigint_handler(int signo)
-{
-    (void)signo;
-    rl_on_new_line();
-    //rl_replace_line("", 0);
-    rl_redisplay();
-}
-
-void    handle_signals(void)
-{
-    struct sigaction action;
-
-    ignore_sigquit();
-    action.sa_handler = sigint_handler;
-    sigaction(SIGINT, &action, NULL);
+    (void)cmd;
+    char    *path;
+    
+    path = getcwd(NULL, 1024);
+    if (path)
+    {
+        ft_putendl_fd(path, STDOUT_FILENO);
+        free(path);
+        return (EXIT_SUCCESS);
+    }
+    else
+        perror("pwd");
+    return (EXIT_FAILURE);
 }

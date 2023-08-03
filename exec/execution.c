@@ -6,11 +6,19 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/07/28 22:54:10 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/01 03:52:22 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void    not_found(char *cmd)
+{
+    ft_putstr_fd("minishell: ", 2);
+	if (cmd)
+    	ft_putstr_fd(cmd, 2);
+    ft_putstr_fd(": command not found\n", 2);
+}
 
 char	*get_cmd(t_cmdline *cmd)
 {
@@ -67,52 +75,49 @@ char    *get_cmd_path(t_cmdline *cmd, char **envp)
     return (path);
 }
 
+void    close_fds(int fd[2])
+{
+    close(fd[0]);
+    close(fd[1]);
+}
+
 int		handle_multi_cmds(t_cmdline *cmd, char **envp)
 {
-    int fd[2];
     int pid;
     int status;
-
     
     while (cmd)
     {
         if (cmd->nxt)
-            pipe(fd);
+            pipe(cmd->pipe);
         pid = fork();
         if (pid == 0)
         {
             if (cmd->nxt)
-            {
-                close(fd[0]);
-                dup2(fd[1], STDOUT_FILENO);
-                close(fd[0]);
-            }
+                dup2(cmd->pipe[1], STDOUT_FILENO);
             redirections(cmd);
+            close_fds(cmd->pipe);
             cmd->path = get_cmd_path(cmd, envp);
             // if (!cmd->path)
             //     return (127);
             if (execve(cmd->path, cmd->args, envp) == -1)
             {
-                printf("%i\n", errno);
-                perror("execve");
+                not_found(cmd->args[0]);
                 if (errno == 14)
                     exit(127);
             }
         }
         else if (cmd->nxt)
-        {
-            close(fd[1]);
-            dup2(fd[0], STDIN_FILENO);
-            close(fd[0]);
-        }
+            dup2(cmd->pipe[0], STDIN_FILENO);
+        close_fds(cmd->pipe);
         cmd = cmd->nxt;
     }
     while (wait(&status) != -1)
         ;
-    if (WIFEXITED(status))
-        return (WEXITSTATUS(status));
-    if (WIFSIGNALED(status))
-        return (WTERMSIG(status));
+    // if (WIFEXITED(status))
+    //     return (WEXITSTATUS(status));
+    // if (WIFSIGNALED(status))
+    //     return (WTERMSIG(status));
     return 0;
 }
 
@@ -221,3 +226,5 @@ int		handle_multi_cmds(t_cmdline *cmd, char **envp)
 // 	}
 // 	return 0;
 // }
+
+//TODO:cat minishell.c > > a

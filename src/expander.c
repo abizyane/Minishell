@@ -44,7 +44,7 @@ char	*replace_var(char *env_var, char *line, int start)
 		while(line[i])
 			new_line[j++] = line[i++];
 	}
-	return (free(line), new_line);
+	return (freeptr(&line), new_line);
 }
 
 char *remove_ds(char *line, int start)
@@ -61,7 +61,7 @@ char *remove_ds(char *line, int start)
 	j += 2;
 	while(line[j])
 		new_line[i++] = line[j++];
-	return (free(line), new_line);
+	return (freeptr(&line), new_line);
 }
 
 void	expand_env_var(t_token **head)
@@ -102,7 +102,6 @@ void	expand_env_var(t_token **head)
 					if (token->line && token->line[i] == '\"' && f == 2)
 						f = 0;
 					i++;
-
 				}
 			}
 		}
@@ -118,6 +117,7 @@ char	*expand_vars(char *line)
 	int		j;
 
 	i = 0;
+    arr = NULL;
 	while (line[i])
 	{
 		if (line[i] == '$' && line[i + 1] && (ft_isalpha(line[i + 1]) || line[i + 1] == '_'))
@@ -136,6 +136,6 @@ char	*expand_vars(char *line)
 		else
 			i++;
 		}
-            printf("========%s\n", arr);
+//            printf("========%s\n", arr);
 	return(freeptr(&line), arr);
 }

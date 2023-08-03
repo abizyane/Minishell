@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/07/27 23:49:24 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/01 04:16:45 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 int	minishell(t_cmdline		*cmd_line, char ***env)
 {
+	int	save_stdin;
+	int save_stdout;
+
+	save_stdin = dup(STDIN_FILENO);
+	save_stdout = dup(STDOUT_FILENO);
 	int ret = handle_multi_cmds(cmd_line, *env);
+	dup2(save_stdin, STDIN_FILENO);
+	dup2(save_stdout, STDOUT_FILENO);
 	return ret;
-//	(void)cmd_line;
-//	(void)env;
 }
 
 int	check_spaces(const char *str)
@@ -44,11 +49,10 @@ int main(int ac, char *av[], char **env)
 	char		*line;
 	t_cmdline	*cmd_line;
 
-    cmd_line = NULL;
-	int save_stdin = dup(STDIN_FILENO);
 	(void)ac;
 	(void)av;
-	handle_signals();
+//	printf("%d\n", getpid());
+	//handle_signals();
 	while (1)
 	{
 		line = readline(GRN" -> "CYN"Minishell "RST);
@@ -58,27 +62,9 @@ int main(int ac, char *av[], char **env)
 		if (line[0] != '\0' && !check_spaces(line))
 		{
 			cmd_line = parse_line(line);
-			while (cmd_line && cmd_line->args)
-			{
-				int k = 0;
-				int f = 0;
-				while (cmd_line->args && cmd_line->args[k])
-				{
-					printf("args[%d]  == %s\n", f, cmd_line->args[k]);
-					f++;
-					k++;
-				}
-				if (cmd_line->redir)
-					while (cmd_line->redir)
-					{
-						printf("first redir filename == %s\n", cmd_line->redir->filename);
-						cmd_line->redir = cmd_line->redir->nxt;
-					}
-				printf("next command\n");
-				cmd_line = cmd_line->nxt;
-			}
-			minishell(cmd_line, &env);
+			if (!cmd_line)
+				exit(1);
+			exit_code = minishell(cmd_line, &env);
 		}
-		dup2(save_stdin, STDIN_FILENO);
 	}
 }

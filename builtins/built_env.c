@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   built_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/26 20:36:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/01 00:10:06 by ahamrad          ###   ########.fr       */
+/*   Created: 2023/07/12 02:26:47 by ahamrad           #+#    #+#             */
+/*   Updated: 2023/07/31 23:50:48 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    ignore_sigquit(void)
+int     env(t_cmdline *cmd, char **envp)
 {
-    struct sigaction action;
+    int i;
 
-    action.sa_handler = SIG_IGN;
-    sigaction(SIGQUIT, &action, NULL);
-}
-
-void    sigint_handler(int signo)
-{
-    (void)signo;
-    rl_on_new_line();
-    //rl_replace_line("", 0);
-    rl_redisplay();
-}
-
-void    handle_signals(void)
-{
-    struct sigaction action;
-
-    ignore_sigquit();
-    action.sa_handler = sigint_handler;
-    sigaction(SIGINT, &action, NULL);
+    i = 0;
+    (void)cmd;
+    if (!envp && !(*envp))
+    {
+        ft_putendl_fd("env failed", STDOUT_FILENO);
+        return (EXIT_FAILURE);
+    }
+    while (envp[i])
+    {
+        ft_putendl_fd(envp[i], STDOUT_FILENO);
+        i++;
+    }
+    return (EXIT_SUCCESS);
 }

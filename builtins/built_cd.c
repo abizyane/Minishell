@@ -1,38 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   built_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/26 20:36:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/01 00:10:06 by ahamrad          ###   ########.fr       */
+/*   Created: 2023/07/12 02:18:35 by ahamrad           #+#    #+#             */
+/*   Updated: 2023/07/31 23:50:26 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    ignore_sigquit(void)
+int     cd(t_cmdline *cmd)
 {
-    struct sigaction action;
-
-    action.sa_handler = SIG_IGN;
-    sigaction(SIGQUIT, &action, NULL);
-}
-
-void    sigint_handler(int signo)
-{
-    (void)signo;
-    rl_on_new_line();
-    //rl_replace_line("", 0);
-    rl_redisplay();
-}
-
-void    handle_signals(void)
-{
-    struct sigaction action;
-
-    ignore_sigquit();
-    action.sa_handler = sigint_handler;
-    sigaction(SIGINT, &action, NULL);
+    
 }

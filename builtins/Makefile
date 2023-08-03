@@ -5,51 +5,39 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/01 00:11:05 by ahamrad          ###   ########.fr        #
+#    Created: 2023/07/12 02:21:00 by ahamrad           #+#    #+#              #
+#    Updated: 2023/07/12 03:54:55 by ahamrad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = main
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address #-I /goinfre/abizyane/.brew/opt/readline/include #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
-HEADER = minishell.h
+HEADER = builtins.h
 
-SRC = minishell.c \
-	src/tokenizer.c \
-	src/tokenizer_tools.c \
-	src/parse.c \
-	src/ft_lst.c \
-	src/lexical_analyzer.c \
-	src/expander.c \
-	src/redir.c \
-	src/ft_heredoc.c \
-	exec/execution.c \
-	exec/execution_utils.c \
-	exec/redirections.c \
-	#exec/signals.c \
+SRC = main.c \
+	built_pwd.c \
+	built_env.c \
+	built_echo.c \
+	built_cd.c \
+	built_exit.c \
+	built_export.c \
+	built_unset.c \
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C ./Libft
-	$(CC) -lreadline $(CFLAGS) $^ -o $@ -L./Libft -lft #-L /goinfre/abizyane/.brew/opt/readline/lib  -lreadline
+	make -C ./libft
+	$(CC) $(CFLAGS) $^ -o $@ -L./libft -lft
 
 %.o: %.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	make clean -C ./Libft
-	rm -rf $(OBJ)
-
-fclean: clean
-	make fclean -C ./Libft
-	rm -rf $(NAME)
+	rm -rf $(OBJ) 
 
 re: fclean all
-
-x : all clean

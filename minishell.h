@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/07/28 22:52:46 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/01 00:00:30 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include "Libft/libft.h"
 # include <dirent.h>
-# include <stdio.h>
 # include <fcntl.h>
-# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/stat.h>
@@ -122,7 +122,16 @@ void    free_arr(char **arr);
 
 int    redirections(t_cmdline *cmd);
 
+
 void    handle_signals(void);
 void    sigint_handler(int signo);
+
+
+int    	pwd(t_cmdline *cmd);
+int     cd(t_cmdline *cmd);
+int     echo(t_cmdline *cmd);
+void    print_args(t_cmdline *cmd, int flag, int i);
+int     echo_option(char *arg);
+int     env(t_cmdline *cmd, char **envp);
 
 #endif
