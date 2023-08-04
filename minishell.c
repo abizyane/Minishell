@@ -12,19 +12,6 @@
 
 #include"minishell.h"
 
-int	minishell(t_cmdline		*cmd_line, char ***env)
-{
-	int	save_stdin;
-	int save_stdout;
-
-	save_stdin = dup(STDIN_FILENO);
-	save_stdout = dup(STDOUT_FILENO);
-	int ret = handle_multi_cmds(cmd_line, *env);
-	dup2(save_stdin, STDIN_FILENO);
-	dup2(save_stdout, STDOUT_FILENO);
-	return ret;
-}
-
 int	check_spaces(const char *str)
 {
     int	i;
@@ -51,8 +38,6 @@ int main(int ac, char *av[], char **env)
 
 	(void)ac;
 	(void)av;
-//	printf("%d\n", getpid());
-	//handle_signals();
 	while (1)
 	{
 		line = readline(GRN" -> "CYN"Minishell "RST);
@@ -64,7 +49,7 @@ int main(int ac, char *av[], char **env)
 			cmd_line = parse_line(line);
 			if (!cmd_line)
 				exit(1);
-			exit_code = minishell(cmd_line, &env);
+			execution(cmd_line, env);
 		}
 	}
 }

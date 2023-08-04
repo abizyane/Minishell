@@ -22,7 +22,7 @@ void	*freeptr(char **s)
 	return (*s);
 }
 
-int	read_heredoc(t_redir *redir, int *fd)
+void	read_heredoc(t_redir *redir, int *fd)
 {
 	char *line;
 	char *dlm;
@@ -69,7 +69,7 @@ void	open_heredoc(t_cmdline **head)
 				if (pid < 0)
 					perror("heredoc fork");
 				if (pid == 0)
-					redir->fd = read_heredoc(redir, fd);
+					read_heredoc(redir, fd);
 				else
 				{
 					wait(&status);

@@ -37,7 +37,7 @@
 #define CYN "\e[3;96m"
 #define RST "\e[0m"
 
-int			exit_code;
+int			exit_status;
 
 typedef enum e_type
 {
@@ -133,5 +133,12 @@ int     echo(t_cmdline *cmd);
 void    print_args(t_cmdline *cmd, int flag, int i);
 int     echo_option(char *arg);
 int     env(t_cmdline *cmd, char **envp);
+
+//new execution
+
+void    local_binary(t_cmdline *cmd, char **envp);
+void    child_execution(t_cmdline *cmd, char **envp, int *fd);
+int     execute_command(t_cmdline *cmd, char **envp);
+void    execution(t_cmdline *cmd, char **envp);
 
 #endif

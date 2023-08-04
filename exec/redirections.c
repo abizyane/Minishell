@@ -42,10 +42,12 @@ int    redirections(t_cmdline *cmd)
             else 
                 ft_putendl_fd("No such file or directory", STDERR_FILENO);
         }
-        // else if (tmp->type == Heredoc)
-        // {
+         else if (tmp->type == Heredoc)
+         {
+
+
             
-        // }
+         }
         tmp = tmp->nxt;
     }
     return (1);
