@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/01 00:00:30 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/05 04:01:01 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,13 @@ typedef struct s_redir
 	struct s_redir		*nxt;
 }						t_redir;
 
+typedef struct s_env
+{
+	char	*name;
+	char	*content;
+	struct s_env *next;
+}				t_env;
+
 typedef struct s_cmdline
 {
 	struct s_cmdline	*prv;
@@ -78,7 +85,6 @@ typedef struct s_cmdline
 	char				**args;
 	int					in;
 	int					out;
-	int					pipe[2];
 	struct s_redir		*redir;
 	struct s_cmdline	*nxt;
 }						t_cmdline;

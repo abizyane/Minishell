@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/01 04:16:45 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/05 12:57:45 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int main(int ac, char *av[], char **env)
 
 	(void)ac;
 	(void)av;
+    signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline(GRN" -> "CYN"Minishell "RST);
