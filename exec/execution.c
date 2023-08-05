@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/05 05:17:32 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/05 16:46:55 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,57 +14,57 @@
 
 char	*get_cmd(t_cmdline *cmd)
 {
-    char	**path;
-    char	*arr;
-    int i;
+	char	**path;
+	char	*arr;
+	int i;
 
-    i = 0;
-    arr = cmd->args[0];
-    path = ft_split(cmd->args[0], '/');
-    if (!path)
-        return (NULL);
-    while (path[i])
-        i++;
-    cmd->args[0] = path[--i];
-    return(free_arr(path), arr);
+	i = 0;
+	arr = cmd->args[0];
+	path = ft_split(cmd->args[0], '/');
+	if (!path)
+		return (NULL);
+	while (path[i])
+		i++;
+	cmd->args[0] = path[--i];
+	return(free_arr(path), arr);
 }
 
 char    *get_cmd_path(t_cmdline *cmd, char **envp)
 {
-    char    *path;
-    char    **paths;
-    int     i;
+	char    *path;
+	char    **paths;
+	int     i;
 
-    i = 0;
-    paths = NULL;
-    path = NULL;
-    if (!cmd->args || !cmd->args[0])
-        return (NULL);
-    if (cmd->args[0][0] == '/')
-        return (get_cmd(cmd));
-    if (cmd->args[0][0] == '.')
-        return cmd->args[0];
-    while (envp[i])
-    {
-        if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-        {
-            paths = ft_split(envp[i] + 5, ':');
-            break ;
-        }
-        i++;
-    }
-    i = 0;
-    while (paths[i])
-    {
-        path = ft_strjoin(paths[i], "/");
-        path = ft_strjoin(path, cmd->args[0]);
-        if (access(path, F_OK) == 0)
-            break ;
-        i++;
-    }
-    if (!paths[i])
-        return (NULL);
-    return (path);
+	i = 0;
+	paths = NULL;
+	path = NULL;
+	if (!cmd->args || !cmd->args[0])
+		return (NULL);
+	if (cmd->args[0][0] == '/')
+		return (get_cmd(cmd));
+	if (cmd->args[0][0] == '.')
+		return cmd->args[0];
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			paths = ft_split(envp[i] + 5, ':');
+			break ;
+		}
+		i++;
+	}
+	i = 0;
+	while (paths[i])
+	{
+		path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(path, cmd->args[0]);
+		if (access(path, F_OK) == 0)
+			break ;
+		i++;
+	}
+	if (!paths[i])
+		return (NULL);
+	return (path);
 }
 
 void    not_found(char *cmd)
@@ -72,6 +72,37 @@ void    not_found(char *cmd)
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": command not found\n", 2);
+}
+
+int		ft_check_builtin(char *cmd)
+{
+	if (!ft_strcmp(cmd, "echo"))
+		return (1);
+	if (!ft_strcmp(cmd, "cd"))
+		return (1);
+	if (!ft_strcmp(cmd, "pwd"))
+		return (1);
+	if (!ft_strcmp(cmd, "export"))
+		return (1);
+	if (!ft_strcmp(cmd, "unset"))
+		return (1);
+	if (!ft_strcmp(cmd, "env"))
+		return (1);
+	if (!ft_strcmp(cmd, "exit"))
+		return (1);
+	return (0);
+}
+
+void	execute_builtin(t_cmdline *cmd, char **envp)
+{
+	if (!ft_strcmp(cmd->args[0], "echo"))
+		exit_status = echo(cmd);
+	if (!ft_strcmp(cmd->args[0], "pwd"))
+		exit_status = pwd(cmd);
+	if (!ft_strcmp(cmd->args[0], "env"))
+		exit_status = env(cmd, envp);
+	// if (!ft_strcmp(cmd->args[0], "cd"))
+	// 	exit_status = cd(cmd, env);
 }
 
 void    local_binary(t_cmdline *cmd, char **envp)
@@ -142,11 +173,11 @@ void    execution(t_cmdline *cmd, char **envp)
 	int     pid;
 
 	input_save = dup(STDIN_FILENO);
-	// if (!cmd->nxt && check_if_builtin(cmd->args[0]) == 1)
-	// {
-	//     execute_builtin(cmd, envp);
-	//     return ;
-	// }
+	if (!cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
+	{
+		execute_builtin(cmd, envp);
+		return ;
+	}
 	while (cmd)
 	{
 		pid = execute_command(cmd, envp);

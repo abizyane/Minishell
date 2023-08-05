@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 19:00:47 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/05 05:18:21 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/05 15:11:18 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	read_heredoc(t_redir *redir, int *fd)
 	}
 	freeptr(&line);
 	close(fd[1]);
+	close(fd[0]);
 	exit(0);
 }
 
@@ -74,6 +75,8 @@ void	open_heredoc(t_cmdline **head)
 				{
 					wait(&status);
 					redir->fd = fd[0];
+					close(fd[0]);
+					close(fd[1]);
 				}
 			}
 			redir = redir->nxt;

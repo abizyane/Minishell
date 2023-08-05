@@ -6,7 +6,7 @@
 #    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/05 03:54:46 by ahamrad          ###   ########.fr        #
+#    Updated: 2023/08/05 16:45:12 by ahamrad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,15 @@ SRC = minishell.c \
 	exec/execution.c \
 	exec/execution_utils.c \
 	exec/redirections.c \
+	builtins/built_cd.c \
+	builtins/built_echo.c \
+	builtins/built_env.c \
+	builtins/built_exit.c \
+	builtins/built_export.c \
+	builtins/built_pwd.c \
+	builtins/built_unset.c \
 	#exec/signals.c \
+	
 
 OBJ = $(SRC:.c=.o)
 

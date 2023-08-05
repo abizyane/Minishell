@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/05 04:01:01 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/05 16:47:23 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ void    sigint_handler(int signo);
 
 
 int    	pwd(t_cmdline *cmd);
-int     cd(t_cmdline *cmd);
 int     echo(t_cmdline *cmd);
 void    print_args(t_cmdline *cmd, int flag, int i);
 int     echo_option(char *arg);
@@ -146,5 +145,9 @@ void    local_binary(t_cmdline *cmd, char **envp);
 void    child_execution(t_cmdline *cmd, char **envp, int *fd);
 int     execute_command(t_cmdline *cmd, char **envp);
 void    execution(t_cmdline *cmd, char **envp);
+
+//builtins
+
+int		echo(t_cmdline *cmd);
 
 #endif

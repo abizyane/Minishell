@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:10 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/07/31 23:51:25 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/05 16:47:59 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int    pwd(t_cmdline *cmd)
     if (path)
     {
         ft_putendl_fd(path, STDOUT_FILENO);
+        printf("it's our pwd\n");
         free(path);
         return (EXIT_SUCCESS);
     }
