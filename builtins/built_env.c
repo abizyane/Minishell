@@ -3,30 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   built_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:26:47 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/07/31 23:50:48 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/06 17:28:28 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int     env(t_cmdline *cmd, char **envp)
+int	env(t_cmdline *cmd, t_env *env)
 {
-    int i;
+	int i;
 
-    i = 0;
-    (void)cmd;
-    if (!envp && !(*envp))
-    {
-        ft_putendl_fd("env failed", STDOUT_FILENO);
-        return (EXIT_FAILURE);
-    }
-    while (envp[i])
-    {
-        ft_putendl_fd(envp[i], STDOUT_FILENO);
-        i++;
-    }
-    return (EXIT_SUCCESS);
+	i = 0;
+	if (!cmd->args[1])
+	{
+		while (env && env->content)
+		{
+			printf("%s=%s\n", env->key, env->content);
+			env = env->nxt;
+		}
+		return (EXIT_SUCCESS);
+	}
+	else
+	{
+		printf("env: no options or arguments\n");
+		return (EXIT_FAILURE);
+	}
 }

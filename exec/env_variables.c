@@ -3,57 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   env_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 03:59:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/05 06:58:50 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/05 17:47:02 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_env   *env_new(char *name, char *content)
+t_env   *env_new(char *key, char *content)
 {
     t_env   *new;
 
     new = ft_calloc(1, sizeof(t_env));
     if (!new)
         return (NULL);
-    new->name = name;
+    new->key = key;
     new->content = content;
-    new->next = NULL;
+    new->nxt = NULL;
     return (new);
 }
 
-t_env   *env_add_back(t_env **env, t_env *new_env)
+void	env_add_back(t_env **env_head, char	**env_var)
 {
     t_env   *tmp;
+	t_env	*new_env;
 
-    tmp = *env;
+    tmp = *env_head;
+	new_env = env_new(env_var[0], env_var[1]);
     if (!tmp)
-        *(env) = new_env;
+        *(env_head) = new_env;
     else
     {
-        while (tmp && tmp->next)
-            tmp = tmp->next;
-        tmp->next = new_env;
+        while (tmp && tmp->nxt)
+            tmp = tmp->nxt;
+        tmp->nxt = new_env;
     }
 }
 
-t_env   *array_to_list(char **envp)
+t_env	*lst_env(char **env)
 {
-    char    **tab;
-    t_env   *envs;
-    int     i = 0;
+    int		i;
+    t_env	*head;
+    char	**str;
 
-    while (envp[i])
+    i = 0;
+    head = NULL;
+    while (env && env[i])
     {
-                         
+    	str = ft_split(env[i], '=');
+		env_add_back(&head, str);
+		free_arr(str);
+		i++;
     }
+	// while (1)
+	// {
+	// 	printf("-----%s = %s\n", head->key, head->content);
+	// 	head = head->nxt;
+	// }
+    return (head);
 }
 
+char	*find_var(t_env *head, char *env_var)
+{
+    t_env	*tmp;
 
-
-
-
-
+    tmp = head;
+    while (tmp)
+    {
+        if (ft_strcmp(tmp->key, env_var) == 0)
+			return (tmp->content);
+        tmp = tmp->nxt;
+    }
+    return (NULL);
+}

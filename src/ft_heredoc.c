@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 19:00:47 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/05 15:11:18 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/06 17:45:05 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,39 +22,45 @@ void	*freeptr(char **s)
 	return (*s);
 }
 
-void	read_heredoc(t_redir *redir, int *fd)
+void	handler(int sig)
+{
+	(void)sig;
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	ioctl(0, TIOCSTI, "\4");
+}
+
+int	read_heredoc(t_redir *redir, t_env *env)
 {
 	char *line;
 	char *dlm;
+	int fd[2];
 
+	(void)env;
 	dlm = redir->filename;
-	signal(SIGINT, SIG_DFL);
+	if (pipe(fd) == -1)
+		return (perror("minishell"), -1);
 	while (1)
 	{
+		signal(SIGINT, handler);
 		line = readline("heredoc $> ");
 		if (!line || !ft_strcmp(line, dlm))
 			break;
-		if (redir->heredoc_flag == 1)
-        	line = expand_vars(line);
+		// if (redir->heredoc_flag == 1)
+        // 	line = expand_vars(line, env);
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
 		freeptr(&line);
 	}
 	freeptr(&line);
 	close(fd[1]);
-	close(fd[0]);
-	exit(0);
+	return fd[0];
 }
 
-//TODO: if there is quotes in the delimiter the input stays the same
-
-void	open_heredoc(t_cmdline **head)
+void	open_heredoc(t_cmdline **head, t_env *env)
 {
 	t_cmdline	*cmd;
 	t_redir 	*redir;
-	int 		pid;
-	int 		fd[2];
-	int			status;
 
 	cmd = *head;
 	while (cmd)
@@ -64,20 +70,9 @@ void	open_heredoc(t_cmdline **head)
 		{
 			if (redir->type == Heredoc)
 			{
-				if (pipe(fd) == -1)
-					return (perror("heredoc pipe"));
-				pid = fork();
-				if (pid < 0)
-					perror("heredoc fork");
-				if (pid == 0)
-					read_heredoc(redir, fd);
-				else
-				{
-					wait(&status);
-					redir->fd = fd[0];
-					close(fd[0]);
-					close(fd[1]);
-				}
+				redir->fd = read_heredoc(redir, env);
+				if (redir->fd == -1)
+					return ;
 			}
 			redir = redir->nxt;
 		}

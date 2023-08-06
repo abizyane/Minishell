@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/05 12:57:45 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/06 17:30:33 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,25 @@ int main(int ac, char *av[], char **env)
 {
 	char		*line;
 	t_cmdline	*cmd_line;
+	t_env		*env_head;
 
 	(void)ac;
 	(void)av;
-    signal(SIGQUIT, SIG_IGN);
+	env_head = lst_env(env);
 	while (1)
 	{
+		sig_handler();
 		line = readline(GRN" -> "CYN"Minishell "RST);
         if (!line)
             return  0;
 		add_history(line);
 		if (line[0] != '\0' && !check_spaces(line))
 		{
-			cmd_line = parse_line(line);
+			cmd_line = parse_line(line, env_head);
 			if (!cmd_line)
 				exit(1);
-			execution(cmd_line, env);
+			execution(cmd_line, env, env_head);
 		}
 	}
 }
+//TODO: $? expanding

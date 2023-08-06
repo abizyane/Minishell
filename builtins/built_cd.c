@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:18:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/05 17:12:28 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/06 17:35:05 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char    *get_homeuuu(t_env *env)
+char    *get_home(t_env *env)
 {
     t_env   *tmp;
 
@@ -25,7 +25,6 @@ char    *get_homeuuu(t_env *env)
     }
     return (NULL);
 }
-
 
 int     cd(t_cmdline *cmd, t_env *env)
 {

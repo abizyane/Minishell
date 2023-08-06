@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 23:29:11 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/05 15:09:44 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/06 17:27:26 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	handle_outfile(t_redir *tmp)
 	}
 	else if (tmp->type == redApp)
 	{
-		tmp->fd = open(tmp->filename, O_WRONLY| O_CREAT | O_APPEND, 0666);
+		tmp->fd = open(tmp->filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (access(tmp->filename, W_OK) == -1)
 			return (permission_denied(tmp->filename), 0);
 		if (tmp->fd < 0)
@@ -66,10 +66,9 @@ int	handle_infile(t_redir *tmp)
 	return (1);
 }
 
-
 int	redirections(t_cmdline *cmd)
 {
-	t_redir *tmp;
+	t_redir	*tmp;
 
 	tmp = cmd->redir;
 	while (tmp)
@@ -84,6 +83,11 @@ int	redirections(t_cmdline *cmd)
 			if (handle_infile(tmp) == 0)
 				exit(EXIT_FAILURE);
 		}
+		else if (tmp->type == Heredoc)
+        {
+            dup2(tmp->fd, STDIN_FILENO);
+            close(tmp->fd);
+        }
 		tmp = tmp->nxt;
 	}
 	return (1);

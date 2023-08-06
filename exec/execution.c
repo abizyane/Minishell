@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/05 16:46:55 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/06 17:46:57 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*get_cmd(t_cmdline *cmd)
 {
 	char	**path;
 	char	*arr;
-	int i;
+	int		i;
 
 	i = 0;
 	arr = cmd->args[0];
@@ -26,14 +26,14 @@ char	*get_cmd(t_cmdline *cmd)
 	while (path[i])
 		i++;
 	cmd->args[0] = path[--i];
-	return(free_arr(path), arr);
+	return (free_arr(path), arr);
 }
 
-char    *get_cmd_path(t_cmdline *cmd, char **envp)
+char	*get_cmd_path(t_cmdline *cmd, char **envp)
 {
-	char    *path;
-	char    **paths;
-	int     i;
+	char	*path;
+	char	**paths;
+	int		i;
 
 	i = 0;
 	paths = NULL;
@@ -43,7 +43,7 @@ char    *get_cmd_path(t_cmdline *cmd, char **envp)
 	if (cmd->args[0][0] == '/')
 		return (get_cmd(cmd));
 	if (cmd->args[0][0] == '.')
-		return cmd->args[0];
+		return (cmd->args[0]);
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
@@ -67,14 +67,14 @@ char    *get_cmd_path(t_cmdline *cmd, char **envp)
 	return (path);
 }
 
-void    not_found(char *cmd)
+void	not_found(char *cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": command not found\n", 2);
 }
 
-int		ft_check_builtin(char *cmd)
+int	ft_check_builtin(char *cmd)
 {
 	if (!ft_strcmp(cmd, "echo"))
 		return (1);
@@ -93,19 +93,22 @@ int		ft_check_builtin(char *cmd)
 	return (0);
 }
 
-void	execute_builtin(t_cmdline *cmd, char **envp)
+void	execute_builtin(t_cmdline *cmd, char **envp, t_env *envi)
 {
+	(void)envp;
 	if (!ft_strcmp(cmd->args[0], "echo"))
 		exit_status = echo(cmd);
 	if (!ft_strcmp(cmd->args[0], "pwd"))
 		exit_status = pwd(cmd);
 	if (!ft_strcmp(cmd->args[0], "env"))
-		exit_status = env(cmd, envp);
+		exit_status = env(cmd, envi);
 	// if (!ft_strcmp(cmd->args[0], "cd"))
 	// 	exit_status = cd(cmd, env);
+	if (!ft_strcmp(cmd->args[0], "exit"))
+		exit_status = ft_exit(cmd);
 }
 
-void    local_binary(t_cmdline *cmd, char **envp)
+void	local_binary(t_cmdline *cmd, char **envp)
 {
 	if (!cmd->args || !cmd->args[0])
 		exit(EXIT_SUCCESS);
@@ -119,8 +122,10 @@ void    local_binary(t_cmdline *cmd, char **envp)
 	}
 }
 
-void    child_execution(t_cmdline *cmd, char **envp, int *fd)
+void	child_execution(t_cmdline *cmd, char **envp, int *fd)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (!cmd->args || !cmd->args[0])
 		exit(EXIT_SUCCESS);
 	if (cmd->redir)
@@ -140,10 +145,10 @@ void    child_execution(t_cmdline *cmd, char **envp, int *fd)
 	}
 }
 
-int     execute_command(t_cmdline *cmd, char **envp)
+int	execute_command(t_cmdline *cmd, char **envp)
 {
-	int pid;
-	int fd[2];
+	int	pid;
+	int	fd[2];
 
 	if (cmd->nxt)
 	{
@@ -166,16 +171,17 @@ int     execute_command(t_cmdline *cmd, char **envp)
 	return (pid);
 }
 
-void    execution(t_cmdline *cmd, char **envp)
+void	execution(t_cmdline *cmd, char **envp, t_env *env)
 {
-	int     input_save;
-	int     status;
-	int     pid;
+	int		input_save;
+	int		status;
+	int		pid;
 
+	rl = 1;
 	input_save = dup(STDIN_FILENO);
-	if (!cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
+	if (cmd && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
 	{
-		execute_builtin(cmd, envp);
+		execute_builtin(cmd, envp, env);
 		return ;
 	}
 	while (cmd)
@@ -189,6 +195,11 @@ void    execution(t_cmdline *cmd, char **envp)
 	if (WIFEXITED(status))
 		exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
+	{
 		exit_status = 128 + WTERMSIG(status);
+		if (exit_status == 131)
+			ft_putstr_fd("Quit: 3\n", 1);
+	}
 	dup2(input_save, STDIN_FILENO);
+	rl = 0;
 }

@@ -3,17 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
+#    By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/05 16:45:12 by ahamrad          ###   ########.fr        #
+#    Updated: 2023/08/06 17:35:51 by abizyane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
+CPPFLAGS = -I /goinfre/abizyane/homebrew/opt/readline/include
+LDFLAGS = -L /goinfre/abizyane/homebrew/opt/readline/lib
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address #-I /goinfre/abizyane/.brew/opt/readline/include #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address $(CPPFLAGS)
 
 HEADER = minishell.h
 
@@ -29,15 +31,13 @@ SRC = minishell.c \
 	exec/execution.c \
 	exec/execution_utils.c \
 	exec/redirections.c \
-	builtins/built_cd.c \
+	exec/env_variables.c \
+	exec/signals.c \
 	builtins/built_echo.c \
 	builtins/built_env.c \
 	builtins/built_exit.c \
-	builtins/built_export.c \
-	builtins/built_pwd.c \
-	builtins/built_unset.c \
-	#exec/signals.c \
-	
+	builtins/built_pwd.c 
+
 
 OBJ = $(SRC:.c=.o)
 
@@ -45,7 +45,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C ./Libft
-	$(CC) -lreadline $(CFLAGS) $^ -o $@ -L./Libft -lft #-L /goinfre/abizyane/.brew/opt/readline/lib  -lreadline
+	$(CC) -lreadline $(CFLAGS) $^ -o $@ -L./Libft -lft $(LDFLAGS)
 
 %.o: %.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@

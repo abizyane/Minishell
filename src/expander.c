@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:14:01 by abizyane          #+#    #+#             */
-/*   Updated: 2023/07/08 20:42:15 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 16:58:38 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*replace_var(char *env_var, char *line, int start)
+char	*replace_var(char *env_var, char *line, int start, t_env *env_head)
 {
 	char	*new_line;
 	char	*value;
@@ -23,6 +23,8 @@ char	*replace_var(char *env_var, char *line, int start)
 	i = 0;
 	j = 0;
 	k = 0;
+	(void)env_head;
+	// value = find_var(env_head, env_var);
 	value = getenv(env_var);
 	new_line = ft_calloc((ft_strlen(value) + (ft_strlen(line) - ft_strlen(env_var))) + 1, sizeof(char));
 	if (!new_line)
@@ -64,7 +66,7 @@ char *remove_ds(char *line, int start)
 	return (freeptr(&line), new_line);
 }
 
-void	expand_env_var(t_token **head)
+void	expand_env_var(t_token **head, t_env *env)
 {
 	t_token	*token;
 	char 	*env_var;
@@ -91,7 +93,7 @@ void	expand_env_var(t_token **head)
 					env_var = ft_substr(token->line, i, j);
 					if (!env_var || (token->prv && token->prv->type == Heredoc))
 						continue ;
-					token->line = replace_var(env_var, token->line, --i);
+					token->line = replace_var(env_var, token->line, --i, env);
 				}
 				else if (token->line[i] == '$' && token->line[i + 1] && ft_isdigit(token->line[i + 1]))
 					token->line = remove_ds(token->line, i);
@@ -109,7 +111,7 @@ void	expand_env_var(t_token **head)
 	}
 }
 
-char	*expand_vars(char *line)
+char	*expand_vars(char *line, t_env *env)
 {
 	char	*arr;
 	char	*var;
@@ -118,7 +120,8 @@ char	*expand_vars(char *line)
 
 	i = 0;
     arr = NULL;
-	while (line[i])
+	var = NULL;
+	while (line && line[i])
 	{
 		if (line[i] == '$' && line[i + 1] && (ft_isalpha(line[i + 1]) || line[i + 1] == '_'))
 		{
@@ -129,13 +132,12 @@ char	*expand_vars(char *line)
 			var = ft_substr(line, i, j);
 			if (!var)
 				continue;
-			arr = replace_var(var, line, --i);
+			arr = replace_var(var, line, --i, env);
 		}
 		else if (line[i] == '$' && line[i + 1] && ft_isdigit(line[i + 1]))
 			arr = remove_ds(line, i);
 		else
 			i++;
 		}
-//            printf("========%s\n", arr);
-	return(freeptr(&line), arr);
+	return(arr);
 }

@@ -112,19 +112,19 @@ void	get_token_type(t_token **head)
 	}
 }
 
-t_cmdline	*parse_line(char *line)
+t_cmdline	*parse_line(char *line, t_env *env)
 {
 	t_token 	*token_head;
 	t_cmdline	*cmd = NULL;
 
 	token_head = tokenizer(line);
-	if (check_tokens(&token_head))
-		return (lstclear_tokens(&token_head), NULL);
-	expand_env_var(&token_head);
+	if (check_tokens(&token_head) != 0)
+		return (NULL);
+	expand_env_var(&token_head, env);
 	remove_quotes(&token_head);
 	get_token_type(&token_head);
 	cmd = fill_outstruct(&token_head);
-	open_heredoc(&cmd);
+	open_heredoc(&cmd, env);
 	return (cmd);
 }
 
