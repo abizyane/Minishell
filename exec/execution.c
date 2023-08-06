@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/06 19:27:47 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 20:41:04 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void	child_execution(t_cmdline *cmd, char **envp, int *fd)
 		close(fd[1]);
 		close(fd[0]);
 	}
+	//TODO: function that converts the list to char**;
 	local_binary(cmd, envp);
 	cmd->path = get_cmd_path(cmd, envp);
 	if (execve(cmd->path, cmd->args, envp) == -1)
@@ -143,6 +144,7 @@ void	child_execution(t_cmdline *cmd, char **envp, int *fd)
 		not_found(cmd->args[0]);
 		exit(127);
 	}
+	//TODO: free the char**;
 }
 
 int	execute_command(t_cmdline *cmd, char **envp)
@@ -180,11 +182,11 @@ void	execution(t_cmdline *cmd, char **envp, t_env *env)
 	rl = 1;
 	input_save = dup(STDIN_FILENO);
 	(void)env;
-	// if (cmd && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
-	// {
-	// 	execute_builtin(cmd, envp, env);
-	// 	return ;
-	// }
+	if (!cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
+	{
+		execute_builtin(cmd, envp, env);
+		return ;
+	}
 	while (cmd)
 	{
 		pid = execute_command(cmd, envp);

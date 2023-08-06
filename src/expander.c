@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:14:01 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/06 20:05:22 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 20:41:26 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,7 @@ char	*replace_var(char *env_var, char *line, int start, t_env *env_head)
 	i = 0;
 	j = 0;
 	k = 0;
-	char *str[2] = {"a",
-					"im fine"};
-	env_add_back(&env_head, str);
 	value = find_var(env_head, env_var);
-	// value = getenv(env_var);
 	new_line = ft_calloc((ft_strlen(value) + (ft_strlen(line) - ft_strlen(env_var))) + 1, sizeof(char));
 	if (!new_line)
 		return (NULL);
