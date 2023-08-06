@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/06 17:31:12 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:15:17 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void					*freeptr(char **s);
 void					open_heredoc(t_cmdline **head, t_env *env);
 char 					*remove_ds(char *line, int start);
 char					*expand_vars(char *line, t_env *env);
+void					env_add_back(t_env **env_head, char	**env_var);
 
 
 int    	execute_single_cmd(t_cmdline *cmd, char **envp);

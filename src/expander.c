@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:14:01 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/06 16:58:38 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 20:05:22 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ char	*replace_var(char *env_var, char *line, int start, t_env *env_head)
 	i = 0;
 	j = 0;
 	k = 0;
-	(void)env_head;
-	// value = find_var(env_head, env_var);
-	value = getenv(env_var);
+	char *str[2] = {"a",
+					"im fine"};
+	env_add_back(&env_head, str);
+	value = find_var(env_head, env_var);
+	// value = getenv(env_var);
 	new_line = ft_calloc((ft_strlen(value) + (ft_strlen(line) - ft_strlen(env_var))) + 1, sizeof(char));
 	if (!new_line)
 		return (NULL);
@@ -55,11 +57,19 @@ char *remove_ds(char *line, int start)
 	int		i;
 	int		j;
 
-	new_line = ft_calloc(ft_strlen(line) - 1, sizeof(char));
+	new_line = ft_calloc(ft_strlen(line) + 2, sizeof(char));
 	i = 0;
 	j = 0;
 	while (i < start)
 		new_line[i++] = line[j++];
+	if (line[j + 1] == '?')
+	{
+		char *var = ft_itoa(exit_status);
+		int	k = 0;
+		while (var[k])
+			new_line[i++] = var[k++];
+		free(var);
+	}	
 	j += 2;
 	while(line[j])
 		new_line[i++] = line[j++];
@@ -95,7 +105,7 @@ void	expand_env_var(t_token **head, t_env *env)
 						continue ;
 					token->line = replace_var(env_var, token->line, --i, env);
 				}
-				else if (token->line[i] == '$' && token->line[i + 1] && ft_isdigit(token->line[i + 1]))
+				else if (token->line[i] == '$' && token->line[i + 1] && (ft_isdigit(token->line[i + 1]) || token->line[i + 1] == '?'))
 					token->line = remove_ds(token->line, i);
 				else
 				{

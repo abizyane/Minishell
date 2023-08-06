@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/06 17:30:33 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 20:02:08 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ int main(int ac, char *av[], char **env)
 	{
 		sig_handler();
 		line = readline(GRN" -> "CYN"Minishell "RST);
-        if (!line)
-            return  0;
+		if (!line)
+			return 0;
 		add_history(line);
 		if (line[0] != '\0' && !check_spaces(line))
 		{
 			cmd_line = parse_line(line, env_head);
 			if (!cmd_line)
-				exit(1);
+				continue ;
 			execution(cmd_line, env, env_head);
 		}
 	}

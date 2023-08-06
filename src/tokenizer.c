@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 20:17:46 by abizyane          #+#    #+#             */
-/*   Updated: 2023/06/22 19:15:09 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 20:03:50 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,5 @@ t_token	*tokenizer(char *line)
 		else
 			char_handler(&head, arr, &i);
 	}
-	if (check_tokens(&head))
-		return (lstclear_tokens(&head), NULL);
 	return (head);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:35 by abizyane          #+#    #+#             */
-/*   Updated: 2023/07/12 16:24:03 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 20:04:11 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	get_token_type(t_token **head)
 	token = (*head);
 	while (token)
 	{
-		if (token->type == Word && (!token->prv || (token->prv && token->prv->type == Pipe))) //|| (token->prv->prv && token->prv->prv->type = )
+		if (token->type == Word && (!token->prv || (token->prv && token->prv->type == Pipe)))
 			token->type = Cmd;
 		else if (token->type == Word && (token->prv->type == Cmd || token->prv->type == Arg || token->prv->type == Fname))
 			token->type = Arg;
@@ -127,25 +127,3 @@ t_cmdline	*parse_line(char *line, t_env *env)
 	open_heredoc(&cmd, env);
 	return (cmd);
 }
-
-//t_cmdline	*parse_line(char *line)
-//{
-//	t_token 	*token_head;
-//  t_cmdline	*cmd = NULL;
-////	char *tok[10] = {"WORD", "PIPE", "IN", "HER", "OUT", "APP", "SPA", "CMD", "ARG", "FNAME"};
-//
-//	token_head = tokenizer(line);
-//	expand_env_var(&token_head);
-//	remove_quotes(&token_head);
-//	get_type2(&token_head);
-//	cmd = fill_outstruct(&token_head);
-//	open_heredoc(&cmd);
-////	int i = 1;
-////	while (token_head)
-////	{
-////		printf("token n* %d == %s ====== type == %s \n", i++, token_head->line,
-////				tok[token_head->type - 1]);
-////		token_head = token_head->nxt;
-////	}
-//	return (cmd);
-//}

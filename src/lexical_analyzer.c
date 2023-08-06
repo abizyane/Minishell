@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analyzer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:43:31 by abizyane          #+#    #+#             */
-/*   Updated: 2023/06/22 20:54:04 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:44:29 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ int	check_tokens(t_token **head)
 {
 	t_token	*tmp;
 
+	if (!(*head))
+		return (1);
 	clean_list(head);
 	get_type(head);
 	tmp = (*head);

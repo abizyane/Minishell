@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 03:59:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/05 17:47:02 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:32:53 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,19 @@ t_env	*lst_env(char **env)
     {
     	str = ft_split(env[i], '=');
 		env_add_back(&head, str);
-		free_arr(str);
+		free(str);
 		i++;
     }
-	// while (1)
-	// {
-	// 	printf("-----%s = %s\n", head->key, head->content);
-	// 	head = head->nxt;
-	// }
     return (head);
 }
+
+t_env   *create_env(void);
+// {
+//     t_env   *head;
+    
+    
+//     return (head);
+// }
 
 char	*find_var(t_env *head, char *env_var)
 {
@@ -78,3 +81,4 @@ char	*find_var(t_env *head, char *env_var)
     }
     return (NULL);
 }
+

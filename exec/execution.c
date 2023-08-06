@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/06 17:46:57 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 19:27:47 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,11 +179,12 @@ void	execution(t_cmdline *cmd, char **envp, t_env *env)
 
 	rl = 1;
 	input_save = dup(STDIN_FILENO);
-	if (cmd && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
-	{
-		execute_builtin(cmd, envp, env);
-		return ;
-	}
+	(void)env;
+	// if (cmd && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
+	// {
+	// 	execute_builtin(cmd, envp, env);
+	// 	return ;
+	// }
 	while (cmd)
 	{
 		pid = execute_command(cmd, envp);
