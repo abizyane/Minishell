@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:14:01 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/06 20:41:26 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 22:56:25 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,11 @@ void	expand_env_var(t_token **head, t_env *env)
 
 char	*expand_vars(char *line, t_env *env)
 {
-	char	*arr;
 	char	*var;
 	int		i;
 	int		j;
 
 	i = 0;
-    arr = NULL;
 	var = NULL;
 	while (line && line[i])
 	{
@@ -138,12 +136,12 @@ char	*expand_vars(char *line, t_env *env)
 			var = ft_substr(line, i, j);
 			if (!var)
 				continue;
-			arr = replace_var(var, line, --i, env);
+			line = replace_var(var, line, --i, env);
 		}
-		else if (line[i] == '$' && line[i + 1] && ft_isdigit(line[i + 1]))
-			arr = remove_ds(line, i);
+		else if (line[i] == '$' && line[i + 1] && (ft_isdigit(line[i + 1]) || line[i + 1] == '?'))
+			line = remove_ds(line, i);
 		else
 			i++;
-		}
-	return(arr);
+	}
+	return(line);
 }

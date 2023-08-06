@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:35 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/06 20:04:11 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/06 22:40:16 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	add_redir_fname(t_cmdline **head, t_token *token)
 	tmp = last_command(*head);
 	r_tmp = last_redir(tmp->redir);
 	r_tmp->filename = file_name;
-	if (token->prv && token->prv->type == Heredoc && token->s == 0)
+	if (token->prv && token->prv->type == Heredoc && token->s == 1)
 		r_tmp->heredoc_flag = 1;
 }
 
@@ -67,7 +67,7 @@ void	add_redir(t_cmdline **head, t_token *token)
 }
 
 
-t_cmdline	*fill_outstruct(t_token **head) // TODO: needs to be changed
+t_cmdline	*fill_outstruct(t_token **head)
 {
 	t_cmdline	*cmd;
     t_token		*token;
