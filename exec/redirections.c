@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 23:29:11 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/07 12:52:18 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/07 15:56:18 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	permission_denied(char *filename)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(filename, 2);
-	ft_putstr_fd(": Cannot access file or directory\n", 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
 }
 
 int	handle_outfile(t_redir *tmp)

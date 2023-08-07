@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   built_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:10 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/07 13:26:27 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/07 17:37:29 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int    pwd(t_cmdline *cmd)
+int    pwd(t_cmdline *cmd,t_env *env)
 {
 	(void)cmd;
+	(void)env;
 	char	*path;
 	
 	path = getcwd(NULL, 1024);

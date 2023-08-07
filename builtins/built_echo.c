@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:26:33 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/06 11:15:48 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/07 21:32:50 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int		echo_option(char *arg)
 		return (1);
 	if (arg[i] != '-')
 		return (1);
-	i++;
+	if (!arg[++i])
+		return (1);
 	while (arg[i])
 	{
 		if (arg[i] != 'n')

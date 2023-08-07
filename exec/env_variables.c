@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 03:59:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/06 19:32:53 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/07 14:54:41 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_env	*lst_env(char **env)
     head = NULL;
     while (env && env[i])
     {
-    	str = ft_split(env[i], '=');
+    	str = ft_split(env[i], '=');    
 		env_add_back(&head, str);
 		free(str);
 		i++;

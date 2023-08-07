@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/07 13:08:40 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/07 21:20:06 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,19 +93,18 @@ int	ft_check_builtin(char *cmd)
 	return (0);
 }
 
-void	execute_builtin(t_cmdline *cmd, char **envp, t_env *envi)
+void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 {
-	(void)envp;
 	if (!ft_strcmp(cmd->args[0], "echo"))
 		exit_status = echo(cmd);
 	if (!ft_strcmp(cmd->args[0], "pwd"))
-		exit_status = pwd(cmd);
+		exit_status = pwd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "env"))
 		exit_status = env(cmd, envi);
-	// if (!ft_strcmp(cmd->args[0], "cd"))
-	// 	exit_status = cd(cmd, env);
+	if (!ft_strcmp(cmd->args[0], "cd"))
+		exit_status = cd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "exit"))
-		exit_status = ft_exit(cmd);
+		exit_status = ft_exit(cmd, exit_f);
 }
 
 void	local_binary(t_cmdline *cmd, char **envp)
@@ -128,8 +127,6 @@ void	child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env)
 	signal(SIGQUIT, SIG_DFL);
 	if (!cmd->args || !cmd->args[0])
 		exit(EXIT_SUCCESS);
-	if (cmd->redir)
-		redirections(cmd);
 	if (cmd->nxt)
 	{
 		dup2(fd[1], STDOUT_FILENO);
@@ -137,8 +134,10 @@ void	child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env)
 		close(fd[0]);
 	}
 	if (ft_check_builtin(cmd->args[0]) == 1)
-		execute_builtin(cmd, envp, env);
-	//TODO: function that converts the list to char**;
+	{
+		execute_builtin(cmd, env, 0);
+		exit(EXIT_SUCCESS);
+	}
 	local_binary(cmd, envp);
 	cmd->path = get_cmd_path(cmd, envp);
 	if (execve(cmd->path, cmd->args, envp) == -1)
@@ -146,7 +145,6 @@ void	child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env)
 		not_found(cmd->args[0]);
 		exit(127);
 	}
-	//TODO: free the char**;
 }
 
 int	execute_command(t_cmdline *cmd, char **envp, t_env *env)
@@ -163,7 +161,10 @@ int	execute_command(t_cmdline *cmd, char **envp, t_env *env)
 	if (pid < 0)
 		perror("fork");
 	if (pid == 0)
+	{
+		redirections(cmd);
 		child_execution(cmd, envp, fd, env);
+	}
 	if (cmd->nxt)
 	{
 		close(fd[1]);
@@ -175,17 +176,20 @@ int	execute_command(t_cmdline *cmd, char **envp, t_env *env)
 	return (pid);
 }
 
-void	execution(t_cmdline *cmd, char **envp, t_env *env)
+void	execution(t_cmdline *cmd, t_env *env)
 {
 	int		input_save;
 	int		status;
 	int		pid;
+	char	**envp;
 
+	envp = lst_to_arr(env);
 	rl = 1;
 	input_save = dup(STDIN_FILENO);
 	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
 	{
-		execute_builtin(cmd, envp, env);
+		execute_builtin(cmd, env, 1);
+		rl = 0;
 		return ;
 	}
 	while (cmd)
@@ -206,4 +210,5 @@ void	execution(t_cmdline *cmd, char **envp, t_env *env)
 	}
 	dup2(input_save, STDIN_FILENO);
 	rl = 0;
-}
+	free_arr(envp);
+	}

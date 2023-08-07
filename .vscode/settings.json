@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "complex": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "errno.h": "c"
     }
 }

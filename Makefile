@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
+#    By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/07 09:34:36 by ahamrad          ###   ########.fr        #
+#    Updated: 2023/08/07 17:04:41 by abizyane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CPPFLAGS = -I /goinfre/ahamrad/homebrew/opt/readline/include
-LDFLAGS = -L /goinfre/ahamrad/homebrew/opt/readline/lib
+CPPFLAGS = -I /goinfre/abizyane/homebrew/opt/readline/include
+LDFLAGS = -L /goinfre/abizyane/homebrew/opt/readline/lib
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address $(CPPFLAGS)
 
@@ -36,7 +36,8 @@ SRC = minishell.c \
 	builtins/built_echo.c \
 	builtins/built_env.c \
 	builtins/built_exit.c \
-	builtins/built_pwd.c 
+	builtins/built_pwd.c \
+	builtins/built_cd.c 
 
 
 OBJ = $(SRC:.c=.o)

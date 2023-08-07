@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:35 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/06 22:40:16 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/07 21:11:42 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_cmdline	*fill_outstruct(t_token **head)
 
 	token = *head;
 	cmd = lstnew_command(NULL, 0);
+	//TODO: double heredoc with the same delim not working , needs to add another cmd node
 	while (token)
 	{
 		if (token->type == Cmd)

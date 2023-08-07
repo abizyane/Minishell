@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/07 13:42:06 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/07 21:14:51 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,22 +137,25 @@ int	redirections(t_cmdline *cmd);
 void	sig_handler(void);
 void    sig_int(int sig);
 
+char	**lst_to_arr(t_env *env);
+void	permission_denied(char *filename);
 
-int    	pwd(t_cmdline *cmd);
-int     cd(t_cmdline *cmd);
+
+int    	pwd(t_cmdline *cmd, t_env *env);
+int     cd(t_cmdline *cmd, t_env *env);
 int     echo(t_cmdline *cmd);
 void    print_args(t_cmdline *cmd, int flag, int i);
 int     echo_option(char *arg);
 char	*find_var(t_env *head, char *env_var);
 t_env	*lst_env(char **env);
-int		ft_exit(t_cmdline *cmd);
+int		ft_exit(t_cmdline *cmd, int f);
 int		env(t_cmdline *cmd, t_env *env);
 
 //new execution
 
 void    local_binary(t_cmdline *cmd, char **envp);
-void    child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env);
+void    child_execution(t_cmdline *cmd,char **envp, int *fd, t_env *env);
 int     execute_command(t_cmdline *cmd, char **envp, t_env *env);
-void    execution(t_cmdline *cmd, char **envp, t_env *env);
+void    execution(t_cmdline *cmd, t_env *env);
 
 #endif
