@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/06 19:15:17 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/07 13:42:06 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 #define MAG "\e[1;95m"
 #define CYN "\e[3;96m"
 #define RST "\e[0m"
+
+#define PATH "/Users/ahamrad/.docker/bin:/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."
 
 int			exit_status;
 int			rl;
@@ -129,7 +131,7 @@ int     array_len(char **arr);
 void    free_arr(char **arr);
 
 
-int    redirections(t_cmdline *cmd);
+int	redirections(t_cmdline *cmd);
 
 
 void	sig_handler(void);
@@ -149,8 +151,8 @@ int		env(t_cmdline *cmd, t_env *env);
 //new execution
 
 void    local_binary(t_cmdline *cmd, char **envp);
-void    child_execution(t_cmdline *cmd, char **envp, int *fd);
-int     execute_command(t_cmdline *cmd, char **envp);
+void    child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env);
+int     execute_command(t_cmdline *cmd, char **envp, t_env *env);
 void    execution(t_cmdline *cmd, char **envp, t_env *env);
 
 #endif

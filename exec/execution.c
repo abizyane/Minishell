@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/07 00:05:23 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/07 13:08:40 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	local_binary(t_cmdline *cmd, char **envp)
 	}
 }
 
-void	child_execution(t_cmdline *cmd, char **envp, int *fd)
+void	child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
@@ -136,6 +136,8 @@ void	child_execution(t_cmdline *cmd, char **envp, int *fd)
 		close(fd[1]);
 		close(fd[0]);
 	}
+	if (ft_check_builtin(cmd->args[0]) == 1)
+		execute_builtin(cmd, envp, env);
 	//TODO: function that converts the list to char**;
 	local_binary(cmd, envp);
 	cmd->path = get_cmd_path(cmd, envp);
@@ -147,7 +149,7 @@ void	child_execution(t_cmdline *cmd, char **envp, int *fd)
 	//TODO: free the char**;
 }
 
-int	execute_command(t_cmdline *cmd, char **envp)
+int	execute_command(t_cmdline *cmd, char **envp, t_env *env)
 {
 	int	pid;
 	int	fd[2];
@@ -161,7 +163,7 @@ int	execute_command(t_cmdline *cmd, char **envp)
 	if (pid < 0)
 		perror("fork");
 	if (pid == 0)
-		child_execution(cmd, envp, fd);
+		child_execution(cmd, envp, fd, env);
 	if (cmd->nxt)
 	{
 		close(fd[1]);
@@ -188,7 +190,7 @@ void	execution(t_cmdline *cmd, char **envp, t_env *env)
 	}
 	while (cmd)
 	{
-		pid = execute_command(cmd, envp);
+		pid = execute_command(cmd, envp, env);
 		cmd = cmd->nxt;
 	}
 	waitpid(pid, &status, 0);
