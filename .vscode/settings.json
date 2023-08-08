@@ -2,6 +2,10 @@
     "files.associations": {
         "complex": "c",
         "minishell.h": "c",
-        "errno.h": "c"
+        "errno.h": "c",
+        "ioctl.h": "c",
+        "paths.h": "c",
+        "termios.h": "c",
+        "unistd.h": "c"
     }
 }

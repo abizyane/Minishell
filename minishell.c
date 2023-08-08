@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/07 21:14:35 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/08 19:50:37 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ char	**empty_env(void)
 	char	**env;
 
 	env = ft_calloc(5, sizeof(char *));
-	env[0] = ft_strjoin("PATH=", ft_strdup(PATH));
-	env[1] = ft_strjoin("PWD=", getcwd(NULL, 1024));
+	env[0] = ft_strjoin("PATH=", ft_strdup(_PATH_STDPATH));
+	env[1] = ft_strjoin("PWD=", getcwd(NULL, 0));
 	env[2] = ft_strdup("SHLVL=1");
 	env[3] = ft_strdup("_=/usr/bin/env");
 	env[4] = NULL;
@@ -80,9 +80,11 @@ void update_shlvl(t_env **env)
 	{
 		if (ft_strcmp(tmp->key, "SHLVL") == 0)
 		{
+			if (!tmp->content)
+				tmp->content = ft_strdup("0");
 			shlvl = ft_atoi(tmp->content) + 1;
 			if (shlvl < 0 || shlvl >= 1000)
-				shlvl = 1;
+				shlvl = 0;
 			free(tmp->content);
 			tmp->content = ft_itoa(shlvl);
 		} 
@@ -108,14 +110,15 @@ int main(int ac, char *av[], char **env)
 		line = readline(GRN" -> "CYN"Minishell "RST);
 		if (!line)
 			return 0;
-		add_history(line);
 		if (line[0] != '\0' && !check_spaces(line))
 		{
+			add_history(line);
 			cmd_line = parse_line(line, env_head);
 			if (!cmd_line)
 				continue ;
 			execution(cmd_line, env_head);
+			// if(getcwd(NULL, 0))
+			// 	pwd = getcwd(NULL, 0);
 		}
 	}
 }
-//TODO: $? expanding

@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 03:59:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/07 14:54:41 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/08 20:01:36 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_env   *env_new(char *key, char *content)
     new->key = key;
     new->content = content;
     new->nxt = NULL;
+    new->export_f = 0;
     return (new);
 }
 
@@ -59,14 +60,6 @@ t_env	*lst_env(char **env)
     }
     return (head);
 }
-
-t_env   *create_env(void);
-// {
-//     t_env   *head;
-    
-    
-//     return (head);
-// }
 
 char	*find_var(t_env *head, char *env_var)
 {

@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/07 21:14:51 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/08 19:47:26 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <unistd.h>
 # include <errno.h>
 #include <sys/ioctl.h>
+#include <paths.h>
 
 #define BLK "\e[1;90m"
 #define RED "\e[1;91m"
@@ -37,8 +38,6 @@
 #define MAG "\e[1;95m"
 #define CYN "\e[3;96m"
 #define RST "\e[0m"
-
-#define PATH "/Users/ahamrad/.docker/bin:/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:."
 
 int			exit_status;
 int			rl;
@@ -79,6 +78,7 @@ typedef struct s_env
 {
 	char	*key;
 	char	*content;
+	int		export_f;
 	struct s_env *nxt;
 }				t_env;
 

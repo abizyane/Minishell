@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:26:55 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/07 19:07:07 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/08 20:00:22 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,18 @@ int	ft_check_digit(char *str)
 	}
 	return (0);
 }
-
+// TODO:  exit: dsfsfas: numeric argument required
+// 
 int	ft_exit(t_cmdline *cmd, int f)
 {
+	if (cmd->args[1] && (ft_check_digit(cmd->args[1]) == 1 || (ft_strlen(cmd->args[1]) >= 19 && cmd->args[1][18] > '7')))
+	{
+		if (f == 1)
+			printf("exit\n");
+		printf("minishell: exit: %s: numeric argument required\n", cmd->args[1]);
+		exit_status = 255;
+		exit(exit_status);
+	}
 	if (array_len(cmd->args) > 2)
 	{
 		if (f == 1)
@@ -40,7 +49,7 @@ int	ft_exit(t_cmdline *cmd, int f)
 	{
 		if (f == 1)
 			printf("exit\n");
-		exit_status = 0; // to be replaced later
+		exit_status = 0;
 	}
 	if (cmd->args[1] && ft_check_digit(cmd->args[1]) == 0)
 	{
@@ -50,11 +59,6 @@ int	ft_exit(t_cmdline *cmd, int f)
 		if (f == 1)
 			printf("exit\n");
 	}
-	if (cmd->args[1] && (ft_check_digit(cmd->args[1]) == 1 || (ft_strlen(cmd->args[1]) >= 19 && cmd->args[1][18] > '7')))
-	{
-		printf("minishell: exit: %s: numeric argument required\n", cmd->args[1]);
-		exit_status = 255;
-	}
-	exit(exit_status); // to be replaced later
+	exit(exit_status);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/07 21:20:06 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/08 20:07:00 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,6 @@ char	*get_cmd_path(t_cmdline *cmd, char **envp)
 	path = NULL;
 	if (!cmd->args || !cmd->args[0])
 		return (NULL);
-	if (cmd->args[0][0] == '/')
-		return (get_cmd(cmd));
-	if (cmd->args[0][0] == '.')
-		return (cmd->args[0]);
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
@@ -51,6 +47,8 @@ char	*get_cmd_path(t_cmdline *cmd, char **envp)
 			paths = ft_split(envp[i] + 5, ':');
 			break ;
 		}
+		// else 
+		// 	paths = ft_split(_PATH_STDPATH);
 		i++;
 	}
 	i = 0;
@@ -58,12 +56,13 @@ char	*get_cmd_path(t_cmdline *cmd, char **envp)
 	{
 		path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(path, cmd->args[0]);
-		if (access(path, F_OK) == 0)
+		if (access(path, F_OK | X_OK) == 0)
 			break ;
 		i++;
 	}
 	if (!paths[i])
 		return (NULL);
+	//TODO: a river of memory leaks in here and it needs to get the paths from the stdpaths if it didn't find it in the env_list
 	return (path);
 }
 
@@ -71,7 +70,10 @@ void	not_found(char *cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": command not found\n", 2);
+	if (ft_strchr(cmd, '/'))
+		ft_putstr_fd(": No such file or directory\n", 2);
+	else
+		ft_putstr_fd(": command not found\n", 2);
 }
 
 int	ft_check_builtin(char *cmd)
@@ -95,6 +97,13 @@ int	ft_check_builtin(char *cmd)
 
 void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 {
+	int		input_save;
+	int		output_save;
+	
+	input_save = dup(STDIN_FILENO);
+	output_save = dup(STDOUT_FILENO);
+	if (cmd->redir)
+		redirections(cmd);
 	if (!ft_strcmp(cmd->args[0], "echo"))
 		exit_status = echo(cmd);
 	if (!ft_strcmp(cmd->args[0], "pwd"))
@@ -105,17 +114,22 @@ void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 		exit_status = cd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "exit"))
 		exit_status = ft_exit(cmd, exit_f);
+	if (cmd->redir)
+	{
+		dup2(input_save, STDIN_FILENO);
+		dup2(output_save, STDOUT_FILENO);
+	}
 }
 
 void	local_binary(t_cmdline *cmd, char **envp)
 {
 	if (!cmd->args || !cmd->args[0])
 		exit(EXIT_SUCCESS);
-	if (access(cmd->args[0], X_OK) == 0)
+	if (access(cmd->args[0], F_OK) == 0)
 	{
 		if (execve(cmd->args[0], cmd->args, envp) == -1)
 		{
-			not_found(cmd->args[0]);
+			printf("minishell: %s: Permission Denied\n", cmd->args[0]);
 			exit(127);
 		}
 	}
@@ -138,8 +152,9 @@ void	child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env)
 		execute_builtin(cmd, env, 0);
 		exit(EXIT_SUCCESS);
 	}
+	if (ft_strncmp(cmd->args[0], ".", 1) && ft_strncmp(cmd->args[0], "/", 1))
+		cmd->path = get_cmd_path(cmd, envp);
 	local_binary(cmd, envp);
-	cmd->path = get_cmd_path(cmd, envp);
 	if (execve(cmd->path, cmd->args, envp) == -1)
 	{
 		not_found(cmd->args[0]);
@@ -211,4 +226,4 @@ void	execution(t_cmdline *cmd, t_env *env)
 	dup2(input_save, STDIN_FILENO);
 	rl = 0;
 	free_arr(envp);
-	}
+}
