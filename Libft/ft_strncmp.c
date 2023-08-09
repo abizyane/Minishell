@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 21:34:02 by abizyane          #+#    #+#             */
-/*   Updated: 2023/06/20 20:56:53 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 05:07:56 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ int	ft_strcmp(const char *s1, const char *s2)
 	i = 0;
 	if (!s1 && !s2)
 		return (0);
-	if (!s1 || !s2)
+	if (s1 && !s2)
 		return (1);
+	if (!s1 && s2)
+		return (-1);
 	while (s1[i] && s2[i] &&  s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);

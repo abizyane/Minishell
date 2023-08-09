@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:26:47 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/08 19:32:59 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 04:18:36 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@ int	env(t_cmdline *cmd, t_env *env)
 	i = 0;
 	if (!cmd->args[1])
 	{
-		while (env && env->content)
+		while (env)
 		{
-			printf("%s=%s\n", env->key, env->content);
+			if (env->content && env->content[i])
+				printf("%s=%s\n", env->key, env->content);
 			env = env->nxt;
 		}
 		return (EXIT_SUCCESS);
 	}
 	else
 	{
-		printf("env: no options or arguments\n");
+		ft_putstr_fd("env: no options or arguments\n", 2);
 		return (EXIT_FAILURE);
 	}
 }

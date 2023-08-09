@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:18:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/08 17:27:58 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/08 23:25:33 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*update_pwd(t_env *env,char *nwd)
 	}
 	str = getcwd(NULL, 0);
 	tmp = find_env(env, "OLDPWD");
-	free(tmp->content);
+	// free(tmp->content);
 	tmp->content = find_env(env, "PWD")->content;
 	if (!str)
 	{

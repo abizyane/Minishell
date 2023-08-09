@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/08 19:47:26 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 05:25:53 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_env
 	char	*key;
 	char	*content;
 	int		export_f;
+	int		p_flag;
 	struct s_env *nxt;
 }				t_env;
 
@@ -119,6 +120,7 @@ void					open_heredoc(t_cmdline **head, t_env *env);
 char 					*remove_ds(char *line, int start);
 char					*expand_vars(char *line, t_env *env);
 void					env_add_back(t_env **env_head, char	**env_var);
+t_env					*find_env(t_env *head, char *key);
 
 
 int    	execute_single_cmd(t_cmdline *cmd, char **envp);
@@ -150,8 +152,8 @@ char	*find_var(t_env *head, char *env_var);
 t_env	*lst_env(char **env);
 int		ft_exit(t_cmdline *cmd, int f);
 int		env(t_cmdline *cmd, t_env *env);
+int		ft_export(t_cmdline *cmd, t_env **env);
 
-//new execution
 
 void    local_binary(t_cmdline *cmd, char **envp);
 void    child_execution(t_cmdline *cmd,char **envp, int *fd, t_env *env);

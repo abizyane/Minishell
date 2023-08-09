@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:26:33 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/07 21:32:50 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/08 23:50:04 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,13 @@ int		echo(t_cmdline *cmd)
 	}
 	while (cmd->args[i] && cmd->args[i + 1])
 	{
-		printf("%s ", cmd->args[i]);
+		ft_putstr_fd(cmd->args[i], STDOUT_FILENO);
+		ft_putstr_fd(" ", STDOUT_FILENO);
 		i++; 
 	}
 	if (cmd->args[i])
-		printf("%s", cmd->args[i]);
+		ft_putstr_fd(cmd->args[i], STDOUT_FILENO);
 	if (!flag)
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }

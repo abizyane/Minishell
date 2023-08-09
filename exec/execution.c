@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/08 20:07:00 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 05:42:08 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,22 +114,24 @@ void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 		exit_status = cd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "exit"))
 		exit_status = ft_exit(cmd, exit_f);
+	if (!ft_strcmp(cmd->args[0], "export"))
+		exit_status = ft_export(cmd, &envi);
 	if (cmd->redir)
 	{
 		dup2(input_save, STDIN_FILENO);
 		dup2(output_save, STDOUT_FILENO);
 	}
 }
-
+//TODO:signals fail when executing a subminishell
 void	local_binary(t_cmdline *cmd, char **envp)
 {
 	if (!cmd->args || !cmd->args[0])
 		exit(EXIT_SUCCESS);
-	if (access(cmd->args[0], F_OK) == 0)
+	if (access(cmd->args[0], X_OK) == 0) // | X_OK
 	{
 		if (execve(cmd->args[0], cmd->args, envp) == -1)
 		{
-			printf("minishell: %s: Permission Denied\n", cmd->args[0]);
+			printf("minishell: %s: Permission denied\n", cmd->args[0]);
 			exit(127);
 		}
 	}
