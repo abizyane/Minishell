@@ -6,7 +6,7 @@
 #    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/09 17:49:22 by ahamrad          ###   ########.fr        #
+#    Updated: 2023/08/09 19:16:35 by ahamrad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 CPPFLAGS = -I /goinfre/ahamrad/homebrew/opt/readline/include
 LDFLAGS = -L /goinfre/ahamrad/homebrew/opt/readline/lib
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address $(CPPFLAGS)
+CFLAGS = -Wall -Wextra -Werror -g $(CPPFLAGS)
 
 HEADER = minishell.h
 

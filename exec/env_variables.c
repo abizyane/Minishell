@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 03:59:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 17:44:59 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/09 20:59:09 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,48 @@ char	*find_var(t_env *head, char *env_var)
 		tmp = tmp->nxt;
 	}
 	return (NULL);
+}
+
+void	free_env(t_env **env)
+{
+	t_env	*tmp;
+	
+	while (*env)
+	{
+		tmp = *env;
+		*env = (*env)->nxt;
+		free(tmp->key);
+		free(tmp->content);
+		free(tmp);
+	}
+	*env = NULL;
+}
+void	free_redir(t_redir **redir)
+{
+	t_redir	*tmp;
+
+	while (*redir)
+	{
+		tmp = *redir;
+		*redir = (*redir)->nxt;
+		free(tmp->filename);
+		free(tmp);	
+	}
+	*redir = NULL;
+}
+
+void		free_cmd(t_cmdline **cmd)
+{
+	t_cmdline	*tmp;
+
+	while (*cmd)
+	{
+		tmp = *cmd;
+		*cmd = (*cmd)->nxt;
+		free(tmp->path);
+		free_arr(tmp->args);
+		free_redir(&tmp->redir);
+		free(tmp);	
+	}
+	*cmd = NULL;
 }

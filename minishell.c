@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 17:30:47 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/09 20:42:36 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,11 @@ char	**empty_env(void)
 {
 	char	**env;
 
-	env = ft_calloc(5, sizeof(char *));
-	env[0] = ft_strjoin("PATH=", ft_strdup(_PATH_STDPATH));
-	env[1] = ft_strjoin("PWD=", getcwd(NULL, 0));
-	env[2] = ft_strdup("SHLVL=1");
-	env[3] = ft_strdup("_=/usr/bin/env");
-	env[4] = NULL;
+	env = ft_calloc(4, sizeof(char *));
+	env[0] = ft_strjoin("PWD=", getcwd(NULL, 0));
+	env[1] = ft_strdup("SHLVL=1");
+	env[2] = ft_strdup("_=/usr/bin/env");
+	env[3] = NULL;
 	return (env);
 }
 
@@ -119,4 +118,5 @@ int	main(int ac, char *av[], char **env)
 			execution(cmd_line, env_head);
 		}
 	}
+	free_env(&env_head);
 }

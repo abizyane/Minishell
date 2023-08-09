@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 17:50:11 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/09 20:38:24 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,6 @@ int			execute_command(t_cmdline *cmd, char **envp, t_env *env);
 void		execution(t_cmdline *cmd, t_env *env);
 int			ft_check_builtin(char *cmd);
 void		execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f);
+void		free_env(t_env **env);
 
 #endif

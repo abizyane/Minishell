@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 17:50:36 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/09 20:54:42 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	local_binary(t_cmdline *cmd, char **envp)
 	{
 		if (execve(cmd->args[0], cmd->args, envp) == -1)
 		{
-			printf("%s\n", cmd->args[0]);
 			printf("minishell: %s: Permission denied\n", cmd->args[0]);
 			exit(127);
 		}
@@ -131,4 +130,5 @@ void	execution(t_cmdline *cmd, t_env *env)
 	dup2(input_save, STDIN_FILENO);
 	rl = 0;
 	free_arr(envp);
+	
 }
