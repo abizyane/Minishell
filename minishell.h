@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 05:25:53 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 08:58:02 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ void	permission_denied(char *filename);
 
 
 int    	pwd(t_cmdline *cmd, t_env *env);
-int     cd(t_cmdline *cmd, t_env *env);
 int     echo(t_cmdline *cmd);
 void    print_args(t_cmdline *cmd, int flag, int i);
 int     echo_option(char *arg);
@@ -152,7 +151,9 @@ char	*find_var(t_env *head, char *env_var);
 t_env	*lst_env(char **env);
 int		ft_exit(t_cmdline *cmd, int f);
 int		env(t_cmdline *cmd, t_env *env);
+int     cd(t_cmdline *cmd, t_env *env);
 int		ft_export(t_cmdline *cmd, t_env **env);
+int 	unset(t_cmdline *cmd, t_env **env);
 
 
 void    local_binary(t_cmdline *cmd, char **envp);

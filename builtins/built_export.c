@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:02 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 07:50:55 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:58:35 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	update_var(t_env **env, char **new_var)
 	t_env	*var;
 	
 	var = find_env(*env, new_var[0]);
+	if (!var)
+		return ;
 	if (var->content && new_var[1])
 	{	
 		free (var->content);
@@ -137,6 +139,8 @@ int	ft_export(t_cmdline *cmd, t_env **env)
 	int	i;
 
 	i = 1;
+	if (!(*env))
+		return (EXIT_FAILURE);
 	if (!cmd->args[1])
 	{
 		print_list(*env);

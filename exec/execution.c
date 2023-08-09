@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 05:42:08 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 10:07:24 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ char	*get_cmd_path(t_cmdline *cmd, char **envp)
 			break ;
 		}
 		// else 
-		// 	paths = ft_split(_PATH_STDPATH);
+		// 	paths = ft_split(_PATH_STDPATH, ':');
 		i++;
 	}
 	i = 0;
-	while (paths[i])
+	while (paths && paths[i])
 	{
 		path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(path, cmd->args[0]);
@@ -60,7 +60,7 @@ char	*get_cmd_path(t_cmdline *cmd, char **envp)
 			break ;
 		i++;
 	}
-	if (!paths[i])
+	if (!paths || !paths[i])
 		return (NULL);
 	//TODO: a river of memory leaks in here and it needs to get the paths from the stdpaths if it didn't find it in the env_list
 	return (path);
@@ -116,6 +116,8 @@ void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 		exit_status = ft_exit(cmd, exit_f);
 	if (!ft_strcmp(cmd->args[0], "export"))
 		exit_status = ft_export(cmd, &envi);
+	if (!ft_strcmp(cmd->args[0], "unset"))
+		exit_status = unset(cmd, &envi);
 	if (cmd->redir)
 	{
 		dup2(input_save, STDIN_FILENO);

@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/08 19:50:37 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:52:53 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,6 @@ int main(int ac, char *av[], char **env)
 			if (!cmd_line)
 				continue ;
 			execution(cmd_line, env_head);
-			// if(getcwd(NULL, 0))
-			// 	pwd = getcwd(NULL, 0);
 		}
 	}
 }

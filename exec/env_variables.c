@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 03:59:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 05:26:23 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:51:56 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,25 @@ t_env	*lst_env(char **env)
     int		i;
     t_env	*head;
     char	**str;
+    int check;
 
     i = 0;
+    check = 0;
     head = NULL;
     while (env && env[i])
     {
-    	str = ft_split(env[i], '=');    
+    	str = ft_split(env[i], '=');
+        if (str && ft_strcmp(str[0], "PATH") == 0)
+            check = 1;            
 		env_add_back(&head, str);
 		free(str);
 		i++;
     }
+    str = malloc(sizeof(char *) * 2);
+    str[0] = "PATH";
+    str[1] = _PATH_STDPATH;
+    if (check == 0)
+        env_add_back(&head, str);
     return (head);
 }
 

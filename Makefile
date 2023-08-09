@@ -6,7 +6,7 @@
 #    By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/09 03:04:50 by abizyane         ###   ########.fr        #
+#    Updated: 2023/08/09 09:38:26 by abizyane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ SRC = minishell.c \
 	builtins/built_exit.c \
 	builtins/built_pwd.c \
 	builtins/built_cd.c \
-	builtins/built_export.c
+	builtins/built_export.c \
+	builtins/built_unset.c
 
 
 OBJ = $(SRC:.c=.o)
