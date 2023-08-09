@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 19:00:31 by abizyane          #+#    #+#             */
-/*   Updated: 2023/06/20 20:56:48 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 14:10:18 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 char	*ft_strjoin(char *s1, char *s2)
 {
@@ -37,5 +37,5 @@ char	*ft_strjoin(char *s1, char *s2)
 		dst[i + j] = s2[j];
 		j++;
 	}
-    return (dst);
+	return (dst);
 }

@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+         #
+#    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/09 09:38:26 by abizyane         ###   ########.fr        #
+#    Updated: 2023/08/09 14:27:48 by ahamrad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CPPFLAGS = -I /goinfre/abizyane/homebrew/opt/readline/include
-LDFLAGS = -L /goinfre/abizyane/homebrew/opt/readline/lib
+CPPFLAGS = -I /goinfre/ahamrad/homebrew/opt/readline/include
+LDFLAGS = -L /goinfre/ahamrad/homebrew/opt/readline/lib
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address $(CPPFLAGS)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 08:58:02 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 14:03:53 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@
 # include <termios.h>
 # include <unistd.h>
 # include <errno.h>
-#include <sys/ioctl.h>
-#include <paths.h>
+# include <sys/ioctl.h>
+# include <paths.h>
 
-#define BLK "\e[1;90m"
-#define RED "\e[1;91m"
-#define GRN "\e[3;92m"
-#define MAG "\e[1;95m"
-#define CYN "\e[3;96m"
-#define RST "\e[0m"
+# define BLK "\e[1;90m"
+# define RED "\e[1;91m"
+# define GRN "\e[3;92m"
+# define MAG "\e[1;95m"
+# define CYN "\e[3;96m"
+# define RST "\e[0m"
 
 int			exit_status;
 int			rl;
@@ -45,11 +45,11 @@ int			rl;
 typedef enum e_type
 {
 	Word = 1,
-	Pipe,    // |
-	redIn,   // <
-	Heredoc, // <<
-	redOut,  // >
-	redApp, // >>
+	Pipe,
+	redIn,
+	Heredoc,
+	redOut,
+	redApp, 
 	Space,
 	Cmd,
 	Arg,
@@ -70,17 +70,17 @@ typedef struct s_redir
 	e_type				type;
 	char				*filename;
 	int 				fd;
-	int 				heredoc_flag;
+	int					heredoc_flag;
 	struct s_redir		*nxt;
 }						t_redir;
 
 typedef struct s_env
 {
-	char	*key;
-	char	*content;
-	int		export_f;
-	int		p_flag;
-	struct s_env *nxt;
+	char			*key;
+	char			*content;
+	int				export_f;
+	int				p_flag;
+	struct s_env	*nxt;
 }				t_env;
 
 typedef struct s_cmdline
@@ -94,71 +94,60 @@ typedef struct s_cmdline
 	struct s_cmdline	*nxt;
 }						t_cmdline;
 
-t_token					*tokenizer(char *line);
-t_cmdline				*parse_line(char *line, t_env *env);
-t_token					*lstnew_token(char *line);
-void					lstadd_token(t_token **head, char *line);
-t_token					*last_token(t_token *head);
-void					lstclear_tokens(t_token **head);
-int						is_quotes(char c);
-int						closed_quotes(char *str, int i);
-int						is_whitespace(char c);
-int						is_separator(char c);
-int						check_tokens(t_token **head);
-void					expand_env_var(t_token **head, t_env *env);
-char					*replace_var(char *env_var, char *line, int start, t_env *env);
-void					remove_quotes(t_token **token);
-int						has_quates(char *str);
-void					lstadd_command(t_cmdline **head, char *cmd, int size);
-t_cmdline				*last_command(t_cmdline *head);
-t_redir					*lstnew_redir(t_token *token);
-void					lstadd_redir(t_redir **head, t_token *token);
-t_redir					*last_redir(t_redir *head);
-t_cmdline				*lstnew_command(char *cmd, int size);
-void					*freeptr(char **s);
-void					open_heredoc(t_cmdline **head, t_env *env);
-char 					*remove_ds(char *line, int start);
-char					*expand_vars(char *line, t_env *env);
-void					env_add_back(t_env **env_head, char	**env_var);
-t_env					*find_env(t_env *head, char *key);
-
-
-int    	execute_single_cmd(t_cmdline *cmd, char **envp);
-char    *get_cmd_path(t_cmdline *cmd, char **envp);
-int		execute_cmds(t_cmdline *cmd, char **envp);
-int 	execute_two_commands(t_cmdline *cmd, char **envp);
-int		handle_multi_cmds(t_cmdline *cmd, char **envp);
-char    **ft_arr_dup(char **arr);
-int     array_len(char **arr);
-void    free_arr(char **arr);
-
-
-int	redirections(t_cmdline *cmd);
-
-
-void	sig_handler(void);
-void    sig_int(int sig);
-
-char	**lst_to_arr(t_env *env);
-void	permission_denied(char *filename);
-
-
-int    	pwd(t_cmdline *cmd, t_env *env);
-int     echo(t_cmdline *cmd);
-void    print_args(t_cmdline *cmd, int flag, int i);
-int     echo_option(char *arg);
-char	*find_var(t_env *head, char *env_var);
-t_env	*lst_env(char **env);
-int		ft_exit(t_cmdline *cmd, int f);
-int		env(t_cmdline *cmd, t_env *env);
-int     cd(t_cmdline *cmd, t_env *env);
-int		ft_export(t_cmdline *cmd, t_env **env);
-int 	unset(t_cmdline *cmd, t_env **env);
-
-
-void    local_binary(t_cmdline *cmd, char **envp);
-void    child_execution(t_cmdline *cmd,char **envp, int *fd, t_env *env);
-int     execute_command(t_cmdline *cmd, char **envp, t_env *env);
-void    execution(t_cmdline *cmd, t_env *env);
+t_token		*tokenizer(char *line);
+t_cmdline	*parse_line(char *line, t_env *env);
+t_token		*lstnew_token(char *line);
+void		lstadd_token(t_token **head, char *line);
+t_token		*last_token(t_token *head);
+void		lstclear_tokens(t_token **head);
+int			is_quotes(char c);
+int			closed_quotes(char *str, int i);
+int			is_whitespace(char c);
+int			is_separator(char c);
+int			check_tokens(t_token **head);
+void		expand_env_var(t_token **head, t_env *env);
+char		*replace_var(char *env_var, char *line, int start, t_env *env);
+void		remove_quotes(t_token **token);
+int			has_quates(char *str);
+void		lstadd_command(t_cmdline **head, char *cmd, int size);
+t_cmdline	*last_command(t_cmdline *head);
+t_redir		*lstnew_redir(t_token *token);
+void		lstadd_redir(t_redir **head, t_token *token);
+t_redir		*last_redir(t_redir *head);
+t_cmdline	*lstnew_command(char *cmd, int size);
+void		*freeptr(char **s);
+void		open_heredoc(t_cmdline **head, t_env *env);
+char		*remove_ds(char *line, int start);
+char		*expand_vars(char *line, t_env *env);
+void		env_add_back(t_env **env_head, char	**env_var);
+t_env		*find_env(t_env *head, char *key);
+int			execute_single_cmd(t_cmdline *cmd, char **envp);
+char		*get_cmd_path(t_cmdline *cmd, char **envp);
+int			execute_cmds(t_cmdline *cmd, char **envp);
+int			execute_two_commands(t_cmdline *cmd, char **envp);
+int			handle_multi_cmds(t_cmdline *cmd, char **envp);
+char		**ft_arr_dup(char **arr);
+int			array_len(char **arr);
+void		free_arr(char **arr);
+int			redirections(t_cmdline *cmd);
+void		sig_handler(void);
+void		sig_int(int sig);
+char		**lst_to_arr(t_env *env);
+void		permission_denied(char *filename);
+int			pwd(t_cmdline *cmd, t_env *env);
+int			echo(t_cmdline *cmd);
+void		print_args(t_cmdline *cmd, int flag, int i);
+int			echo_option(char *arg);
+char		*find_var(t_env *head, char *env_var);
+t_env		*lst_env(char **env);
+int			ft_exit(t_cmdline *cmd, int f);
+int			env(t_cmdline *cmd, t_env *env);
+int			cd(t_cmdline *cmd, t_env *env);
+int			ft_export(t_cmdline *cmd, t_env **env);
+int			unset(t_cmdline *cmd, t_env **env);
+void		local_binary(t_cmdline *cmd, char **envp);
+void		child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env);
+int			execute_command(t_cmdline *cmd, char **envp, t_env *env);
+void		execution(t_cmdline *cmd, t_env *env);
 
 #endif

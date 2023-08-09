@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:15:14 by abizyane          #+#    #+#             */
-/*   Updated: 2023/06/20 20:55:55 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 14:05:25 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 int	ft_atoi(const char *str)
 {
@@ -35,4 +35,4 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (rslt * sgn);
-}			
+}

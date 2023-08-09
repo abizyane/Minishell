@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 14:30:14 by abizyane          #+#    #+#             */
-/*   Updated: 2023/06/20 20:56:26 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 14:08:36 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
@@ -25,8 +25,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 		return (NULL);
 	while (i < n)
 	{
-			d[i] = s[i];
-			i++;
+		d[i] = s[i];
+		i++;
 	}
 	return (dst);
 }
