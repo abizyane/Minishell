@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 14:03:53 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/09 17:50:11 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,7 @@ void		local_binary(t_cmdline *cmd, char **envp);
 void		child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env);
 int			execute_command(t_cmdline *cmd, char **envp, t_env *env);
 void		execution(t_cmdline *cmd, t_env *env);
+int			ft_check_builtin(char *cmd);
+void		execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f);
 
 #endif

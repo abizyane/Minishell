@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 20:36:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/07 23:23:54 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:32:55 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	sig_int(int sig)
 {
-	if(sig == SIGINT)
+	if (sig == SIGINT)
 	{
 		write (1, "\n", 1);
 		if (rl == 0)
@@ -32,5 +32,4 @@ void	sig_handler(void)
 	rl_catch_signals = 0;
 	signal(SIGINT, sig_int);
 	signal(SIGQUIT, SIG_IGN);
-    
 }

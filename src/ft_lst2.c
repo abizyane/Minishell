@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 18:59:25 by abizyane          #+#    #+#             */
-/*   Updated: 2023/07/15 18:59:25 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:58:01 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include "../minishell.h"
 
 t_redir	*lstnew_redir(t_token *token)
 {

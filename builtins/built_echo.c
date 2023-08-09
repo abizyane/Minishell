@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   built_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:26:33 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/08 23:50:04 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:34:20 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		echo_option(char *arg)
+int	echo_option(char *arg)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if (!arg)
 		return (1);
@@ -32,10 +32,10 @@ int		echo_option(char *arg)
 	return (0);
 }
 
-int		echo(t_cmdline *cmd)
+int	echo(t_cmdline *cmd)
 {
-	int i;
-	int flag;
+	int	i;
+	int	flag;
 
 	i = 1;
 	flag = 0;

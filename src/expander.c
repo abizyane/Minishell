@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:14:01 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/06 22:56:25 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:54:57 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ char	*replace_var(char *env_var, char *line, int start, t_env *env_head)
 	{
 		while (line[++i] && env_var[k] && line[i] == env_var[k])
 			k++;
-		while(line[i])
+		while (line[i])
 			new_line[j++] = line[i++];
 	}
 	return (freeptr(&line), new_line);
 }
 
-char *remove_ds(char *line, int start)
+char	*remove_ds(char *line, int start)
 {
 	char	*new_line;
 	int		i;
@@ -78,7 +78,7 @@ void	expand_env_var(t_token **head, t_env *env)
 	char 	*env_var;
 	int 	i;
 	int 	j;
-	int 	f = 0;
+	int		f = 0;
 
 	token = (*head);
 	while (token)
@@ -90,7 +90,7 @@ void	expand_env_var(t_token **head, t_env *env)
 			{
 				if (token->line && token->line[i] == '\'' && f == 0)
 					i = closed_quotes(token->line, i) + 1;
-				else if (token->line[i] == '$' && token->line[i + 1] && ( ft_isalpha(token->line[i + 1]) || token->line[i + 1] == '_'))
+				else if (token->line[i] == '$' && token->line[i + 1] && (ft_isalpha(token->line[i + 1]) || token->line[i + 1] == '_'))
 				{
 					j = 0;
 					i++;
@@ -135,7 +135,7 @@ char	*expand_vars(char *line, t_env *env)
 				j++;
 			var = ft_substr(line, i, j);
 			if (!var)
-				continue;
+				continue ;
 			line = replace_var(var, line, --i, env);
 		}
 		else if (line[i] == '$' && line[i + 1] && (ft_isdigit(line[i + 1]) || line[i + 1] == '?'))
@@ -143,5 +143,5 @@ char	*expand_vars(char *line, t_env *env)
 		else
 			i++;
 	}
-	return(line);
+	return (line);
 }

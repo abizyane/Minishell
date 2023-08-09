@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:24:23 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 09:40:13 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:57:36 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	lstclear_tokens(t_token **head)
 	t_token	*next;
 
 	tmp = (*head);
-	while(tmp)
+	while (tmp)
 	{
 		next = tmp->nxt;
 		free(tmp);

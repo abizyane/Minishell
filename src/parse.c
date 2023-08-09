@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:35 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 07:46:31 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:00:24 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	add_redir_fname(t_cmdline **head, t_token *token)
 {
 	t_cmdline	*tmp;
 	t_redir		*r_tmp;
-	char 		*file_name;
+	char		*file_name;
 
 	file_name = token->line;
 	tmp = last_command(*head);
@@ -29,11 +29,10 @@ void	add_redir_fname(t_cmdline **head, t_token *token)
 void	add_args(t_cmdline **head, char *token)
 {
 	t_cmdline	*tmp;
-	int 		i;
+	int			i;
 
 	tmp = last_command(*head);
 	i = 0;
-
 	while (tmp->args && tmp->args[i] != 0)
 		i++;
 	tmp->args[i] = ft_strdup(token);
@@ -42,7 +41,7 @@ void	add_args(t_cmdline **head, char *token)
 int	count_args(t_token **head)
 {
 	t_token	*tmp;
-	int	i;
+	int		i;
 
 	i = 0;
 	tmp = *head;
@@ -59,18 +58,16 @@ void	add_redir(t_cmdline **head, t_token *token)
 {
 	t_cmdline	*tmp;
 
-    if (!(*head))
-        (*head) = lstnew_command(NULL, count_args(&token));
-
-    tmp = last_command(*head);
+	if (!(*head))
+		(*head) = lstnew_command(NULL, count_args(&token));
+	tmp = last_command(*head);
 	lstadd_redir(&tmp->redir, token);
 }
-
 
 t_cmdline	*fill_outstruct(t_token **head)
 {
 	t_cmdline	*cmd;
-    t_token		*token;
+	t_token		*token;
 
 	token = *head;
 	cmd = lstnew_command(NULL, 0);
@@ -115,7 +112,7 @@ void	get_token_type(t_token **head)
 
 t_cmdline	*parse_line(char *line, t_env *env)
 {
-	t_token 	*token_head;
+	t_token		*token_head;
 	t_cmdline	*cmd = NULL;
 
 	token_head = tokenizer(line);

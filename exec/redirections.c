@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 23:29:11 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/08 23:56:49 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:33:27 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ int	redirections(t_cmdline *cmd)
 				exit(EXIT_FAILURE);
 		}
 		else if (tmp->type == Heredoc)
-        {
-            dup2(tmp->fd, STDIN_FILENO);
-            close(tmp->fd);
-        }
+		{
+			dup2(tmp->fd, STDIN_FILENO);
+			close(tmp->fd);
+		}
 		tmp = tmp->nxt;
 	}
 	return (1);

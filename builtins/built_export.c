@@ -3,56 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   built_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:02 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 09:58:35 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:30:28 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-void reset_p_flag(t_env *env) 
+void	reset_p_flag(t_env *env)
 {
-    t_env *tmp;
-    
+	t_env	*tmp;
+	
 	tmp = env;
-    while (tmp) 
+	while (tmp) 
 	{
-        tmp->p_flag = 0;
-        tmp = tmp->nxt;
-    }
+		tmp->p_flag = 0;
+		tmp = tmp->nxt;
+	}
 }
 
 void	print_list(t_env *env) 
 {
-    t_env	*curr_env;
-    t_env	*min;
+	t_env	*curr_env;
+	t_env	*min;
 	t_env	*check;
 	
 	curr_env = env;
-    while (curr_env) 
+	while (curr_env) 
 	{
-        min = NULL;
-        check = env;
-        while (check) 
+		min = NULL;
+		check = env;
+		while (check) 
 		{
-            if (!check->p_flag) 
-                if (!min || strcmp(check->key, min->key) < 0) 
-                    min = check;
-            check = check->nxt;
-        }
-        if (min) 
+			if (!check->p_flag) 
+				if (!min || strcmp(check->key, min->key) < 0) 
+					min = check;
+			check = check->nxt;
+		}
+		if (min) 
 		{
 			if (min->content)
-            	printf("declare -x %s=\"%s\"\n", min->key, min->content);
-            else
-            	printf("declare -x %s\n", min->key);
+				printf("declare -x %s=\"%s\"\n", min->key, min->content);
+			else
+				printf("declare -x %s\n", min->key);
 			min->p_flag = 1;
-        }
-        curr_env = curr_env->nxt;
-    }
+		}
+		curr_env = curr_env->nxt;
+	}
 	reset_p_flag(env);
 }
 
@@ -77,12 +76,12 @@ int	check_syntax(char *new_var)
 void	update_var(t_env **env, char **new_var)
 {
 	t_env	*var;
-	
+
 	var = find_env(*env, new_var[0]);
 	if (!var)
 		return ;
 	if (var->content && new_var[1])
-	{	
+	{
 		free (var->content);
 		var->content = NULL;
 		var->content = new_var[1];
@@ -127,11 +126,11 @@ void	add_var(t_env **env, char *new_var)
 
 void	print_msg(char *key)
 {
-		ft_putstr_fd("minishell: export: `", 2);
-		ft_putstr_fd(key, 2);
-		ft_putstr_fd("': not a valid identifier", 2);
-		ft_putstr_fd("\n", 2);
-		exit_status = 1;
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(key, 2);
+	ft_putstr_fd("': not a valid identifier", 2);
+	ft_putstr_fd("\n", 2);
+	exit_status = 1;
 }
 
 int	ft_export(t_cmdline *cmd, t_env **env)
@@ -144,7 +143,7 @@ int	ft_export(t_cmdline *cmd, t_env **env)
 	if (!cmd->args[1])
 	{
 		print_list(*env);
-		return (EXIT_SUCCESS);		
+		return (EXIT_SUCCESS);
 	}
 	while (cmd->args[i])
 	{

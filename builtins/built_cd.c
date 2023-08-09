@@ -3,43 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:18:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 11:56:00 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:20:37 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*str_join(char *s1, char *s2)
+void	cd_error(char *path, int i)
 {
-   size_t	i;
-   size_t	j;
-   size_t	l;
-   char	*dst;
-
-   i = -1;
-   j = -1;
-   if (!s1)
-	   return (s2);
-   l = ft_strlen(s1) + ft_strlen(s2);
-   dst = ft_calloc((l + 2), sizeof(char));
-   if (!dst)
-	   return (NULL);
-   while (s1[++i])
-	   dst[i] = s1[i];
-	if (i > 0 && s1[i - 1] != '/')
-   		dst[i++] = '/';
-   while (s2[++j])
-	   dst[i + j] = s2[j];
-   return (dst);
+	if (i == 1)
+		ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory.\n", 2);
+	if (i == 2)
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
 }
 
-
-char    *get_home(t_env *env)
+char	*str_join(char *s1, char *s2)
 {
-	t_env   *tmp;
+	size_t	i;
+	size_t	j;
+	size_t	l;
+	char	*dst;
+
+	i = -1;
+	j = -1;
+	if (!s1)
+		return (s2);
+	l = ft_strlen(s1) + ft_strlen(s2);
+	dst = ft_calloc((l + 2), sizeof(char));
+	if (!dst)
+		return (NULL);
+	while (s1[++i])
+		dst[i] = s1[i];
+	if (i > 0 && s1[i - 1] != '/')
+		dst[i++] = '/';
+	while (s2[++j])
+		dst[i + j] = s2[j];
+	return (dst);
+}
+
+char	*get_home(t_env *env)
+{
+	t_env	*tmp;
 
 	tmp = env;
 	while (tmp)
@@ -53,21 +64,21 @@ char    *get_home(t_env *env)
 
 t_env	*find_env(t_env *head, char *key)
 {
-    t_env	*tmp;
+	t_env	*tmp;
 
-    tmp = head;
-    while (tmp)
-    {
-        if (ft_strcmp(tmp->key, key) == 0)
+	tmp = head;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, key) == 0)
 			return (tmp);
-        tmp = tmp->nxt;
-    }
-    return (NULL);
+		tmp = tmp->nxt;
+	}
+	return (NULL);
 }
 
 char	*update_pwd(t_env *env,char *nwd)
 {
-	char    *str;
+	char	*str;
 	t_env	*tmp;
 
 	if (!find_var(env, "PWD"))
@@ -114,7 +125,7 @@ int     cd(t_cmdline *cmd, t_env *env)
 		{
 			char *tmp = getcwd(NULL, 0);
 			if (chdir(update_pwd(env, cmd->args[1])) == -1 || !tmp)
-				return(perror("cd: "), EXIT_FAILURE);
+				return(cd_error(cmd->args[1], 1), EXIT_FAILURE);
 			return (EXIT_SUCCESS);
 		}
 		else
@@ -132,7 +143,7 @@ int     cd(t_cmdline *cmd, t_env *env)
 				
 			}
 			if (chdir(cmd->args[1]) == -1)
-				return(perror("cd: "), EXIT_FAILURE);
+				return(cd_error(cmd->args[1], 2), EXIT_FAILURE);
 			(void)update_pwd(env, cmd->args[1]);
 			return (EXIT_SUCCESS);
 		}

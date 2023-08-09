@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analyzer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:43:31 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/06 19:44:29 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:58:26 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void	append_tokens(t_token **token)
 		}
 		else
 			tmp = tmp->nxt;
-
 	}
 }
 

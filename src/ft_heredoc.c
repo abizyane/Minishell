@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 19:00:47 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/08 19:34:24 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:56:46 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include "../minishell.h"
 
 void	*freeptr(char **s)
 {
@@ -32,9 +32,9 @@ void	handler(int sig)
 
 int	read_heredoc(t_redir *redir, t_env *env)
 {
-	char *line;
-	char *dlm;
-	int fd[2];
+	char	*line;
+	char	*dlm;
+	int		fd[2];
 
 	(void)env;
 	dlm = redir->filename;
@@ -45,9 +45,9 @@ int	read_heredoc(t_redir *redir, t_env *env)
 		signal(SIGINT, handler);
 		line = readline("heredoc $> ");
 		if (!line || !ft_strcmp(line, dlm))
-			break;
+			break ;
 		if (redir->heredoc_flag == 0)
-        	line = expand_vars(line, env);
+			line = expand_vars(line, env);
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
 		freeptr(&line);
@@ -60,7 +60,7 @@ int	read_heredoc(t_redir *redir, t_env *env)
 void	open_heredoc(t_cmdline **head, t_env *env)
 {
 	t_cmdline	*cmd;
-	t_redir 	*redir;
+	t_redir		*redir;
 
 	cmd = *head;
 	while (cmd)

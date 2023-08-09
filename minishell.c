@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 09:52:53 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:30:47 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
+#include "minishell.h"
 
 int	check_spaces(const char *str)
 {
@@ -70,11 +70,11 @@ char	**empty_env(void)
 	return (env);
 }
 
-void update_shlvl(t_env **env)
+void	update_shlvl(t_env **env)
 {
 	t_env	*tmp;
 	int		shlvl;
-	
+
 	tmp = *env;
 	while (tmp)
 	{
@@ -87,12 +87,12 @@ void update_shlvl(t_env **env)
 				shlvl = 0;
 			free(tmp->content);
 			tmp->content = ft_itoa(shlvl);
-		} 
-		tmp = tmp->nxt;		
+		}
+		tmp = tmp->nxt;
 	}
 }
 
-int main(int ac, char *av[], char **env)
+int	main(int ac, char *av[], char **env)
 {
 	char		*line;
 	t_cmdline	*cmd_line;
@@ -107,9 +107,9 @@ int main(int ac, char *av[], char **env)
 	while (1)
 	{
 		sig_handler();
-		line = readline(GRN" -> "CYN"Minishell "RST);
+		line = readline(GRN" -> "CYN"minishell "RST);
 		if (!line)
-			return 0;
+			return (0);
 		if (line[0] != '\0' && !check_spaces(line))
 		{
 			add_history(line);

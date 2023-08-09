@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_tools.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 18:00:52 by abizyane          #+#    #+#             */
-/*   Updated: 2023/06/20 21:03:54 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:02:43 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,16 @@ int	closed_quotes(char *str, int i) // returns the index of the other quote
 	return (0);
 }
 
-int has_quates(char *str)
+int	has_quates(char *str)
 {
-    int	i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        if (is_quotes(str[i]))
+	i = 0;
+	while (str[i])
+	{
+		if (is_quotes(str[i]))
 			return (1);
-        i++;
-    }
-    return (0);
+		i++;
+	}
+	return (0);
 }

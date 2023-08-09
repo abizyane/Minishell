@@ -6,7 +6,7 @@
 #    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/09 14:27:48 by ahamrad          ###   ########.fr        #
+#    Updated: 2023/08/09 17:49:22 by ahamrad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC = minishell.c \
 	src/ft_heredoc.c \
 	exec/execution.c \
 	exec/execution_utils.c \
+	exec/execution_utils2.c \
 	exec/redirections.c \
 	exec/env_variables.c \
 	exec/signals.c \
