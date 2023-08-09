@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:02 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 07:07:07 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 07:50:55 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	print_list(t_env *env)
 	reset_p_flag(env);
 }
 
-//TODO:a="" stays the same
 int	check_syntax(char *new_var)
 {
 	int	i;
@@ -80,12 +79,11 @@ void	update_var(t_env **env, char **new_var)
 	t_env	*var;
 	
 	var = find_env(*env, new_var[0]);
-	if (var->content)
+	if (var->content && new_var[1])
 	{	
 		free (var->content);
 		var->content = NULL;
-		if (new_var[1])
-			var->content = new_var[1];
+		var->content = new_var[1];
 		return ;
 	}
 	else 
@@ -125,6 +123,15 @@ void	add_var(t_env **env, char *new_var)
 	free(str);
 }
 
+void	print_msg(char *key)
+{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(key, 2);
+		ft_putstr_fd("': not a valid identifier", 2);
+		ft_putstr_fd("\n", 2);
+		exit_status = 1;
+}
+
 int	ft_export(t_cmdline *cmd, t_env **env)
 {
 	int	i;
@@ -138,13 +145,7 @@ int	ft_export(t_cmdline *cmd, t_env **env)
 	while (cmd->args[i])
 	{
 		if (!check_syntax(cmd->args[i]))
-		{	
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(cmd->args[i], 2);
-			ft_putstr_fd("': not a valid identifier", 2);
-			ft_putstr_fd("\n", 2);
-			exit_status = 1;
-		}
+			print_msg(cmd->args[i]);
 		else
 			add_var(env, cmd->args[i]);
 		i++;

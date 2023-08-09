@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:26:55 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/08 20:00:22 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 07:45:25 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	ft_check_digit(char *str)
 	}
 	return (0);
 }
-// TODO:  exit: dsfsfas: numeric argument required
-// 
+ 
 int	ft_exit(t_cmdline *cmd, int f)
 {
 	if (cmd->args[1] && (ft_check_digit(cmd->args[1]) == 1 || (ft_strlen(cmd->args[1]) >= 19 && cmd->args[1][18] > '7')))
