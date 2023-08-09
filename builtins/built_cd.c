@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:18:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 18:20:37 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/09 21:26:03 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	cd_error(char *path, int i)
 {
 	if (i == 1)
 		ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory.\n", 2);
-	if (i == 2)
+	if (i == 2 && path)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(path, 2);

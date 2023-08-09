@@ -6,11 +6,30 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:45:57 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 17:48:58 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/09 21:47:37 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	**get_paths_from_env(char **envp)
+{
+	int		i;
+	char	**paths;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			paths = ft_split(envp[i] + 5, ':');
+			return (paths);
+		}
+		i++;
+	}
+	paths = ft_split(_PATH_STDPATH, ':');
+	return (paths);
+}
 
 char	*get_cmd_path(t_cmdline *cmd, char **envp)
 {
@@ -23,18 +42,7 @@ char	*get_cmd_path(t_cmdline *cmd, char **envp)
 	path = NULL;
 	if (!cmd->args || !cmd->args[0])
 		return (NULL);
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			paths = ft_split(envp[i] + 5, ':');
-			break ;
-		}
-		else 
-			paths = ft_split(_PATH_STDPATH, ':');
-		i++;
-	}
-	i = 0;
+	paths = get_paths_from_env(envp);
 	while (paths && paths[i])
 	{
 		path = ft_strjoin(paths[i], "/");

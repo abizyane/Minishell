@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 20:42:36 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/09 21:20:46 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,4 @@ int	main(int ac, char *av[], char **env)
 			execution(cmd_line, env_head);
 		}
 	}
-	free_env(&env_head);
 }

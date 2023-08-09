@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 20:54:42 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/09 21:14:17 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,4 @@ void	execution(t_cmdline *cmd, t_env *env)
 	dup2(input_save, STDIN_FILENO);
 	rl = 0;
 	free_arr(envp);
-	
 }
