@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:18:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/08 23:25:33 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 11:56:00 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int     cd(t_cmdline *cmd, t_env *env)
 	if (!cmd->args[1])
 	{
 		home = get_home(env);
-		if (chdir(home) == -1)
+		if (chdir(home) == -1 && !cmd->args[1])
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 	}
 	else
@@ -115,11 +115,22 @@ int     cd(t_cmdline *cmd, t_env *env)
 			char *tmp = getcwd(NULL, 0);
 			if (chdir(update_pwd(env, cmd->args[1])) == -1 || !tmp)
 				return(perror("cd: "), EXIT_FAILURE);
-			
 			return (EXIT_SUCCESS);
 		}
 		else
 		{
+			if (ft_strcmp(cmd->args[1], "-") == 0)
+			{
+				free (cmd->args[1]);
+				cmd->args[1] = find_var(env, "OLDPWD");
+			}
+			else if (cmd->args[1][0] ==  '~')
+			{
+				home = ft_strjoin(get_home(env), cmd->args[1]+1);
+				free (cmd->args[1]);
+				cmd->args[1] = home;
+				
+			}
 			if (chdir(cmd->args[1]) == -1)
 				return(perror("cd: "), EXIT_FAILURE);
 			(void)update_pwd(env, cmd->args[1]);
