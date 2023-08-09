@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:02 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 06:56:36 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/09 07:07:07 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	print_list(t_env *env)
 	reset_p_flag(env);
 }
 
-
+//TODO:a="" stays the same
 int	check_syntax(char *new_var)
 {
 	int	i;
@@ -66,7 +66,7 @@ int	check_syntax(char *new_var)
 	{
 		if (i == 0 && !ft_isalpha(new_var[i]) && new_var[i] != '_')
 			return (0);
-		if (!ft_isalnum(new_var[i]) && new_var[i] != '=')
+		if (!ft_isalnum(new_var[i]) && new_var[i] != '=' && new_var[i] != '_')
 			return (0);
 		if (new_var[i] == '=')
 			return (i);
