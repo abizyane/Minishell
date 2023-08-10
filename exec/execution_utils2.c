@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:45:57 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 21:47:37 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 01:37:42 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,19 @@ void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 	if (cmd->redir)
 		redirections(cmd);
 	if (!ft_strcmp(cmd->args[0], "echo"))
-		exit_status = echo(cmd);
+		g_exit_status = echo(cmd);
 	if (!ft_strcmp(cmd->args[0], "pwd"))
-		exit_status = pwd(cmd, envi);
+		g_exit_status = pwd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "env"))
-		exit_status = env(cmd, envi);
+		g_exit_status = env(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "cd"))
-		exit_status = cd(cmd, envi);
+		g_exit_status = cd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "exit"))
-		exit_status = ft_exit(cmd, exit_f);
+		g_exit_status = ft_exit(cmd, exit_f);
 	if (!ft_strcmp(cmd->args[0], "export"))
-		exit_status = ft_export(cmd, &envi);
+		g_exit_status = ft_export(cmd, &envi);
 	if (!ft_strcmp(cmd->args[0], "unset"))
-		exit_status = unset(cmd, &envi);
+		g_exit_status = unset(cmd, &envi);
 	if (cmd->redir)
 	{
 		dup2(input_save, STDIN_FILENO);

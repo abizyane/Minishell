@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:02 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 18:30:28 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 01:38:45 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	print_msg(char *key)
 	ft_putstr_fd(key, 2);
 	ft_putstr_fd("': not a valid identifier", 2);
 	ft_putstr_fd("\n", 2);
-	exit_status = 1;
+	g_exit_status = 1;
 }
 
 int	ft_export(t_cmdline *cmd, t_env **env)
@@ -153,7 +153,7 @@ int	ft_export(t_cmdline *cmd, t_env **env)
 			add_var(env, cmd->args[i]);
 		i++;
 	}
-	if (!cmd->args[i] && exit_status == 1)
+	if (!cmd->args[i] && g_exit_status == 1)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

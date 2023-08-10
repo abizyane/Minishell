@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 21:14:17 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 01:47:24 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,12 @@ void	execution(t_cmdline *cmd, t_env *env)
 	char	**envp;
 
 	envp = lst_to_arr(env);
-	rl = 1;
+	g_rl = 1;
 	input_save = dup(STDIN_FILENO);
 	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
 	{
 		execute_builtin(cmd, env, 1);
-		rl = 0;
+		g_rl = 0;
 		return ;
 	}
 	while (cmd)
@@ -120,14 +120,14 @@ void	execution(t_cmdline *cmd, t_env *env)
 	while (waitpid(-1, NULL, 0) != -1)
 		;
 	if (WIFEXITED(status))
-		exit_status = WEXITSTATUS(status);
+		g_exit_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 	{
-		exit_status = 128 + WTERMSIG(status);
-		if (exit_status == 131)
+		g_exit_status = 128 + WTERMSIG(status);
+		if (g_exit_status == 131)
 			ft_putstr_fd("Quit: 3\n", 1);
 	}
 	dup2(input_save, STDIN_FILENO);
-	rl = 0;
+	g_rl = 0;
 	free_arr(envp);
 }

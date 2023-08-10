@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:26:55 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 18:32:53 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 01:36:59 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	ft_exit(t_cmdline *cmd, int f)
 		if (f == 1)
 			printf("exit\n");
 		printf("minishell: exit: %s: numeric argument required\n", cmd->args[1]);
-		exit_status = 255;
-		exit(exit_status);
+		g_exit_status = 255;
+		exit(g_exit_status);
 	}
 	if (array_len(cmd->args) > 2)
 	{
@@ -48,16 +48,16 @@ int	ft_exit(t_cmdline *cmd, int f)
 	{
 		if (f == 1)
 			printf("exit\n");
-		exit_status = 0;
+		g_exit_status = 0;
 	}
 	if (cmd->args[1] && ft_check_digit(cmd->args[1]) == 0)
 	{
-		exit_status = ft_atoi(cmd->args[1]);
-		if (exit_status >= 256)
-			exit_status = exit_status % 256;
+		g_exit_status = ft_atoi(cmd->args[1]);
+		if (g_exit_status >= 256)
+			g_exit_status = g_exit_status % 256;
 		if (f == 1)
 			printf("exit\n");
 	}
-	exit(exit_status);
+	exit(g_exit_status);
 	return (0);
 }

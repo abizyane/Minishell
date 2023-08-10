@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 21:10:22 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 01:40:27 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 # define CYN "\e[3;96m"
 # define RST "\e[0m"
 
-int			exit_status;
-int			rl;
+int			g_exit_status;
+int			g_rl;
 
 typedef enum e_type
 {
@@ -69,7 +69,7 @@ typedef struct s_redir
 {
 	e_type				type;
 	char				*filename;
-	int 				fd;
+	int					fd;
 	int					heredoc_flag;
 	struct s_redir		*nxt;
 }						t_redir;
