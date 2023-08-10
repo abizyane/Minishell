@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:24:23 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 17:57:36 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 06:20:09 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,6 @@ void	lstadd_command(t_cmdline **head, char *cmd, int size)
 	tmp = *head;
 	if (!tmp)
 		(*head) = new;
-	if (tmp && !tmp->args)
-	{
-		free(*head);
-		*head = new;
-	}
 	else
 	{
 		tmp = last_command(*head);
