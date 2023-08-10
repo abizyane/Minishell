@@ -6,7 +6,7 @@
 #    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/09 23:36:35 by ahamrad          ###   ########.fr        #
+#    Updated: 2023/08/10 02:45:01 by ahamrad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,13 +45,19 @@ SRC = minishell.c \
 
 OBJ = $(SRC:.c=.o)
 
+LIBFT_PATH = ./Libft
+LIBFT = $(LIBFT_PATH)/libft.a
+LIBFT_HEADER = $(LIBFT_PATH)/libft.h
+
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	make -C ./Libft
+$(NAME): $(OBJ) $(LIBFT)
 	$(CC) -lreadline $(CFLAGS) $^ -o $@ -L./Libft -lft $(LDFLAGS)
 
-%.o: %.c $(HEADER) Makefile
+$(LIBFT):
+	make -C ./Libft
+
+%.o: %.c $(HEADER) Makefile $(LIBFT_HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
@@ -63,5 +69,3 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
-
-x : all clean

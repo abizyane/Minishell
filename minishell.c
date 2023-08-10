@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 21:20:46 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 03:14:01 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	**lst_to_arr(t_env *env)
 	int		i;
 	char	**arr;
 	t_env	*tmp;
+	char	*tmp2;
 
 	i = 0;
 	tmp = env;
@@ -48,8 +49,9 @@ char	**lst_to_arr(t_env *env)
 	i = 0;
 	while (env)
 	{
-		arr[i] = ft_strjoin(env->key, "=");
-		arr[i] = ft_strjoin(arr[i], env->content);
+		tmp2 = ft_strjoin(env->key, "=");
+		arr[i] = ft_strjoin(tmp2, env->content);
+		free(tmp2);
 		i++;
 		env = env->nxt;
 	}

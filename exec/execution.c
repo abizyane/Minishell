@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 01:47:24 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 03:22:04 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	execution(t_cmdline *cmd, t_env *env)
 	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
 	{
 		execute_builtin(cmd, env, 1);
+		free_arr(envp);
 		g_rl = 0;
 		return ;
 	}
