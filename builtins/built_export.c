@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:02 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 01:38:45 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 04:29:24 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	reset_p_flag(t_env *env)
 {
 	t_env	*tmp;
-	
+
 	tmp = env;
 	while (tmp) 
 	{
@@ -24,12 +24,12 @@ void	reset_p_flag(t_env *env)
 	}
 }
 
-void	print_list(t_env *env) 
+void	print_list(t_env *env)
 {
 	t_env	*curr_env;
 	t_env	*min;
 	t_env	*check;
-	
+
 	curr_env = env;
 	while (curr_env) 
 	{

@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:16 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 01:37:23 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 04:32:14 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	print_unset_msg(char *key)
 {
-		ft_putstr_fd("minishell: unset: `", 2);
-		ft_putstr_fd(key, 2);
-		ft_putstr_fd("': not a valid identifier", 2);
-		ft_putstr_fd("\n", 2);
-		g_exit_status = 1;
+	ft_putstr_fd("minishell: unset: `", 2);
+	ft_putstr_fd(key, 2);
+	ft_putstr_fd("': not a valid identifier", 2);
+	ft_putstr_fd("\n", 2);
+	g_exit_status = 1;
 }
 
 int	check_unset_syntax(char *key)
@@ -55,7 +55,7 @@ void	clear_env(t_env **env, char *key)
 	}
 	else
 	{
-		while(next && ft_strcmp(next->key, key) != 0)
+		while (next && ft_strcmp(next->key, key) != 0)
 		{
 			tmp = tmp->nxt;
 			next = tmp->nxt;
@@ -71,23 +71,23 @@ void	clear_env(t_env **env, char *key)
 
 //TODO: unsetting the head causes abort
 
-int unset(t_cmdline *cmd, t_env **env)
+int	unset(t_cmdline *cmd, t_env **env)
 {
 	t_env	*var;
-    int     i;
+	int		i;
 
-    i = 1;
-    g_exit_status = 0;
+	i = 1;
+	g_exit_status = 0;
 	if (!cmd->args[i])
-        return (EXIT_SUCCESS);
-    while (cmd->args[i])
-    {
-        if (!check_unset_syntax(cmd->args[i]))
-            print_unset_msg(cmd->args[i]);
-        var = find_env(*env, cmd->args[i]);
-	    if (var)
+		return (EXIT_SUCCESS);
+	while (cmd->args[i])
+	{
+		if (!check_unset_syntax(cmd->args[i]))
+			print_unset_msg(cmd->args[i]);
+		var = find_env(*env, cmd->args[i]);
+		if (var)
 			clear_env(env, var->key);
-        i++;
-    }
-    return (g_exit_status);
+		i++;
+	}
+	return (g_exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 03:59:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 21:29:35 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 04:33:06 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	free_redir(t_redir **redir)
 		tmp = *redir;
 		*redir = (*redir)->nxt;
 		free(tmp->filename);
-		free(tmp);	
+		free(tmp);
 	}
 	*redir = NULL;
 }
@@ -128,7 +128,7 @@ void	free_cmd(t_cmdline **cmd)
 			free_arr(tmp->args);
 		if (tmp->redir)
 			free_redir(&tmp->redir);
-		free(tmp);	
+		free(tmp);
 	}
 	*cmd = NULL;
 }

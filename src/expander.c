@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:14:01 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/10 01:38:11 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 04:36:59 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ char	*remove_ds(char *line, int start)
 		new_line[i++] = line[j++];
 	if (line[j + 1] == '?')
 	{
-		char *var = ft_itoa(g_exit_status);
-		int	k = 0;
+		char	*var = ft_itoa(g_exit_status);
+		int		k = 0;
 		while (var[k])
 			new_line[i++] = var[k++];
 		free(var);
-	}	
+	}
 	j += 2;
-	while(line[j])
+	while (line[j])
 		new_line[i++] = line[j++];
 	return (freeptr(&line), new_line);
 }
@@ -75,9 +75,9 @@ char	*remove_ds(char *line, int start)
 void	expand_env_var(t_token **head, t_env *env)
 {
 	t_token	*token;
-	char 	*env_var;
-	int 	i;
-	int 	j;
+	char	*env_var;
+	int		i;
+	int		j;
 	int		f = 0;
 
 	token = (*head);

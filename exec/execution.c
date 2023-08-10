@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 03:22:04 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 04:52:55 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,29 @@ int	execute_command(t_cmdline *cmd, char **envp, t_env *env)
 	return (pid);
 }
 
+void	get_exit_status(int status)
+{
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		g_exit_status = 128 + WTERMSIG(status);
+		if (g_exit_status == 131)
+			ft_putstr_fd("Quit: 3\n", 1);
+	}
+}
+int	execute_builtin2(t_cmdline *cmd, t_env *env)
+{
+	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
+	{
+		execute_builtin(cmd, env, 1);
+		g_rl = 0;
+		return (1);
+	}
+	else
+		return (0);
+}
+
 void	execution(t_cmdline *cmd, t_env *env)
 {
 	int		input_save;
@@ -105,11 +128,9 @@ void	execution(t_cmdline *cmd, t_env *env)
 	envp = lst_to_arr(env);
 	g_rl = 1;
 	input_save = dup(STDIN_FILENO);
-	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
+	if (execute_builtin2(cmd, env) == 1)
 	{
-		execute_builtin(cmd, env, 1);
 		free_arr(envp);
-		g_rl = 0;
 		return ;
 	}
 	while (cmd)
@@ -120,14 +141,7 @@ void	execution(t_cmdline *cmd, t_env *env)
 	waitpid(pid, &status, 0);
 	while (waitpid(-1, NULL, 0) != -1)
 		;
-	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
-	{
-		g_exit_status = 128 + WTERMSIG(status);
-		if (g_exit_status == 131)
-			ft_putstr_fd("Quit: 3\n", 1);
-	}
+	get_exit_status(status);
 	dup2(input_save, STDIN_FILENO);
 	g_rl = 0;
 	free_arr(envp);

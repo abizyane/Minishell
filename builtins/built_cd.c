@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:18:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 21:26:03 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 04:27:13 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,20 @@ t_env	*find_env(t_env *head, char *key)
 	return (NULL);
 }
 
-char	*update_pwd(t_env *env,char *nwd)
+char	*update_pwd(t_env *env, char *nwd)
 {
 	char	*str;
 	t_env	*tmp;
 
 	if (!find_var(env, "PWD"))
 	{
-		char *arr[2] = {"PWD",
+		char	*arr[2] = {"PWD",
 					getcwd(NULL, 1024)};
 		env_add_back(&env, arr);
 	}
 	if (!find_var(env, "OLDPWD"))
 	{
-		char *arrr[2] = {"OLDPWD",
+		char	*arrr[2] = {"OLDPWD",
 						find_var(env, "PWD")};
 		env_add_back(&env, arrr);
 	}
@@ -102,16 +102,16 @@ char	*update_pwd(t_env *env,char *nwd)
 		tmp = find_env(env, "PWD");
 		tmp->content = str_join(tmp->content, nwd);
 		return (nwd);
-	}	
+	}
 	find_env(env, "PWD")->content = str;
 	return (nwd);
 }
 
 //TODO: cd - && cd ~
 
-int     cd(t_cmdline *cmd, t_env *env)
+int	cd(t_cmdline *cmd, t_env *env)
 {
-	char    *home;
+	char	*home;
 
 	if (!cmd->args[1])
 	{
@@ -123,9 +123,9 @@ int     cd(t_cmdline *cmd, t_env *env)
 	{
 		if (ft_strcmp(cmd->args[1], ".") == 0 || ft_strcmp(cmd->args[1], "..") == 0)
 		{
-			char *tmp = getcwd(NULL, 0);
+			char	*tmp = getcwd(NULL, 0);
 			if (chdir(update_pwd(env, cmd->args[1])) == -1 || !tmp)
-				return(cd_error(cmd->args[1], 1), EXIT_FAILURE);
+				return (cd_error(cmd->args[1], 1), EXIT_FAILURE);
 			return (EXIT_SUCCESS);
 		}
 		else
@@ -135,15 +135,14 @@ int     cd(t_cmdline *cmd, t_env *env)
 				free (cmd->args[1]);
 				cmd->args[1] = find_var(env, "OLDPWD");
 			}
-			else if (cmd->args[1][0] ==  '~')
+			else if (cmd->args[1][0] == '~')
 			{
-				home = ft_strjoin(get_home(env), cmd->args[1]+1);
+				home = ft_strjoin(get_home(env), cmd->args[1] + 1);
 				free (cmd->args[1]);
 				cmd->args[1] = home;
-				
 			}
 			if (chdir(cmd->args[1]) == -1)
-				return(cd_error(cmd->args[1], 2), EXIT_FAILURE);
+				return (cd_error(cmd->args[1], 2), EXIT_FAILURE);
 			(void)update_pwd(env, cmd->args[1]);
 			return (EXIT_SUCCESS);
 		}
