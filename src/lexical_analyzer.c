@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analyzer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:43:31 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 17:58:26 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 13:36:11 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,15 +134,15 @@ int	check_tokens(t_token **head)
 	while (tmp)
 	{
 		if (!tmp->prv && tmp->type == Pipe)
-			return ((int)write(2, RED "syntax error!" RST "\n", 25));
+			return ((int)write(2, "syntax error!\n", 15));
 		if (!tmp->nxt && tmp->type != Word)
-			return ((int)write(2, RED "syntax error!" RST "\n", 25));
+			return ((int)write(2, "syntax error!\n", 15));
 		if (tmp->nxt && tmp->prv && tmp->type == Pipe && (tmp->prv->type != Word
 				|| tmp->nxt->type == Pipe))
-			return ((int)write(2, RED "syntax error!" RST "\n", 25));
+			return ((int)write(2, "syntax error!\n", 15));
 		if (tmp->nxt && tmp->type != Word && tmp->type != Pipe
 			&& tmp->nxt->type != Word)
-			return ((int)write(2, RED "syntax error!" RST "\n", 25));
+			return ((int)write(2, "syntax error!\n", 15));
 		tmp = tmp->nxt;
 	}
 	append_tokens(head);

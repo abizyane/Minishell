@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:35 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/10 06:24:06 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:16:38 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	add_args(t_cmdline **head, t_token *token)
 
 	tmp = last_command(*head);
 	i = 0;
+	if (!tmp->args)
+		tmp->args = ft_calloc(sizeof(char *), count_args(token));
 	while (tmp->args && tmp->args[i] != 0)
 		i++;
 	tmp->args[i] = ft_strdup(token->line);

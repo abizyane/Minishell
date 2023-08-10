@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:18:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 04:27:13 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 12:47:11 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ char	*update_pwd(t_env *env, char *nwd)
 	return (nwd);
 }
 
-//TODO: cd - && cd ~
 
 int	cd(t_cmdline *cmd, t_env *env)
 {
@@ -123,9 +122,11 @@ int	cd(t_cmdline *cmd, t_env *env)
 	{
 		if (ft_strcmp(cmd->args[1], ".") == 0 || ft_strcmp(cmd->args[1], "..") == 0)
 		{
-			char	*tmp = getcwd(NULL, 0);
+			char	*tmp;
+
+			tmp = getcwd(NULL, 0);
 			if (chdir(update_pwd(env, cmd->args[1])) == -1 || !tmp)
-				return (cd_error(cmd->args[1], 1), EXIT_FAILURE);
+				cd_error(cmd->args[1], 1);
 			return (EXIT_SUCCESS);
 		}
 		else
@@ -134,6 +135,7 @@ int	cd(t_cmdline *cmd, t_env *env)
 			{
 				free (cmd->args[1]);
 				cmd->args[1] = find_var(env, "OLDPWD");
+				ft_putendl_fd(cmd->args[1], STDOUT_FILENO);
 			}
 			else if (cmd->args[1][0] == '~')
 			{

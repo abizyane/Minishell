@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/10 01:40:27 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 13:34:35 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,6 @@
 # include <errno.h>
 # include <sys/ioctl.h>
 # include <paths.h>
-
-# define BLK "\e[1;90m"
-# define RED "\e[1;91m"
-# define GRN "\e[3;92m"
-# define MAG "\e[1;95m"
-# define CYN "\e[3;96m"
-# define RST "\e[0m"
 
 int			g_exit_status;
 int			g_rl;
@@ -122,7 +115,7 @@ char		*expand_vars(char *line, t_env *env);
 void		env_add_back(t_env **env_head, char	**env_var);
 t_env		*find_env(t_env *head, char *key);
 int			execute_single_cmd(t_cmdline *cmd, char **envp);
-char		*get_cmd_path(t_cmdline *cmd, char **envp);
+char		*get_cmd_path(t_cmdline *cmd, t_env *envp);
 int			execute_cmds(t_cmdline *cmd, char **envp);
 int			execute_two_commands(t_cmdline *cmd, char **envp);
 int			handle_multi_cmds(t_cmdline *cmd, char **envp);

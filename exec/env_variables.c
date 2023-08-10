@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 03:59:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 04:33:06 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 12:38:39 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_env	*lst_env(char **env)
 
 	i = 0;
 	check = 0;
-	head = NULL;
+	head = env_new(NULL, NULL);
 	while (env && env[i])
 	{
 		str = ft_split(env[i], '=');
@@ -63,11 +63,13 @@ t_env	*lst_env(char **env)
 		free(str);
 		i++;
 	}
-	str = malloc(sizeof(char *) * 2);
-	str[0] = "PATH";
-	str[1] = _PATH_STDPATH;
 	if (check == 0)
+	{	
+		str = ft_calloc(sizeof(char *), 2);
+		str[0] = ft_strdup("PATH");
+		str[1] = ft_strdup(_PATH_STDPATH);
 		env_add_back(&head, str);
+	}
 	return (head);
 }
 
@@ -131,4 +133,19 @@ void	free_cmd(t_cmdline **cmd)
 		free(tmp);
 	}
 	*cmd = NULL;
+}
+
+void	free_tokens(t_token **token)
+{
+	t_token	*tmp;
+
+	while (*token)
+	{
+		tmp = *token;
+		*token = (*token)->nxt;
+		if (tmp->line)
+			free(tmp->line);
+		free(tmp);
+	}
+	*token = NULL;
 }

@@ -6,7 +6,7 @@
 #    By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/10 05:49:21 by abizyane         ###   ########.fr        #
+#    Updated: 2023/08/10 10:38:17 by abizyane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 CPPFLAGS = -I /goinfre/abizyane/homebrew/opt/readline/include
 LDFLAGS = -L /goinfre/abizyane/homebrew/opt/readline/lib
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g $(CPPFLAGS)
+CFLAGS = -Wall -Wextra -Werror -g $(CPPFLAGS) #-fsanitize=address
 
 HEADER = minishell.h
 

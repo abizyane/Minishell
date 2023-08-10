@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:16 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 04:32:14 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 09:54:55 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	clear_env(t_env **env, char *key)
 		next = (*env)->nxt;
 	if (key && tmp && ft_strcmp(key, tmp->key) == 0)
 	{
-		tmp->nxt = NULL;
 		free(tmp->key);
 		free(tmp->content);
 		free(tmp);
@@ -61,11 +60,12 @@ void	clear_env(t_env **env, char *key)
 			next = tmp->nxt;
 		}
 		tmp->nxt = next->nxt;
-		if (next->key)
+		if (next && next->key)
 			free(next->key);
-		if (next->content)
+		if (next && next->content)
 			free(next->content);
-		free(next);
+		if (next)
+			free(next);
 	}
 }
 

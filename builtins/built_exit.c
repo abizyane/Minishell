@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:26:55 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 01:36:59 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 12:14:56 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_check_digit(char *str)
 
 int	ft_exit(t_cmdline *cmd, int f)
 {
-	if (cmd->args[1] && (ft_check_digit(cmd->args[1]) == 1 || (ft_strlen(cmd->args[1]) >= 19 && cmd->args[1][18] > '7')))
+	if (cmd->args[1] && (ft_check_digit(cmd->args[1]) == 1 || (ft_strlen(cmd->args[1]) >= 19 || (cmd->args[1][18] && cmd->args[1][18] > '7'))))
 	{
 		if (f == 1)
 			printf("exit\n");

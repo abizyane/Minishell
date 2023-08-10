@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/10 05:49:00 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:28:01 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,17 @@ char	**lst_to_arr(t_env *env)
 		i++;
 		tmp = tmp->nxt;
 	}
-	arr = (char **)malloc(sizeof(char *) * (i + 1));
+	arr = ft_calloc(sizeof(char *) , (i));
 	i = 0;
 	while (env)
 	{
-		tmp2 = ft_strjoin(env->key, "=");
-		arr[i] = ft_strjoin(tmp2, env->content);
-		free(tmp2);
-		i++;
+		if (env->key)
+		{
+			tmp2 = ft_strjoin(env->key, "=");
+			arr[i] = ft_strjoin(tmp2, env->content);
+			free(tmp2);
+			i++;
+		}
 		env = env->nxt;
 	}
 	arr[i] = NULL;
@@ -101,16 +104,20 @@ int	main(int ac, char *av[], char **env)
 
 	(void)ac;
 	(void)av;
-	if (!env[0])
+	if (!env[0]){
 		env = empty_env();
+	}
 	env_head = lst_env(env);
 	update_shlvl(&env_head);
 	while (1)
 	{
 		sig_handler();
-		line = readline(GRN" -> "CYN"minishell "RST);
+		line = readline(" -> minishell ");
 		if (!line)
+		{
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			return (0);
+		}
 		if (line[0] != '\0' && !check_spaces(line))
 		{
 			add_history(line);
@@ -118,6 +125,7 @@ int	main(int ac, char *av[], char **env)
 			if (!cmd_line)
 				continue ;
 			execution(cmd_line, env_head);
+			free_cmd(&cmd_line);
 		}
 	}
 }

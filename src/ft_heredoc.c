@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 19:00:47 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 17:56:46 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 15:04:24 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	read_heredoc(t_redir *redir, t_env *env)
 	while (1)
 	{
 		signal(SIGINT, handler);
-		line = readline("heredoc $> ");
+		line = readline("> ");
 		if (!line || !ft_strcmp(line, dlm))
 			break ;
 		if (redir->heredoc_flag == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 22:55:23 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 14:06:33 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 07:56:39 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_calloc(size_t count, size_t size)
 
 	x = malloc(size * count);
 	if (!x)
-		return (NULL);
+		exit(1);
 	ft_bzero(x, count * size);
 	return (x);
 }

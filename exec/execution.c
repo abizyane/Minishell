@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 04:52:55 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 10:22:22 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env)
 		exit(EXIT_SUCCESS);
 	}
 	if (ft_strncmp(cmd->args[0], ".", 1) && ft_strncmp(cmd->args[0], "/", 1))
-		cmd->path = get_cmd_path(cmd, envp);
+		cmd->path = get_cmd_path(cmd, env);
 	local_binary(cmd, envp);
 	if (execve(cmd->path, cmd->args, envp) == -1)
 	{

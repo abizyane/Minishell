@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:45:57 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 02:35:38 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 10:19:32 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ char	**get_paths_from_env(char **envp)
 		}
 		i++;
 	}
-	paths = ft_split(_PATH_STDPATH, ':');
-	return (paths);
+	return (NULL);
 }
 
-char	*get_cmd_path(t_cmdline *cmd, char **envp)
+char	*get_cmd_path(t_cmdline *cmd, t_env *envp)
 {
 	char	*path;
 	char	**paths;
@@ -42,7 +41,7 @@ char	*get_cmd_path(t_cmdline *cmd, char **envp)
 	path = NULL;
 	if (!cmd->args || !cmd->args[0])
 		return (NULL);
-	paths = get_paths_from_env(envp);
+	paths = ft_split(find_var(envp, "PATH"), ':');
 	while (paths && paths[i])
 	{
 		path = ft_strjoin(paths[i], "/");
@@ -53,7 +52,7 @@ char	*get_cmd_path(t_cmdline *cmd, char **envp)
 	}
 	if (!paths || !paths[i])
 		return (NULL);
-	//TODO: a river of memory leaks in here and it needs to get the paths from the stdpaths if it didn't find it in the env_list
+	free_arr(paths);
 	return (path);
 }
 

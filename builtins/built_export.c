@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:02 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 04:29:24 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 10:06:25 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ void	print_list(t_env *env)
 		while (check) 
 		{
 			if (!check->p_flag) 
-				if (!min || strcmp(check->key, min->key) < 0) 
+				if (!min || ft_strcmp(check->key, min->key) < 0) 
 					min = check;
 			check = check->nxt;
 		}
 		if (min) 
 		{
-			if (min->content)
+			if (min->content && min->key)
 				printf("declare -x %s=\"%s\"\n", min->key, min->content);
-			else
+			else if (min->key)
 				printf("declare -x %s\n", min->key);
 			min->p_flag = 1;
 		}

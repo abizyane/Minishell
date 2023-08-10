@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 20:17:46 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/06 20:03:50 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:36:03 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	quotes_handler(t_token **head, char *line, int *i)
 		lstadd_token(head, ft_substr(line, (*i), (closed_quotes(line, (*i))
 					- (*i) + 1)));
 	else
-		return ((int)write(2, RED"syntax error!"RST"\n", 25));
+		return ((int)write(2, "syntax error!\n", 15));
 	(*i) = closed_quotes(line, (*i)) + 1;
 	return (0);
 }
