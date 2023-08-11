@@ -15,7 +15,7 @@ NAME = minishell
 CPPFLAGS = -I /goinfre/abizyane/homebrew/opt/readline/include
 LDFLAGS = -L /goinfre/abizyane/homebrew/opt/readline/lib
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g $(CPPFLAGS) #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g $(CPPFLAGS) -fsanitize=address
 
 HEADER = minishell.h
 
