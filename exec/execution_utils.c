@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:47:23 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 10:32:36 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/11 20:27:44 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**ft_arr_dup(char **arr)
 	i = 0;
 	while (arr[i])
 		i++;
-	new = ft_calloc(sizeof(char *) , (i + 1));
+	new = ft_calloc(sizeof(char *), (i + 1));
 	if (!new)
 		return (NULL);
 	i = 0;

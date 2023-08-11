@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:45:57 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 10:19:32 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/11 20:29:42 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,10 @@ int	ft_check_builtin(char *cmd)
 
 void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 {
-	int		input_save;
-	int		output_save;
-	
-	input_save = dup(STDIN_FILENO);
-	output_save = dup(STDOUT_FILENO);
+	int		save[2];
+
+	save[0] = dup(STDIN_FILENO);
+	save[1] = dup(STDOUT_FILENO);
 	if (cmd->redir)
 		redirections(cmd);
 	if (!ft_strcmp(cmd->args[0], "echo"))
@@ -104,7 +103,7 @@ void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 		g_exit_status = unset(cmd, &envi);
 	if (cmd->redir)
 	{
-		dup2(input_save, STDIN_FILENO);
-		dup2(output_save, STDOUT_FILENO);
+		dup2(save[0], STDIN_FILENO);
+		dup2(save[1], STDOUT_FILENO);
 	}
 }

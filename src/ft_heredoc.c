@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 19:00:47 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/10 15:04:24 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/11 20:10:34 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void    *freeptr(char **s)
+void	*freeptr(char **s)
 {
 	if (*s)
 	{
@@ -22,7 +22,7 @@ void    *freeptr(char **s)
 	return (*s);
 }
 
-void    handler(int sig)
+void	handler(int sig)
 {
 	(void)sig;
 	g_rl = 1;
@@ -31,11 +31,11 @@ void    handler(int sig)
 	rl_replace_line("", 0);
 }
 
-int    read_heredoc(t_redir *redir, t_env *env)
+int	read_heredoc(t_redir *redir, t_env *env)
 {
-	char    *line;
-	char    *dlm;
-	int        fd[2];
+	char	*line;
+	char	*dlm;
+	int		fd[2];
 
 	(void)env;
 	dlm = redir->filename;
@@ -77,10 +77,10 @@ void	close_heredoc_fds(t_cmdline *cmd)
 	}
 }
 
-void    open_heredoc(t_cmdline **head, t_env *env)
+void	open_heredoc(t_cmdline **head, t_env *env)
 {
-	t_cmdline    *cmd;
-	t_redir        *redir;
+	t_cmdline	*cmd;
+	t_redir		*redir;
 
 	cmd = *head;
 	while (cmd)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:35 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/10 13:16:38 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/11 20:08:29 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ t_cmdline	*parse_line(char *line, t_env *env)
 {
 	t_token		*token_head;
 	t_cmdline	*cmd;
-	
+
 	token_head = tokenizer(line);
 	if (check_tokens(&token_head) != 0)
 	{

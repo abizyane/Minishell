@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/10 13:28:01 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/11 20:17:59 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**lst_to_arr(t_env *env)
 	tmp = env;
 	while (tmp && ++i)
 		tmp = tmp->nxt;
-	arr = ft_calloc(sizeof(char *) , i + 1);
+	arr = ft_calloc(sizeof(char *), i + 1);
 	i = 0;
 	while (env)
 	{
@@ -132,5 +132,4 @@ int	main(int ac, char *av[], char **env)
 		}
 	}
 	free_env(&env_head);
-	system("leaks minishell");
 }

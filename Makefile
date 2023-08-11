@@ -3,19 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+         #
+#    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/10 10:38:17 by abizyane         ###   ########.fr        #
+#    Updated: 2023/08/11 20:31:20 by ahamrad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CPPFLAGS = -I /goinfre/abizyane/homebrew/opt/readline/include
-LDFLAGS = -L /goinfre/abizyane/homebrew/opt/readline/lib
+CPPFLAGS = -I /goinfre/ahamrad/homebrew/opt/readline/include
+LDFLAGS = -L /goinfre/ahamrad/homebrew/opt/readline/lib
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g $(CPPFLAGS) -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g $(CPPFLAGS) #-fsanitize=address
 
 HEADER = minishell.h
 
@@ -25,6 +25,7 @@ SRC = minishell.c \
 	src/parse.c \
 	src/ft_lst.c \
 	src/ft_lst2.c \
+	src/ft_lst3.c \
 	src/lexical_analyzer.c \
 	src/expander.c \
 	src/redir.c \
@@ -35,6 +36,7 @@ SRC = minishell.c \
 	exec/redirections.c \
 	exec/env_variables.c \
 	exec/signals.c \
+	exec/exit_status.c \
 	builtins/built_echo.c \
 	builtins/built_env.c \
 	builtins/built_exit.c \
