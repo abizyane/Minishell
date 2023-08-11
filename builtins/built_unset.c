@@ -69,8 +69,6 @@ void	clear_env(t_env **env, char *key)
 	}
 }
 
-//TODO: unsetting the head causes abort
-
 int	unset(t_cmdline *cmd, t_env **env)
 {
 	t_env	*var;

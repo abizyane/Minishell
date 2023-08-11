@@ -94,6 +94,14 @@ void	update_shlvl(t_env **env)
 	}
 }
 
+/*
+*	TODO: OLDPWD must be empty!! [in normal case and without environment]
+*	TODO: PWD must be filled even if ENV is unsetted!!
+*	TODO: Heredoc Ctrl+C not working || [Using boolean int to solve problem results] Ctrl+C ==> 'heredoc' ==> continue to exectue command [PROBLEM]
+*	TODO: tests : Error Management [input: $USER | $HOME...] [Mine: minishell: /Users/abizyane: Permission denied || bash: bash: /Users/abizyane: is a directory]
+*	TODO: More Tests Marouane's Norm [Expanding :: expand_env_var(t_token **head, t_env *env)]
+*/
+
 int	main(int ac, char *av[], char **env)
 {
 	char		*line;
