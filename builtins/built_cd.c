@@ -95,7 +95,6 @@ char	*update_pwd(t_env *env, char *nwd)
 	}
 	str = getcwd(NULL, 0);
 	tmp = find_env(env, "OLDPWD");
-	free(tmp->content);
 	tmp->content = find_env(env, "PWD")->content;
 	if (!str)
 	{
