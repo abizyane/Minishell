@@ -52,6 +52,9 @@ char	*remove_ds(char *line, int start)
 	char	*new_line;
 	int		i;
 	int		j;
+	char	*var;
+	int		k;
+	
 
 	new_line = ft_calloc(ft_strlen(line) + 2, sizeof(char));
 	i = 0;
@@ -60,11 +63,11 @@ char	*remove_ds(char *line, int start)
 		new_line[i++] = line[j++];
 	if (line[j + 1] == '?')
 	{
-		char	*var = ft_itoa(g_exit_status);
-		int		k = 0;
+		var = ft_itoa(g_exit_status);
+		k = 0;
 		while (var[k])
 			new_line[i++] = var[k++];
-		free(var);
+		freeptr(&var);
 	}
 	j += 2;
 	while (line[j])
@@ -78,8 +81,9 @@ void	expand_env_var(t_token **head, t_env *env)
 	char	*env_var;
 	int		i;
 	int		j;
-	int		f = 0;
-
+	int		f;
+	
+	f = 0;
 	token = (*head);
 	while (token)
 	{

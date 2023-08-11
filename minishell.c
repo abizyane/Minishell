@@ -40,37 +40,35 @@ char	**lst_to_arr(t_env *env)
 
 	i = 0;
 	tmp = env;
-	while (tmp)
-	{
-		i++;
+	while (tmp && ++i)
 		tmp = tmp->nxt;
-	}
-	arr = ft_calloc(sizeof(char *) , (i));
+	arr = ft_calloc(sizeof(char *) , i + 1);
 	i = 0;
 	while (env)
 	{
 		if (env->key)
 		{
 			tmp2 = ft_strjoin(env->key, "=");
-			arr[i] = ft_strjoin(tmp2, env->content);
+			arr[i++] = ft_strjoin(tmp2, env->content);
 			free(tmp2);
-			i++;
 		}
 		env = env->nxt;
 	}
-	arr[i] = NULL;
 	return (arr);
 }
 
 char	**empty_env(void)
 {
 	char	**env;
+	char	*cwd;
 
+	cwd = getcwd(NULL, 0);
 	env = ft_calloc(4, sizeof(char *));
-	env[0] = ft_strjoin("PWD=", getcwd(NULL, 0));
+	env[0] = ft_strjoin("PWD=", cwd);
 	env[1] = ft_strdup("SHLVL=1");
 	env[2] = ft_strdup("_=/usr/bin/env");
 	env[3] = NULL;
+	freeptr(&cwd);
 	return (env);
 }
 
@@ -104,20 +102,16 @@ int	main(int ac, char *av[], char **env)
 
 	(void)ac;
 	(void)av;
-	if (!env[0]){
+	if (!env[0])
 		env = empty_env();
-	}
 	env_head = lst_env(env);
 	update_shlvl(&env_head);
 	while (1)
 	{
 		sig_handler();
-		line = readline(" -> minishell ");
+		line = readline(" minishell-1.0$ ");
 		if (!line)
-		{
-			ft_putstr_fd("exit\n", STDOUT_FILENO);
-			return (0);
-		}
+			return (ft_putstr_fd("exit\n", STDOUT_FILENO), 0);
 		if (line[0] != '\0' && !check_spaces(line))
 		{
 			add_history(line);
@@ -125,7 +119,10 @@ int	main(int ac, char *av[], char **env)
 			if (!cmd_line)
 				continue ;
 			execution(cmd_line, env_head);
+			close_heredoc_fds(cmd_line);
 			free_cmd(&cmd_line);
 		}
 	}
+	free_env(&env_head);
+	system("leaks minishell");
 }

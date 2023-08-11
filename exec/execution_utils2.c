@@ -12,22 +12,26 @@
 
 #include "../minishell.h"
 
-char	**get_paths_from_env(char **envp)
+char	*free_strjoin(char *s1, char *s2)
 {
-	int		i;
-	char	**paths;
+	size_t	i;
+	size_t	j;
+	size_t	l;
+	char	*dst;
 
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			paths = ft_split(envp[i] + 5, ':');
-			return (paths);
-		}
-		i++;
-	}
-	return (NULL);
+	i = -1;
+	j = -1;
+	if (!s1)
+		return (s2);
+	l = ft_strlen(s1) + ft_strlen(s2);
+	dst = ft_calloc((l + 2), sizeof(char));
+	if (!dst)
+		return (NULL);
+	while (s1[++i])
+		dst[i] = s1[i];
+	while (s2[++j])
+		dst[i + j] = s2[j];
+	return (freeptr(&s1), dst);
 }
 
 char	*get_cmd_path(t_cmdline *cmd, t_env *envp)
@@ -45,7 +49,7 @@ char	*get_cmd_path(t_cmdline *cmd, t_env *envp)
 	while (paths && paths[i])
 	{
 		path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(path, cmd->args[0]);
+		path = free_strjoin(path, cmd->args[0]);
 		if (access(path, F_OK | X_OK) == 0)
 			break ;
 		i++;

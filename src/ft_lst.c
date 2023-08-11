@@ -20,7 +20,7 @@ t_token	*lstnew_token(char *line)
 	if (!new)
 		return (NULL);
 	if (line)
-		new->line = line;
+		new->line = ft_strdup(line);
 	new->nxt = NULL;
 	new->prv = NULL;
 	return (new);
@@ -65,6 +65,7 @@ void	lstclear_tokens(t_token **head)
 	while (tmp)
 	{
 		next = tmp->nxt;
+		freeptr(&tmp->line);
 		free(tmp);
 		tmp = next;
 	}

@@ -69,10 +69,10 @@ t_token	*tokenizer(char *line)
 		else if (is_quotes(arr[i]))
 		{
 			if (quotes_handler(&head, arr, &i))
-				return (lstclear_tokens(&head), NULL);
+				return (freeptr(&arr), NULL);
 		}
 		else
 			char_handler(&head, arr, &i);
 	}
-	return (head);
+	return (freeptr(&arr), head);
 }

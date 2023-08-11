@@ -24,6 +24,7 @@ SRC = minishell.c \
 	src/tokenizer_tools.c \
 	src/parse.c \
 	src/ft_lst.c \
+	src/ft_lst2.c \
 	src/lexical_analyzer.c \
 	src/expander.c \
 	src/redir.c \
@@ -67,5 +68,7 @@ clean:
 fclean: clean
 	make fclean -C ./Libft
 	rm -rf $(NAME)
+
+x: all clean
 
 re: fclean all

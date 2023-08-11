@@ -147,5 +147,8 @@ void		execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f);
 void		free_env(t_env **env);
 void		free_cmd(t_cmdline **cmd);
 void		free_redir(t_redir **redir);
+char		*free_strjoin(char *s1, char *s2);
+int			check_spaces(const char *str);
+void		close_heredoc_fds(t_cmdline *cmd);
 
 #endif

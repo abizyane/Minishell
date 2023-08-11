@@ -24,12 +24,11 @@ void	not_found(char *cmd)
 		ft_putstr_fd(": command not found\n", 2);
 }
 
-//TODO:signals fail when executing a subminishell
 void	local_binary(t_cmdline *cmd, char **envp)
 {
 	if (!cmd->args || !cmd->args[0])
 		exit(EXIT_SUCCESS);
-	if (access(cmd->args[0], X_OK | F_OK) == 0) // | X_OK
+	if (access(cmd->args[0], X_OK | F_OK) == 0)
 	{
 		if (execve(cmd->args[0], cmd->args, envp) == -1)
 		{

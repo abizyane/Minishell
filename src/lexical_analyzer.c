@@ -29,7 +29,7 @@ void	get_type(t_token **head)
 			token->type = redIn;
 		else if (ft_strncmp(token->line, ">", 1) == 0)
 			token->type = redOut;
-		else if (is_whitespace(token->line[0]))
+		else if (check_spaces(token->line))
 			token->type = Space;
 		else
 			token->type = Word;
@@ -88,6 +88,7 @@ void	remove_quotes(t_token **token)
 					new_line[j++] = tmp->line[i];
 				i++;
 			}
+			freeptr(&tmp->line);
 			tmp->line = new_line;
 			tmp->s = 1;
 		}
@@ -103,9 +104,10 @@ void	append_tokens(t_token **token)
 	tmp = (*token);
 	while (tmp)
 	{
-		if (tmp->nxt && tmp->type == Word && tmp->nxt->type == Word && tmp->nxt->s == 0)
+		if (tmp->nxt && tmp->type == Word
+			&& tmp->nxt->type == Word && tmp->nxt->s == 0)
 		{
-			tmp->line = ft_strjoin(tmp->line, tmp->nxt->line);
+			tmp->line = free_strjoin(tmp->line, tmp->nxt->line);
 			nxt_tmp = tmp->nxt;
 			if (tmp->nxt->nxt)
 			{
