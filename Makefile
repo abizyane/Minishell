@@ -6,7 +6,7 @@
 #    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/11 20:31:20 by ahamrad          ###   ########.fr        #
+#    Updated: 2023/08/12 03:01:08 by ahamrad          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC = minishell.c \
 	exec/execution_utils.c \
 	exec/execution_utils2.c \
 	exec/redirections.c \
+	exec/redirections_utils.c \
 	exec/env_variables.c \
 	exec/signals.c \
 	exec/exit_status.c \

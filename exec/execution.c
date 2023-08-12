@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/11 21:11:55 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/12 03:01:27 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	local_binary(t_cmdline *cmd, char **envp)
 {
 	if (!cmd->args || !cmd->args[0])
 		exit(EXIT_SUCCESS);
-	if (access(cmd->args[0], F_OK) == 0)
+	if (access(cmd->args[0], F_OK | X_OK) == 0)
 	{
 		if (execve(cmd->args[0], cmd->args, envp) == -1)
 		{
@@ -44,7 +44,7 @@ void	child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env)
 	signal(SIGQUIT, SIG_DFL);
 	if (!cmd->args || !cmd->args[0])
 		exit(EXIT_SUCCESS);
-	if (cmd->nxt)
+	if (cmd->nxt && redirection_check_out(cmd->redir) == 0)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
@@ -83,7 +83,7 @@ int	execute_command(t_cmdline *cmd, char **envp, t_env *env)
 		redirections(cmd);
 		child_execution(cmd, envp, fd, env);
 	}
-	if (cmd->nxt)
+	if (cmd->nxt && redirection_check_in(cmd->redir) == 0)
 	{
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);

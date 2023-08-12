@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/11 20:30:42 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/12 03:00:48 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,7 @@ int			check_spaces(const char *str);
 void		close_heredoc_fds(t_cmdline *cmd);
 void		get_exit_status(int status);
 int			execute_builtin2(t_cmdline *cmd, t_env *env);
+int			redirection_check_in(t_redir *redir);
+int			redirection_check_out(t_redir *redir);
 
 #endif
