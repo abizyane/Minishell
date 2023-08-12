@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/12 03:00:48 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 13:34:35 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,12 +147,5 @@ void		execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f);
 void		free_env(t_env **env);
 void		free_cmd(t_cmdline **cmd);
 void		free_redir(t_redir **redir);
-char		*free_strjoin(char *s1, char *s2);
-int			check_spaces(const char *str);
-void		close_heredoc_fds(t_cmdline *cmd);
-void		get_exit_status(int status);
-int			execute_builtin2(t_cmdline *cmd, t_env *env);
-int			redirection_check_in(t_redir *redir);
-int			redirection_check_out(t_redir *redir);
 
 #endif

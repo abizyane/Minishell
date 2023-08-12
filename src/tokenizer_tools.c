@@ -37,7 +37,7 @@ int	is_quotes(char c)
 	return (0);
 }
 
-int	closed_quotes(char *str, int i)
+int	closed_quotes(char *str, int i) // returns the index of the other quote
 {
 	char	*tmp;
 	char	c;

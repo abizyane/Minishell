@@ -43,30 +43,19 @@ void	clear_env(t_env **env, char *key)
 	t_env	*next;
 
 	tmp = (*env);
-	if (tmp->nxt)
-		next = (*env)->nxt;
-	if (key && tmp && ft_strcmp(key, tmp->key) == 0)
+	next = (*env)->nxt;
+	while (next && ft_strcmp(next->key, key) != 0)
 	{
-		free(tmp->key);
-		free(tmp->content);
-		free(tmp);
-		(*env) = next;
+		tmp = tmp->nxt;
+		next = tmp->nxt;
 	}
-	else
-	{
-		while (next && ft_strcmp(next->key, key) != 0)
-		{
-			tmp = tmp->nxt;
-			next = tmp->nxt;
-		}
-		tmp->nxt = next->nxt;
-		if (next && next->key)
-			free(next->key);
-		if (next && next->content)
-			free(next->content);
-		if (next)
-			free(next);
-	}
+	tmp->nxt = next->nxt;
+	if (next && next->key)
+		free(next->key);
+	if (next && next->content)
+		free(next->content);
+	if (next)
+		free(next);
 }
 
 int	unset(t_cmdline *cmd, t_env **env)
@@ -76,7 +65,7 @@ int	unset(t_cmdline *cmd, t_env **env)
 
 	i = 1;
 	g_exit_status = 0;
-	if (!cmd->args[i])
+	if (!cmd->args[i] || !(*env))
 		return (EXIT_SUCCESS);
 	while (cmd->args[i])
 	{

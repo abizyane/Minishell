@@ -54,7 +54,6 @@ char	*remove_ds(char *line, int start)
 	int		j;
 	char	*var;
 	int		k;
-	
 
 	new_line = ft_calloc(ft_strlen(line) + 2, sizeof(char));
 	i = 0;
@@ -67,7 +66,7 @@ char	*remove_ds(char *line, int start)
 		k = 0;
 		while (var[k])
 			new_line[i++] = var[k++];
-		freeptr(&var);
+		free(var);
 	}
 	j += 2;
 	while (line[j])
@@ -75,56 +74,14 @@ char	*remove_ds(char *line, int start)
 	return (freeptr(&line), new_line);
 }
 
-
-static int	check_and_expand(t_token *token, t_env *env, int i)
-{
-	char	*env_var;
-	int		j;
-
-	j = 0;
-	if ((ft_isalpha(token->line[i + 1]) || token->line[i + 1] == '_'))
-	{
-		j = 0;
-		i++;
-		while (token->line[i + j] && (ft_isalnum(token->line[i + j]) || token->line[i + j] == '_'))
-			j++;
-		env_var = ft_substr(token->line, i, j);
-		if (!env_var || (token->prv && token->prv->type == Heredoc))
-			return(1) ;
-		token->line = replace_var(env_var, token->line, --i, env);
-	}
-	return (0);
-}
-
-static int	handling(t_token *token, t_env *env, int *i, int *f)
-{
-	if (token->line && token->line[(*i)] == '\'' && (*f) == 0)
-		(*i) = closed_quotes(token->line, (*i)) + 1;
-	else if (token->line[(*i)] == '$' && token->line[(*i) + 1] && (ft_isalpha(token->line[(*i) + 1]) || token->line[(*i) + 1] == '_'))
-	{	
-		if (check_and_expand(token, env, (*i)))
-			return (1);
-	}
-	else if (token->line[(*i)] == '$' && token->line[(*i) + 1] && (ft_isdigit(token->line[(*i) + 1]) || token->line[(*i) + 1] == '?'))
-		token->line = remove_ds(token->line, (*i));
-	else
-	{
-		if (token->line && token->line[(*i)] == '\"')
-			(*f)++;
-		if (token->line && token->line[(*i)] == '\"' && (*f) == 2)
-			(*f) = 0;
-		(*i)++;
-	}
-	return (0);
-}
-
 void	expand_env_var(t_token **head, t_env *env)
 {
 	t_token	*token;
+	char	*env_var;
 	int		i;
-	int		f;
-	
-	f = 0;
+	int		j;
+	int		f = 0;
+
 	token = (*head);
 	while (token)
 	{
@@ -132,58 +89,36 @@ void	expand_env_var(t_token **head, t_env *env)
 		{
 			i = 0;
 			while (token->line && token->line[i])
-				if (handling(token, env, &i, &f))
-					continue;
+			{
+				if (token->line && token->line[i] == '\'' && f == 0)
+					i = closed_quotes(token->line, i) + 1;
+				else if (token->line[i] == '$' && token->line[i + 1] && (ft_isalpha(token->line[i + 1]) || token->line[i + 1] == '_'))
+				{
+					j = 0;
+					i++;
+					while (token->line[i + j] && (ft_isalnum(token->line[i + j]) || token->line[i + j] == '_'))
+						j++;
+					env_var = ft_substr(token->line, i, j);
+					if (!env_var || (token->prv && token->prv->type == Heredoc))
+						continue ;
+					token->line = replace_var(env_var, token->line, --i, env);
+					freeptr(&env_var);
+				}
+				else if (token->line[i] == '$' && token->line[i + 1] && (ft_isdigit(token->line[i + 1]) || token->line[i + 1] == '?'))
+					token->line = remove_ds(token->line, i);
+				else
+				{
+					if (token->line && token->line[i] == '\"')
+						f++;
+					if (token->line && token->line[i] == '\"' && f == 2)
+						f = 0;
+					i++;
+				}
+			}
 		}
 		token = token->nxt;
 	}
 }
-
-// void	expand_env_var(t_token **head, t_env *env)
-// {
-// 	t_token	*token;
-// 	char	*env_var;
-// 	int		i;
-// 	int		j;
-// 	int		f;
-	
-// 	f = 0;
-// 	token = (*head);
-// 	while (token)
-// 	{
-// 		if (token->type == Word)
-// 		{
-// 			i = 0;
-// 			while (token->line && token->line[i])
-// 			{
-// 				if (token->line && token->line[i] == '\'' && f == 0)
-// 					i = closed_quotes(token->line, i) + 1;
-// 				else if (token->line[i] == '$' && token->line[i + 1] && (ft_isalpha(token->line[i + 1]) || token->line[i + 1] == '_'))
-// 				{
-// 					j = 0;
-// 					i++;
-// 					while (token->line[i + j] && (ft_isalnum(token->line[i + j]) || token->line[i + j] == '_'))
-// 						j++;
-// 					env_var = ft_substr(token->line, i, j);
-// 					if (!env_var || (token->prv && token->prv->type == Heredoc))
-// 						continue ;
-// 					token->line = replace_var(env_var, token->line, --i, env);
-// 				}
-// 				else if (token->line[i] == '$' && token->line[i + 1] && (ft_isdigit(token->line[i + 1]) || token->line[i + 1] == '?'))
-// 					token->line = remove_ds(token->line, i);
-// 				else
-// 				{
-// 					if (token->line && token->line[i] == '\"')
-// 						f++;
-// 					if (token->line && token->line[i] == '\"' && f == 2)
-// 						f = 0;
-// 					i++;
-// 				}
-// 			}
-// 		}
-// 		token = token->nxt;
-// 	}
-// }
 
 char	*expand_vars(char *line, t_env *env)
 {
@@ -205,6 +140,7 @@ char	*expand_vars(char *line, t_env *env)
 			if (!var)
 				continue ;
 			line = replace_var(var, line, --i, env);
+			free (var);
 		}
 		else if (line[i] == '$' && line[i + 1] && (ft_isdigit(line[i + 1]) || line[i + 1] == '?'))
 			line = remove_ds(line, i);

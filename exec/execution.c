@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/12 03:01:27 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 10:22:22 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,33 @@ void	not_found(char *cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
-	if (ft_strchr(cmd, '/') && access(cmd, F_OK) == 0 && access(cmd, X_OK) == -1)
-		ft_putstr_fd(": Permission denied\n", 2);
-	else if (ft_strchr(cmd, '/') && access(cmd, F_OK) == -1)
+	if (ft_strchr(cmd, '/'))
+	{
 		ft_putstr_fd(": No such file or directory\n", 2);
+	}
 	else
 		ft_putstr_fd(": command not found\n", 2);
 }
 
+//TODO:signals fail when executing a subminishell
 void	local_binary(t_cmdline *cmd, char **envp)
 {
+	struct stat s;
+
+	stat(cmd->args[0], &s);
 	if (!cmd->args || !cmd->args[0])
 		exit(EXIT_SUCCESS);
-	if (access(cmd->args[0], F_OK | X_OK) == 0)
+	if (access(cmd->args[0], X_OK | F_OK) == 0)
 	{
 		if (execve(cmd->args[0], cmd->args, envp) == -1)
 		{
-			not_found(cmd->args[0]);
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd->args[0], 2);
+
+			if (S_ISDIR(s.st_mode))
+				ft_putstr_fd(": is a directory\n", 2);
+			else
+				ft_putstr_fd(": Permission denied\n", 2);
 			exit(126);
 		}
 	}
@@ -44,7 +54,7 @@ void	child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env)
 	signal(SIGQUIT, SIG_DFL);
 	if (!cmd->args || !cmd->args[0])
 		exit(EXIT_SUCCESS);
-	if (cmd->nxt && redirection_check_out(cmd->redir) == 0)
+	if (cmd->nxt)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
@@ -83,7 +93,7 @@ int	execute_command(t_cmdline *cmd, char **envp, t_env *env)
 		redirections(cmd);
 		child_execution(cmd, envp, fd, env);
 	}
-	if (cmd->nxt && redirection_check_in(cmd->redir) == 0)
+	if (cmd->nxt)
 	{
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
@@ -92,6 +102,29 @@ int	execute_command(t_cmdline *cmd, char **envp, t_env *env)
 	else
 		close(STDIN_FILENO);
 	return (pid);
+}
+
+void	get_exit_status(int status)
+{
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+	{
+		g_exit_status = 128 + WTERMSIG(status);
+		if (g_exit_status == 131)
+			ft_putstr_fd("Quit: 3\n", 1);
+	}
+}
+int	execute_builtin2(t_cmdline *cmd, t_env *env)
+{
+	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
+	{
+		execute_builtin(cmd, env, 1);
+		g_rl = 0;
+		return (1);
+	}
+	else
+		return (0);
 }
 
 void	execution(t_cmdline *cmd, t_env *env)

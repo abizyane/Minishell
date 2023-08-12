@@ -19,36 +19,38 @@ int	ft_check_digit(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] >= '0' && str[i] <= '9')
+		if (str[0] == '+' && str[0] == '-')
+			i++;
+		else if (str[i] >= '0' && str[i] <= '9')
 			i++;
 		else
 			return (1);
 	}
 	return (0);
 }
-
+// TODO: needs refactor
 int	ft_exit(t_cmdline *cmd, int f)
 {
-	if (cmd->args[1] && (ft_check_digit(cmd->args[1]) == 1 || (ft_strlen(cmd->args[1]) >= 19 || (cmd->args[1][18] && cmd->args[1][18] > '7'))))
+	if (!cmd->args[1])
 	{
 		if (f == 1)
-			printf("exit\n");
-		printf("minishell: exit: %s: numeric argument required\n", cmd->args[1]);
+			ft_putstr_fd("exit\n", 1);
+		g_exit_status = 0;
+	}
+	if (cmd->args[1] && ft_check_digit(cmd->args[1]) == 1)
+	{
+		if (f == 1)
+			ft_putstr_fd("exit\n", 1);
+		ft_putstr_fd("minishell: exit: %s: numeric argument required\n", 2);
 		g_exit_status = 255;
 		exit(g_exit_status);
 	}
 	if (array_len(cmd->args) > 2)
 	{
 		if (f == 1)
-			printf("exit\n");
-		printf("minishell: exit: too many arguments\n");
+			ft_putstr_fd("exit\n", 1);
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		return (1);
-	}
-	if (!cmd->args[1])
-	{
-		if (f == 1)
-			printf("exit\n");
-		g_exit_status = 0;
 	}
 	if (cmd->args[1] && ft_check_digit(cmd->args[1]) == 0)
 	{
@@ -56,8 +58,45 @@ int	ft_exit(t_cmdline *cmd, int f)
 		if (g_exit_status >= 256)
 			g_exit_status = g_exit_status % 256;
 		if (f == 1)
-			printf("exit\n");
+			ft_putstr_fd("exit\n", 1);
+		if (ft_check_digit(cmd->args[1]) == 0 && (cmd->args[1][0] == '+' || cmd->args[1][0] == '-'))
+			g_exit_status = 100;
 	}
 	exit(g_exit_status);
 	return (0);
 }
+
+// int	ft_exit(t_cmdline *cmd, int f)
+// {
+
+// 	if (array_len(cmd->args) > 2)
+// 	{
+// 		if (f == 1)
+// 			printf("exit\n");
+// 		printf("minishell: exit: too many arguments\n");
+// 		return (1);
+// 	}
+// 	else if (!cmd->args[1])
+// 	{
+// 		if (f == 1)
+// 			printf("exit\n");
+// 		g_exit_status = 0;
+// 	}
+// 	else if (cmd->args[1] && ft_check_digit(cmd->args[1]) == 0)
+// 	{
+// 		g_exit_status = ft_atoi(cmd->args[1]);
+// 		if (g_exit_status >= 256)
+// 			g_exit_status = g_exit_status % 256;
+// 		if (f == 1)
+// 			printf("exit\n");
+// 	}
+// 	else if (cmd->args[1] && (ft_check_digit(cmd->args[1]) == 1 || (ft_strlen(cmd->args[1]) >= 19 || (cmd->args[1][18] && cmd->args[1][18] > '7'))))
+// 	{
+// 		printf("minishell: exit: %s: numeric argument required\n", cmd->args[1]);
+// 		g_exit_status = 255;
+// 	}
+	
+// 	exit(g_exit_status);
+// 	return (0);
+// }
+

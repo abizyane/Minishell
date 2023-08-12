@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:45:57 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/12 02:51:21 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 10:19:32 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,24 @@ char	*free_strjoin(char *s1, char *s2)
 	return (freeptr(&s1), dst);
 }
 
+char	**get_paths_from_env(char **envp)
+{
+	int		i;
+	char	**paths;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			paths = ft_split(envp[i] + 5, ':');
+			return (paths);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
 char	*get_cmd_path(t_cmdline *cmd, t_env *envp)
 {
 	char	*path;
@@ -46,6 +64,8 @@ char	*get_cmd_path(t_cmdline *cmd, t_env *envp)
 	if (!cmd->args || !cmd->args[0])
 		return (NULL);
 	paths = ft_split(find_var(envp, "PATH"), ':');
+	if (!paths)
+		return (NULL);
 	while (paths && paths[i])
 	{
 		path = ft_strjoin(paths[i], "/");
@@ -53,9 +73,8 @@ char	*get_cmd_path(t_cmdline *cmd, t_env *envp)
 		if (access(path, F_OK | X_OK) == 0)
 			break ;
 		i++;
+		free(path);
 	}
-	if (!paths || !paths[i])
-		return (NULL);
 	free_arr(paths);
 	return (path);
 }
@@ -81,10 +100,11 @@ int	ft_check_builtin(char *cmd)
 
 void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 {
-	int		save[2];
-
-	save[0] = dup(STDIN_FILENO);
-	save[1] = dup(STDOUT_FILENO);
+	int		input_save;
+	int		output_save;
+	
+	input_save = dup(STDIN_FILENO);
+	output_save = dup(STDOUT_FILENO);
 	if (cmd->redir)
 		redirections(cmd);
 	if (!ft_strcmp(cmd->args[0], "echo"))
@@ -103,7 +123,7 @@ void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 		g_exit_status = unset(cmd, &envi);
 	if (cmd->redir)
 	{
-		dup2(save[0], STDIN_FILENO);
-		dup2(save[1], STDOUT_FILENO);
+		dup2(input_save, STDIN_FILENO);
+		dup2(output_save, STDOUT_FILENO);
 	}
 }

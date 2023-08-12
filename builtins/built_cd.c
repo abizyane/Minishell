@@ -80,18 +80,19 @@ char	*update_pwd(t_env *env, char *nwd)
 {
 	char	*str;
 	t_env	*tmp;
+	char	*pwd[2];
 
 	if (!find_var(env, "PWD"))
 	{
-		char	*arr[2] = {"PWD",
-					getcwd(NULL, 1024)};
-		env_add_back(&env, arr);
+		pwd[0] = ft_strdup("PWD");
+		pwd[1] = getcwd(NULL, 0);
+		env_add_back(&env, pwd);
 	}
 	if (!find_var(env, "OLDPWD"))
 	{
-		char	*arrr[2] = {"OLDPWD",
-						find_var(env, "PWD")};
-		env_add_back(&env, arrr);
+		pwd[0] = ft_strdup("OLDPWD"),
+		pwd[1] = ft_strdup(find_var(env, "PWD"));
+		env_add_back(&env, pwd);
 	}
 	str = getcwd(NULL, 0);
 	tmp = find_env(env, "OLDPWD");
@@ -126,6 +127,7 @@ int	cd(t_cmdline *cmd, t_env *env)
 			tmp = getcwd(NULL, 0);
 			if (chdir(update_pwd(env, cmd->args[1])) == -1 || !tmp)
 				cd_error(cmd->args[1], 1);
+			free(tmp);
 			return (EXIT_SUCCESS);
 		}
 		else

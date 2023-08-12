@@ -30,7 +30,7 @@ int	quotes_handler(t_token **head, char *line, int *i)
 		lstadd_token(head, ft_substr(line, (*i), (closed_quotes(line, (*i))
 					- (*i) + 1)));
 	else
-		return ((int)write(2, "syntax error!\n", 15));
+		return ((int)write(2, "syntax error! `unmatched quotes'\n", 34));
 	(*i) = closed_quotes(line, (*i)) + 1;
 	return (0);
 }
@@ -59,7 +59,8 @@ t_token	*tokenizer(char *line)
 
 	i = 0;
 	arr = ft_strtrim(line, " ");
-	head = ft_calloc(sizeof(t_token), 1);
+	// head = ft_calloc(sizeof(t_token), 1);
+	head = NULL;
 	while (arr[i])
 	{
 		if (is_whitespace(arr[i]))
@@ -69,10 +70,10 @@ t_token	*tokenizer(char *line)
 		else if (is_quotes(arr[i]))
 		{
 			if (quotes_handler(&head, arr, &i))
-				return (freeptr(&arr), NULL);
+				return (lstclear_tokens(&head), NULL);
 		}
 		else
 			char_handler(&head, arr, &i);
 	}
-	return (freeptr(&arr), head);
+	return (free(arr), head);
 }

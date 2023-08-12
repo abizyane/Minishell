@@ -12,50 +12,90 @@
 
 #include "../minishell.h"
 
-void	free_redir(t_redir **redir)
+t_redir	*lstnew_redir(t_token *token)
+{
+	t_redir	*redir;
+
+	redir = ft_calloc(1, sizeof(t_redir));
+	if (!redir)
+		return (NULL);
+	redir->type = token->type;
+	redir->nxt = NULL;
+	return (redir);
+}
+
+void	lstadd_redir(t_redir **head, t_token *token)
+{
+	t_redir	*new;
+	t_redir	*tmp;
+
+	new = lstnew_redir(token);
+	tmp = *head;
+	if (!tmp)
+		(*head) = new;
+	else
+	{
+		while (tmp && tmp->nxt)
+			tmp = tmp->nxt;
+		tmp->nxt = new;
+	}
+}
+
+t_redir	*last_redir(t_redir *head)
 {
 	t_redir	*tmp;
 
-	while (*redir)
-	{
-		tmp = *redir;
-		*redir = (*redir)->nxt;
-		free(tmp->filename);
-		free(tmp);
-	}
-	*redir = NULL;
+	tmp = head;
+	if (!head || !tmp->nxt)
+		return (head);
+	while (tmp->nxt)
+		tmp = tmp->nxt;
+	return (tmp);
 }
 
-void	free_cmd(t_cmdline **cmd)
+t_cmdline	*lstnew_command(char *cmd, int size)
+{
+	t_cmdline	*command;
+
+	command = ft_calloc(1, sizeof(t_cmdline));
+	if (!command)
+		return (NULL);
+	command->nxt = NULL;
+	command->prv = NULL;
+	command->redir = NULL;
+	command->args = NULL;
+	if (cmd)
+	{
+		command->args = ft_calloc(size, sizeof(char *));
+		command->args[0] = cmd;
+	}
+	return (command);
+}
+
+t_cmdline	*last_command(t_cmdline *head)
 {
 	t_cmdline	*tmp;
 
-	while (*cmd)
-	{
-		tmp = *cmd;
-		*cmd = (*cmd)->nxt;
-		if (tmp->path)
-			free(tmp->path);
-		if (tmp->args)
-			free_arr(tmp->args);
-		if (tmp->redir)
-			free_redir(&tmp->redir);
-		free(tmp);
-	}
-	*cmd = NULL;
+	tmp = head;
+	if (!head || !tmp->nxt)
+		return (head);
+	while (tmp && tmp->nxt)
+		tmp = tmp->nxt;
+	return (tmp);
 }
 
-void	free_tokens(t_token **token)
+void	lstadd_command(t_cmdline **head, char *cmd, int size)
 {
-	t_token	*tmp;
+	t_cmdline	*new;
+	t_cmdline	*tmp;
 
-	while (*token)
+	new = lstnew_command(cmd, size);
+	if (!(*head))
+		(*head) = new;
+	else
 	{
-		tmp = *token;
-		*token = (*token)->nxt;
-		if (tmp->line)
-			free(tmp->line);
-		free(tmp);
+		tmp = last_command(*head);
+		tmp->nxt = new;
+		new->prv = tmp;
 	}
-	*token = NULL;
 }

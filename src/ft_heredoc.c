@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 19:00:47 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/11 20:10:34 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 15:04:24 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	*freeptr(char **s)
 void	handler(int sig)
 {
 	(void)sig;
-	g_rl = 1;
+	g_rl = 2;
 	rl_on_new_line();
-	ioctl(0, TIOCSTI, "\4");
 	rl_replace_line("", 0);
+	ioctl(0, TIOCSTI, "\4");
 }
 
 int	read_heredoc(t_redir *redir, t_env *env)
@@ -41,9 +41,9 @@ int	read_heredoc(t_redir *redir, t_env *env)
 	dlm = redir->filename;
 	if (pipe(fd) == -1)
 		return (perror("minishell"), -1);
-	signal(SIGINT, handler);
 	while (1)
 	{
+		signal(SIGINT, handler);
 		line = readline("> ");
 		if (!line || !ft_strcmp(line, dlm))
 			break ;
@@ -56,25 +56,6 @@ int	read_heredoc(t_redir *redir, t_env *env)
 	freeptr(&line);
 	close(fd[1]);
 	return (fd[0]);
-}
-
-void	close_heredoc_fds(t_cmdline *cmd)
-{
-	t_cmdline	*p;
-	t_redir		*q;
-
-	p = cmd;
-	while (p)
-	{
-		q = p->redir;
-		while (q)
-		{
-			if (q->type == Heredoc)
-				close(q->fd);
-			q = q->nxt;
-		}
-		p = p->nxt;
-	}
 }
 
 void	open_heredoc(t_cmdline **head, t_env *env)
@@ -94,9 +75,10 @@ void	open_heredoc(t_cmdline **head, t_env *env)
 				if (redir->fd == -1)
 					return ;
 			}
+			else if (g_rl == 2)
+				return ;
 			redir = redir->nxt;
 		}
 		cmd = cmd->nxt;
 	}
-	g_rl = 0;
 }

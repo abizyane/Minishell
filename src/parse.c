@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:35 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/11 20:08:29 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/10 13:16:38 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,13 @@ void	get_token_type(t_token **head)
 t_cmdline	*parse_line(char *line, t_env *env)
 {
 	t_token		*token_head;
-	t_cmdline	*cmd;
+	t_cmdline	*cmd = NULL;
 
 	token_head = tokenizer(line);
 	if (check_tokens(&token_head) != 0)
 	{
-		g_exit_status = 1;
-		return (lstclear_tokens(&token_head), NULL);
+		g_exit_status = 2;
+		return (lstclear_tokens(&token_head),NULL);
 	}
 	expand_env_var(&token_head, env);
 	remove_quotes(&token_head);
