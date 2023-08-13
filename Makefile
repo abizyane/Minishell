@@ -31,7 +31,9 @@ SRC = minishell.c \
 	exec/execution.c \
 	exec/execution_utils.c \
 	exec/execution_utils2.c \
+	exec/exit_status.c \
 	exec/redirections.c \
+	exec/redirections_utils.c \
 	exec/env_variables.c \
 	exec/signals.c \
 	builtins/built_echo.c \

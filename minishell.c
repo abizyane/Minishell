@@ -121,17 +121,17 @@ int	main(int ac, char *av[], char **env)
 		{
 			add_history(line);
 			cmd_line = parse_line(line, env_head);
-			freeptr(&line);
-			free(line);
 			if (!cmd_line || g_rl == 2)
 			{
 				if (g_rl == 2)
 					g_rl = 0;
+				freeptr(&line);
 				continue ;
 			}
 			execution(cmd_line, env_head);
 			free_cmd(&cmd_line);
 		}
+		freeptr(&line);
 	}
 	free_env(&env_head);
 }

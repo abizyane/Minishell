@@ -45,7 +45,7 @@ char	*str_join(char *s1, char *s2)
 		dst[i++] = '/';
 	while (s2[++j])
 		dst[i + j] = s2[j];
-	return (dst);
+	return (freeptr(&s1) , dst);
 }
 
 char	*get_home(t_env *env)
@@ -82,28 +82,34 @@ char	*update_pwd(t_env *env, char *nwd)
 	t_env	*tmp;
 	char	*pwd[2];
 
+	if (!find_var(env, "OLDPWD"))
+	{
+
+		pwd[0] = ft_strdup("OLDPWD");
+		pwd[1] = find_var(env, "PWD");
+		env_add_back(&env, pwd);
+	}
 	if (!find_var(env, "PWD"))
 	{
 		pwd[0] = ft_strdup("PWD");
 		pwd[1] = getcwd(NULL, 0);
 		env_add_back(&env, pwd);
 	}
-	if (!find_var(env, "OLDPWD"))
-	{
-		pwd[0] = ft_strdup("OLDPWD"),
-		pwd[1] = ft_strdup(find_var(env, "PWD"));
-		env_add_back(&env, pwd);
-	}
-	str = getcwd(NULL, 0);
 	tmp = find_env(env, "OLDPWD");
 	tmp->content = find_env(env, "PWD")->content;
+	str = getcwd(NULL, 0);
 	if (!str)
 	{
 		tmp = find_env(env, "PWD");
 		tmp->content = str_join(tmp->content, nwd);
 		return (nwd);
 	}
-	find_env(env, "PWD")->content = str;
+	else
+	{
+		// if (find_var(env, "PWD"))
+		// 	freeptr(&find_env(env, "PWD")->content);
+		find_env(env, "PWD")->content = str;
+	}
 	return (nwd);
 }
 
@@ -136,7 +142,10 @@ int	cd(t_cmdline *cmd, t_env *env)
 			{
 				free (cmd->args[1]);
 				cmd->args[1] = find_var(env, "OLDPWD");
-				ft_putendl_fd(cmd->args[1], STDOUT_FILENO);
+				if (!cmd->args[1])
+					ft_putendl_fd("minishell: cd: OLDPWD not set", STDERR_FILENO);
+				else
+					ft_putendl_fd(cmd->args[1], STDOUT_FILENO);
 			}
 			else if (cmd->args[1][0] == '~')
 			{
@@ -144,7 +153,7 @@ int	cd(t_cmdline *cmd, t_env *env)
 				free (cmd->args[1]);
 				cmd->args[1] = home;
 			}
-			if (chdir(cmd->args[1]) == -1)
+			if (cmd->args[1] && chdir(cmd->args[1]) == -1)
 				return (cd_error(cmd->args[1], 2), EXIT_FAILURE);
 			(void)update_pwd(env, cmd->args[1]);
 			return (EXIT_SUCCESS);

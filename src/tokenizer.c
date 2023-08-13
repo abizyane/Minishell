@@ -59,7 +59,6 @@ t_token	*tokenizer(char *line)
 
 	i = 0;
 	arr = ft_strtrim(line, " ");
-	// head = ft_calloc(sizeof(t_token), 1);
 	head = NULL;
 	while (arr[i])
 	{
@@ -70,7 +69,7 @@ t_token	*tokenizer(char *line)
 		else if (is_quotes(arr[i]))
 		{
 			if (quotes_handler(&head, arr, &i))
-				return (lstclear_tokens(&head), NULL);
+				return (freeptr(&arr), lstclear_tokens(&head), NULL);
 		}
 		else
 			char_handler(&head, arr, &i);

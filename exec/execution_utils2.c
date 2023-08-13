@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:45:57 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 10:19:32 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/13 11:58:00 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,37 @@ void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 	output_save = dup(STDOUT_FILENO);
 	if (cmd->redir)
 		redirections(cmd);
+	if (!ft_strcmp(cmd->args[0], "echo"))
+		g_exit_status = echo(cmd);
+	if (!ft_strcmp(cmd->args[0], "pwd"))
+		g_exit_status = pwd(cmd, envi);
+	if (!ft_strcmp(cmd->args[0], "env"))
+		g_exit_status = env(cmd, envi);
+	if (!ft_strcmp(cmd->args[0], "cd"))
+		g_exit_status = cd(cmd, envi);
+	if (!ft_strcmp(cmd->args[0], "exit"))
+		g_exit_status = ft_exit(cmd, exit_f);
+	if (!ft_strcmp(cmd->args[0], "export"))
+		g_exit_status = ft_export(cmd, &envi);
+	if (!ft_strcmp(cmd->args[0], "unset"))
+		g_exit_status = unset(cmd, &envi);
+	if (cmd->redir)
+	{
+		dup2(input_save, STDIN_FILENO);
+		dup2(output_save, STDOUT_FILENO);
+	}
+}
+
+void	exec_builtin_redir(t_cmdline *cmd, t_env *envi, int exit_f)
+{
+	int		input_save;
+	int		output_save;
+	
+	input_save = dup(STDIN_FILENO);
+	output_save = dup(STDOUT_FILENO);
+	if (cmd->redir)
+		if (handle_builtin_redir(cmd) == 0)
+			return ;
 	if (!ft_strcmp(cmd->args[0], "echo"))
 		g_exit_status = echo(cmd);
 	if (!ft_strcmp(cmd->args[0], "pwd"))

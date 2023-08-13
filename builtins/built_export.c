@@ -78,21 +78,21 @@ void	update_var(t_env **env, char **new_var)
 	t_env	*var;
 
 	var = find_env(*env, new_var[0]);
-	if (!var)
-		return ;
 	if (var->content && new_var[1])
 	{
-		free (var->content);
-		var->content = NULL;
+		freeptr(&var->content);
 		var->content = new_var[1];
 		return ;
 	}
-	else 
+	else
 	{
 		if (new_var[1])
-			var->content = ft_strdup(new_var[1]);
-		else
+			var->content = new_var[1];
+		else if (!new_var[1] && ft_strcmp(var->content, ""))
+		{
+			freeptr(&var->content);
 			var->content = ft_strdup("");
+		}
 	}
 }
 
@@ -104,21 +104,23 @@ void	add_var(t_env **env, char *new_var)
 	int		j;
 
 	tmp = (*env);
-	str = ft_calloc(3, sizeof(char *));
-	if (!str)
-		return ;
 	i = check_syntax(new_var);
+	if (!i)
+		return ;
+	str = ft_calloc(3, sizeof(char *));
 	str[0] = ft_substr(new_var, 0, i);
+	str[1] = NULL;
 	j = ++i;
 	while (new_var[j - 1] == '=' && new_var[i])
 		i++;
 	if (new_var[j - 1] == '=' && new_var[j])
 		str[1] = ft_substr(new_var, j, i);
-	else if (new_var[j - 1] == '=' && !new_var[i])
-		str[1] = NULL;
 	tmp = find_env(*env, str[0]);
 	if (tmp)
+	{
 		update_var(env, str);
+		free (str[0]);
+	}
 	else
 		env_add_back(env, str);
 	free(str);

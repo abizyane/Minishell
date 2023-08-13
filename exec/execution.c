@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 10:22:22 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/13 12:45:53 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env)
 		close(fd[1]);
 		close(fd[0]);
 	}
+	if (cmd->redir)
+		redirections(cmd);
 	if (ft_check_builtin(cmd->args[0]) == 1)
 	{
 		execute_builtin(cmd, env, 0);
@@ -90,7 +92,8 @@ int	execute_command(t_cmdline *cmd, char **envp, t_env *env)
 		perror("fork");
 	if (pid == 0)
 	{
-		redirections(cmd);
+		if (cmd->redir)
+			redirections(cmd);
 		child_execution(cmd, envp, fd, env);
 	}
 	if (cmd->nxt)
@@ -104,27 +107,31 @@ int	execute_command(t_cmdline *cmd, char **envp, t_env *env)
 	return (pid);
 }
 
-void	get_exit_status(int status)
+int	handle_builtin_redir(t_cmdline *cmd)
 {
-	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
+	t_redir	*tmp;
+
+	tmp = cmd->redir;
+	while (tmp)
 	{
-		g_exit_status = 128 + WTERMSIG(status);
-		if (g_exit_status == 131)
-			ft_putstr_fd("Quit: 3\n", 1);
+		if (tmp->type == redOut || tmp->type == redApp)
+		{
+			if (handle_outfile(tmp) == 0) 
+				return (0);
+		}
+		else if (tmp->type == redIn)
+		{
+			if (handle_infile(tmp) == 0)
+				return (0);
+		}
+		else if (tmp->type == Heredoc)
+		{
+			dup2(tmp->fd, STDIN_FILENO);
+			close(tmp->fd);
+		}
+		tmp = tmp->nxt;
 	}
-}
-int	execute_builtin2(t_cmdline *cmd, t_env *env)
-{
-	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
-	{
-		execute_builtin(cmd, env, 1);
-		g_rl = 0;
-		return (1);
-	}
-	else
-		return (0);
+	return (1);
 }
 
 void	execution(t_cmdline *cmd, t_env *env)
@@ -137,6 +144,12 @@ void	execution(t_cmdline *cmd, t_env *env)
 	envp = lst_to_arr(env);
 	g_rl = 1;
 	input_save = dup(STDIN_FILENO);
+	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1 && cmd->redir)
+	{
+		exec_builtin_redir(cmd, env, 1);
+		free_arr(envp);
+		return ;
+	}
 	if (execute_builtin2(cmd, env) == 1)
 	{
 		free_arr(envp);

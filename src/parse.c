@@ -122,7 +122,7 @@ t_cmdline	*parse_line(char *line, t_env *env)
 	token_head = tokenizer(line);
 	if (check_tokens(&token_head) != 0)
 	{
-		g_exit_status = 2;
+		g_exit_status = 258;
 		return (lstclear_tokens(&token_head),NULL);
 	}
 	expand_env_var(&token_head, env);

@@ -147,5 +147,12 @@ void		execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f);
 void		free_env(t_env **env);
 void		free_cmd(t_cmdline **cmd);
 void		free_redir(t_redir **redir);
+char		*free_strjoin(char *s1, char *s2);
+int			execute_builtin2(t_cmdline *cmd, t_env *env);
+void		get_exit_status(int status);
+void		exec_builtin_redir(t_cmdline *cmd, t_env *envi, int exit_f);
+int			handle_outfile(t_redir *tmp);
+int			handle_infile(t_redir *tmp);
+int			handle_builtin_redir(t_cmdline *cmd);
 
 #endif

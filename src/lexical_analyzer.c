@@ -106,7 +106,7 @@ void	append_tokens(t_token **token)
 	{
 		if (tmp->nxt && tmp->type == Word && tmp->nxt->type == Word && tmp->nxt->s == 0)
 		{
-			tmp->line = ft_strjoin(tmp->line, tmp->nxt->line);
+			tmp->line = free_strjoin(tmp->line, tmp->nxt->line);
 			nxt_tmp = tmp->nxt;
 			if (tmp->nxt->nxt)
 			{

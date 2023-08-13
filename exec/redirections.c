@@ -6,7 +6,7 @@
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 23:29:11 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 17:33:27 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/13 08:45:08 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	handle_outfile(t_redir *tmp)
 {
 	if (tmp->type == redOut)
 	{
-		tmp->fd = open(tmp->filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		tmp->fd = open(tmp->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (tmp->fd < 0)
 			return (permission_denied(tmp->filename), 0);
 		dup2(tmp->fd, STDOUT_FILENO);
@@ -34,7 +34,7 @@ int	handle_outfile(t_redir *tmp)
 	}
 	else if (tmp->type == redApp)
 	{
-		tmp->fd = open(tmp->filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		tmp->fd = open(tmp->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (tmp->fd < 0)
 			return (permission_denied(tmp->filename), 0);
 		dup2(tmp->fd, STDOUT_FILENO);
