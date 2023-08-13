@@ -113,10 +113,8 @@ int	main(int ac, char *av[], char **env)
 	{
 		sig_handler();
 		line = readline(" -> minishell ");
-		if (!line){
-			free_env(&env_head);
-			return (ft_putstr_fd("exit\n", STDOUT_FILENO), 0);
-		}
+		if (!line)
+			return (free_env(&env_head), ft_putstr_fd("exit\n", 1), 0);
 		if (line[0] != '\0' && !check_spaces(line))
 		{
 			add_history(line);

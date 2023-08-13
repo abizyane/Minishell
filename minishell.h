@@ -134,7 +134,7 @@ int			echo_option(char *arg);
 char		*find_var(t_env *head, char *env_var);
 t_env		*lst_env(char **env);
 int			ft_exit(t_cmdline *cmd, int f);
-int			env(t_cmdline *cmd, t_env *env);
+int			ft_env(t_cmdline *cmd, t_env *env);
 int			cd(t_cmdline *cmd, t_env *env);
 int			ft_export(t_cmdline *cmd, t_env **env);
 int			unset(t_cmdline *cmd, t_env **env);

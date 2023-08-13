@@ -76,88 +76,56 @@ t_env	*find_env(t_env *head, char *key)
 	return (NULL);
 }
 
-char	*update_pwd(t_env *env, char *nwd)
+void	update_pwd(t_env *env, char *nwd)
 {
-	char	*str;
-	t_env	*tmp;
 	char	*pwd[2];
 
-	if (!find_var(env, "OLDPWD"))
-	{
-
-		pwd[0] = ft_strdup("OLDPWD");
-		pwd[1] = find_var(env, "PWD");
-		env_add_back(&env, pwd);
-	}
-	if (!find_var(env, "PWD"))
+	pwd[1] = NULL;
+	if (!find_env(env, "PWD"))
 	{
 		pwd[0] = ft_strdup("PWD");
-		pwd[1] = getcwd(NULL, 0);
 		env_add_back(&env, pwd);
 	}
-	tmp = find_env(env, "OLDPWD");
-	tmp->content = find_env(env, "PWD")->content;
-	str = getcwd(NULL, 0);
-	if (!str)
+	if (!find_env(env, "OLDPWD"))
 	{
-		tmp = find_env(env, "PWD");
-		tmp->content = str_join(tmp->content, nwd);
-		return (nwd);
+		pwd[0] = ft_strdup("OLDPWD");
+		env_add_back(&env, pwd);
 	}
-	else
+	if (find_env(env, "PWD")->content)
 	{
-		// if (find_var(env, "PWD"))
-		// 	freeptr(&find_env(env, "PWD")->content);
-		find_env(env, "PWD")->content = str;
+		puts("change old");
+		free(find_env(env, "OLDPWD")->content);
+		find_env(env, "OLDPWD")->content = ft_strdup(find_env(env, "PWD")->content);
+		free(find_env(env, "PWD")->content);
 	}
-	return (nwd);
+	find_env(env, "PWD")->content = getcwd(NULL, 0);
+	if (!find_env(env, "PWD")->content)
+	{
+		find_env(env, "PWD")->content = ft_strjoin(find_env(env,"OLDPWD")->content, "/");
+		find_env(env, "PWD")->content = free_strjoin(find_env(env, "PWD")->content, nwd);
+	}
+		
 }
 
 
 int	cd(t_cmdline *cmd, t_env *env)
 {
-	char	*home;
+	char	*tmp;
 
-	if (!cmd->args[1])
+	if (!cmd->args[1] || cmd->args[1][0] == '~')
 	{
-		home = get_home(env);
-		if (chdir(home) == -1 && !cmd->args[1])
-			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+		tmp = get_home(env);
+		if (chdir(tmp) == -1 && !cmd->args[1])
+			return (ft_putstr_fd("minishell: cd: HOME not set\n", 2), EXIT_FAILURE);
 	}
-	else
+	else if (!ft_strcmp(cmd->args[1], ".") || !ft_strcmp(cmd->args[1], ".."))
 	{
-		if (ft_strcmp(cmd->args[1], ".") == 0 || ft_strcmp(cmd->args[1], "..") == 0)
-		{
-			char	*tmp;
-
-			tmp = getcwd(NULL, 0);
-			if (chdir(update_pwd(env, cmd->args[1])) == -1 || !tmp)
-				cd_error(cmd->args[1], 1);
-			free(tmp);
-			return (EXIT_SUCCESS);
-		}
-		else
-		{
-			if (ft_strcmp(cmd->args[1], "-") == 0)
-			{
-				free (cmd->args[1]);
-				cmd->args[1] = find_var(env, "OLDPWD");
-				if (!cmd->args[1])
-					ft_putendl_fd("minishell: cd: OLDPWD not set", STDERR_FILENO);
-				else
-					ft_putendl_fd(cmd->args[1], STDOUT_FILENO);
-			}
-			else if (cmd->args[1][0] == '~')
-			{
-				home = ft_strjoin(get_home(env), cmd->args[1] + 1);
-				free (cmd->args[1]);
-				cmd->args[1] = home;
-			}
-			if (cmd->args[1] && chdir(cmd->args[1]) == -1)
-				return (cd_error(cmd->args[1], 2), EXIT_FAILURE);
-			(void)update_pwd(env, cmd->args[1]);
-			return (EXIT_SUCCESS);
-		}
+		tmp = getcwd(NULL, 0);
+		if (chdir(cmd->args[1]) == -1 || !tmp)
+			cd_error(cmd->args[1], 1);
+		free(tmp);
 	}
-	return (EXIT_FAILURE);
+	else if (chdir(cmd->args[1]) == -1)
+		return(cd_error(cmd->args[1], 2), EXIT_FAILURE);
+	return (update_pwd(env, cmd->args[1]), EXIT_SUCCESS);
 }

@@ -112,7 +112,7 @@ void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 	if (!ft_strcmp(cmd->args[0], "pwd"))
 		g_exit_status = pwd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "env"))
-		g_exit_status = env(cmd, envi);
+		g_exit_status = ft_env(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "cd"))
 		g_exit_status = cd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "exit"))
@@ -143,7 +143,7 @@ void	exec_builtin_redir(t_cmdline *cmd, t_env *envi, int exit_f)
 	if (!ft_strcmp(cmd->args[0], "pwd"))
 		g_exit_status = pwd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "env"))
-		g_exit_status = env(cmd, envi);
+		g_exit_status = ft_env(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "cd"))
 		g_exit_status = cd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "exit"))

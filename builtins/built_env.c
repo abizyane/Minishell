@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-int	env(t_cmdline *cmd, t_env *env)
+int	ft_env(t_cmdline *cmd, t_env *env)
 {
 	int	i;
 
