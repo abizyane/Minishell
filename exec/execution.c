@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/14 17:45:39 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 17:48:03 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,8 @@ int	execute_command(t_cmdline *cmd, char **envp, t_env *env)
 	int	pid;
 	int	fd[2];
 
-	if (cmd->nxt)
-	{
-		if (pipe(fd) == -1)
-			perror("pipe");
-	}
+	if (cmd->nxt && pipe(fd) == -1)
+		perror("pipe");
 	pid = fork();
 	if (pid < 0)
 		perror("fork");

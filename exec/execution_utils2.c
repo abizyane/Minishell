@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:45:57 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/14 17:37:52 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 17:48:36 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,17 @@ char	*get_cmd_path(t_cmdline *cmd, t_env *envp)
 
 void	close_dup(int in, int out)
 {
-		dup2(in, STDIN_FILENO);
-		dup2(out, STDOUT_FILENO);
-		close(in);
-		close(out);
+	dup2(in, STDIN_FILENO);
+	dup2(out, STDOUT_FILENO);
+	close(in);
+	close(out);
 }
 
 void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 {
-	int		input_save;
-	int		output_save;
-	
+	int	input_save;
+	int	output_save;
+
 	input_save = dup(STDIN_FILENO);
 	output_save = dup(STDOUT_FILENO);
 	if (cmd->redir)
@@ -88,15 +88,14 @@ void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 		g_data.exit_status = ft_export(cmd, &envi);
 	if (!ft_strcmp(cmd->args[0], "unset"))
 		g_data.exit_status = unset(cmd, &envi);
-	// if (cmd->redir)
-		close_dup(input_save, output_save);
+	close_dup(input_save, output_save);
 }
 
 void	exec_builtin_redir(t_cmdline *cmd, t_env *envi, int exit_f)
 {
-	int		input_save;
-	int		output_save;
-	
+	int	input_save;
+	int	output_save;
+
 	input_save = dup(STDIN_FILENO);
 	output_save = dup(STDOUT_FILENO);
 	if (cmd->redir)
