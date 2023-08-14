@@ -32,8 +32,10 @@
 # include <sys/ioctl.h>
 # include <paths.h>
 
+// typedef struct s_global{
 int			g_exit_status;
 int			g_rl;
+// };
 
 typedef enum e_type
 {
