@@ -120,7 +120,12 @@ t_cmdline	*parse_line(char *line, t_env *env)
 	t_cmdline	*cmd = NULL;
 
 	token_head = tokenizer(line);
-	if (check_tokens(&token_head) != 0)
+	if (!token_head)
+	{
+		g_exit_status = 258;
+		return (lstclear_tokens(&token_head),NULL);
+	}
+	if(check_tokens(&token_head) != 0)
 	{
 		g_exit_status = 258;
 		return (lstclear_tokens(&token_head),NULL);
