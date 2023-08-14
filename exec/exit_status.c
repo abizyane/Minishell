@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 20:25:07 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/14 07:24:44 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:18:33 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,19 @@ int	execute_builtin2(t_cmdline *cmd, t_env *env)
 	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1)
 	{
 		execute_builtin(cmd, env, 1);
+		g_data.rl = 0;
+		return (1);
+	}
+	else
+		return (0);
+}
+
+int	execute_builtin_redir(t_cmdline *cmd, t_env *env)
+{
+	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1
+		&& cmd->redir)
+	{
+		exec_builtin_redir(cmd, env, 1);
 		g_data.rl = 0;
 		return (1);
 	}

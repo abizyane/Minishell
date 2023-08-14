@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/14 16:56:37 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:35:15 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_minishell(char **line, t_env **env_head, t_cmdline **cmd_line)
 				freeptr(line);
 				continue ;
 			}
-			execution(*cmd_line, *env_head);
+			execution(*cmd_line, *env_head, 0, 0);
 			free_cmd(cmd_line);
 		}
 		freeptr(line);

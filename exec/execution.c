@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/14 17:48:03 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:32:51 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,22 +95,16 @@ int	handle_builtin_redir(t_cmdline *cmd)
 	return (1);
 }
 
-void	execution(t_cmdline *cmd, t_env *env)
+void	execution(t_cmdline *cmd, t_env *env, int input_save, int output_save)
 {
-	int		input_save;
-	int		output_save;
 	int		status;
 	int		pid;
 	char	**envp;
 
 	envp = lst_to_arr(env);
 	g_data.rl = 1;
-	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1
-		&& cmd->redir)
-	{
-		exec_builtin_redir(cmd, env, 1);
+	if (execute_builtin_redir(cmd, env) == 1)
 		return (free_arr(envp));
-	}
 	if (execute_builtin2(cmd, env) == 1)
 		return (free_arr(envp));
 	input_save = dup(STDIN_FILENO);

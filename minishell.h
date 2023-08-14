@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/14 17:44:21 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:34:08 by ahamrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,8 @@ void					child_execution(t_cmdline *cmd, char **envp, int *fd,
 							t_env *env);
 int						execute_command(t_cmdline *cmd, char **envp,
 							t_env *env);
-void					execution(t_cmdline *cmd, t_env *env);
+void					execution(t_cmdline *cmd, t_env *env, int input_save, 
+							int output_save);
 int						ft_check_builtin(char *cmd);
 void					execute_builtin(t_cmdline *cmd, t_env *envi,
 							int exit_f);
@@ -192,4 +193,6 @@ char					**empty_env(void);
 char					*str_join(char *s1, char *s2);
 char					*get_home(t_env *env);
 void					close_dup(int in, int out);
+int						execute_builtin_redir(t_cmdline *cmd, t_env *env);
+
 #endif
