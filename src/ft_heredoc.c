@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 19:00:47 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/10 15:04:24 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 07:24:44 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*freeptr(char **s)
 void	handler(int sig)
 {
 	(void)sig;
-	g_rl = 2;
+	g_data.rl = 2;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	ioctl(0, TIOCSTI, "\4");
@@ -69,13 +69,13 @@ void	open_heredoc(t_cmdline **head, t_env *env)
 		redir = cmd->redir;
 		while (redir)
 		{
-			if (redir->type == Heredoc && g_rl == 0)
+			if (redir->type == Heredoc && g_data.rl == 0)
 			{
 				redir->fd = read_heredoc(redir, env);
 				if (redir->fd == -1)
 					return ;
 			}
-			else if (g_rl == 2)
+			else if (g_data.rl == 2)
 				return ;
 			redir = redir->nxt;
 		}

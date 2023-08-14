@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/13 12:45:53 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/14 07:24:44 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	execution(t_cmdline *cmd, t_env *env)
 	char	**envp;
 
 	envp = lst_to_arr(env);
-	g_rl = 1;
+	g_data.rl = 1;
 	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1
 		&& cmd->redir)
 	{
@@ -164,6 +164,6 @@ void	execution(t_cmdline *cmd, t_env *env)
 	get_exit_status(status);
 	(dup2(input_save, STDIN_FILENO), dup2(output_save, STDOUT_FILENO));
 	(close(input_save), close(output_save));
-	g_rl = 0;
+	g_data.rl = 0;
 	free_arr(envp);
 }

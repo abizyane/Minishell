@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:26:55 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 12:14:56 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 07:24:21 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_exit(t_cmdline *cmd, int f)
 		return (1);
 	}
 	else if (!cmd->args[1])
-		exit_st = g_exit_status;
+		exit_st = g_data.exit_status;
 	else if (cmd->args[1] && ft_check_digit(cmd->args[1]) == 0)
 		exit_st = ft_atol(cmd->args[1]);
 	if (f == 1)

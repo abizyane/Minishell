@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:02 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 10:06:25 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 07:24:21 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	update_var(t_env **env, char **new_var)
 void	add_var(t_env **env, char *new_var)
 {
 	t_env	*tmp;
-	char	**str;
+	char	*str[2];
 	int		i;
 	int		j;
 
@@ -107,7 +107,6 @@ void	add_var(t_env **env, char *new_var)
 	i = check_syntax(new_var);
 	if (!i)
 		return ;
-	str = ft_calloc(3, sizeof(char *));
 	str[0] = ft_substr(new_var, 0, i);
 	str[1] = NULL;
 	j = ++i;
@@ -123,7 +122,6 @@ void	add_var(t_env **env, char *new_var)
 	}
 	else
 		env_add_back(env, str);
-	free(str);
 }
 
 void	print_msg(char *key)
@@ -132,7 +130,7 @@ void	print_msg(char *key)
 	ft_putstr_fd(key, 2);
 	ft_putstr_fd("': not a valid identifier", 2);
 	ft_putstr_fd("\n", 2);
-	g_exit_status = 1;
+	g_data.exit_status = 1;
 }
 
 int	ft_export(t_cmdline *cmd, t_env **env)
@@ -155,7 +153,7 @@ int	ft_export(t_cmdline *cmd, t_env **env)
 			add_var(env, cmd->args[i]);
 		i++;
 	}
-	if (!cmd->args[i] && g_exit_status == 1)
+	if (!cmd->args[i] && g_data.exit_status == 1)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

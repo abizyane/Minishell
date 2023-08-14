@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/10 13:28:01 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 07:24:44 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**lst_to_arr(t_env *env)
 	tmp = env;
 	while (tmp && ++i)
 		tmp = tmp->nxt;
-	arr = ft_calloc(sizeof(char *) , i + 1);
+	arr = ft_calloc(sizeof(char *), i + 1);
 	i = 0;
 	while (env)
 	{
@@ -97,7 +97,6 @@ void	update_shlvl(t_env **env)
 	}
 }
 
-
 void	close_all_redirs(t_cmdline *cmd)
 {
 	t_redir	*tmp;
@@ -135,10 +134,10 @@ int	main(int ac, char *av[], char **env)
 		{
 			add_history(line);
 			cmd_line = parse_line(line, env_head);
-			if (!cmd_line || g_rl == 2)
+			if (!cmd_line || g_data.rl == 2)
 			{
-				if (g_rl == 2)
-					g_rl = 0;
+				if (g_data.rl == 2)
+					g_data.rl = 0;
 				freeptr(&line);
 				continue ;
 			}

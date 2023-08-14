@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:35 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/10 13:16:38 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 07:24:21 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	count_args(t_token *head)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (head && head->nxt && head->type == Pipe)
@@ -54,7 +54,6 @@ void	add_args(t_cmdline **head, t_token *token)
 	tmp->args[i] = ft_strdup(token->line);
 }
 
-
 void	add_redir(t_cmdline **head, t_token *token)
 {
 	t_cmdline	*tmp;
@@ -92,7 +91,7 @@ t_cmdline	*fill_outstruct(t_token **head)
 			add_args(&cmd, token);
 		else
 			add_redir(&cmd, token);
-		token = token->nxt ;
+		token = token->nxt;
 	}
 	return (cmd);
 }
@@ -104,9 +103,11 @@ void	get_token_type(t_token **head)
 	token = (*head);
 	while (token)
 	{
-		if (token->type == Word && (!token->prv || (token->prv && token->prv->type == Pipe)))
+		if (token->type == Word && (!token->prv || (token->prv
+					&& token->prv->type == Pipe)))
 			token->type = Cmd;
-		else if (token->type == Word && (token->prv->type == Cmd || token->prv->type == Arg || token->prv->type == Fname))
+		else if (token->type == Word && (token->prv->type == Cmd
+					|| token->prv->type == Arg || token->prv->type == Fname))
 			token->type = Arg;
 		else if (token->type == Word)
 			token->type = Fname;
@@ -117,18 +118,19 @@ void	get_token_type(t_token **head)
 t_cmdline	*parse_line(char *line, t_env *env)
 {
 	t_token		*token_head;
-	t_cmdline	*cmd = NULL;
+	t_cmdline	*cmd;
 
+	cmd = NULL;
 	token_head = tokenizer(line);
 	if (!token_head)
 	{
-		g_exit_status = 258;
-		return (lstclear_tokens(&token_head),NULL);
+		g_data.exit_status = 258;
+		return (lstclear_tokens(&token_head), NULL);
 	}
-	if(check_tokens(&token_head) != 0)
+	if (check_tokens(&token_head) != 0)
 	{
-		g_exit_status = 258;
-		return (lstclear_tokens(&token_head),NULL);
+		g_data.exit_status = 258;
+		return (lstclear_tokens(&token_head), NULL);
 	}
 	expand_env_var(&token_head, env);
 	remove_quotes(&token_head);

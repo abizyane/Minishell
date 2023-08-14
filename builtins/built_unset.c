@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:16 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 09:54:55 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 07:24:21 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_unset_msg(char *key)
 	ft_putstr_fd(key, 2);
 	ft_putstr_fd("': not a valid identifier", 2);
 	ft_putstr_fd("\n", 2);
-	g_exit_status = 1;
+	g_data.exit_status = 1;
 }
 
 int	check_unset_syntax(char *key)
@@ -64,7 +64,7 @@ int	unset(t_cmdline *cmd, t_env **env)
 	int		i;
 
 	i = 1;
-	g_exit_status = 0;
+	g_data.exit_status = 0;
 	if (!cmd->args[i] || !(*env))
 		return (EXIT_SUCCESS);
 	while (cmd->args[i])
@@ -76,5 +76,5 @@ int	unset(t_cmdline *cmd, t_env **env)
 			clear_env(env, var->key);
 		i++;
 	}
-	return (g_exit_status);
+	return (g_data.exit_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/10 13:34:35 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 07:27:59 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,13 @@
 # include <sys/ioctl.h>
 # include <paths.h>
 
-// typedef struct s_global{
-int			g_exit_status;
-int			g_rl;
-// };
+typedef struct s_global
+{
+	int			exit_status;
+	int			rl;
+}		t_global;
+
+t_global	g_data;
 
 typedef enum e_type
 {
@@ -88,6 +91,18 @@ typedef struct s_cmdline
 	struct s_redir		*redir;
 	struct s_cmdline	*nxt;
 }						t_cmdline;
+
+typedef struct s_tmp
+{
+	char	*var;
+	char	*new_line;
+	char	*value;
+	char	*env_var;
+	int		i;
+	int		j;
+	int		k;
+
+}			t_tmp;
 
 t_token		*tokenizer(char *line);
 t_cmdline	*parse_line(char *line, t_env *env);
@@ -156,5 +171,6 @@ void		exec_builtin_redir(t_cmdline *cmd, t_env *envi, int exit_f);
 int			handle_outfile(t_redir *tmp);
 int			handle_infile(t_redir *tmp);
 int			handle_builtin_redir(t_cmdline *cmd);
+void		init_var(t_tmp *vars);
 
 #endif

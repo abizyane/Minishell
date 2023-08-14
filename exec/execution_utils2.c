@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:45:57 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/13 11:58:00 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/14 07:24:21 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,19 +108,19 @@ void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 	if (cmd->redir)
 		redirections(cmd);
 	if (!ft_strcmp(cmd->args[0], "echo"))
-		g_exit_status = echo(cmd);
+		g_data.exit_status = echo(cmd);
 	if (!ft_strcmp(cmd->args[0], "pwd"))
-		g_exit_status = pwd(cmd, envi);
+		g_data.exit_status = pwd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "env"))
-		g_exit_status = ft_env(cmd, envi);
+		g_data.exit_status = ft_env(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "cd"))
-		g_exit_status = cd(cmd, envi);
+		g_data.exit_status = cd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "exit"))
-		g_exit_status = ft_exit(cmd, exit_f);
+		g_data.exit_status = ft_exit(cmd, exit_f);
 	if (!ft_strcmp(cmd->args[0], "export"))
-		g_exit_status = ft_export(cmd, &envi);
+		g_data.exit_status = ft_export(cmd, &envi);
 	if (!ft_strcmp(cmd->args[0], "unset"))
-		g_exit_status = unset(cmd, &envi);
+		g_data.exit_status = unset(cmd, &envi);
 	if (cmd->redir)
 	{
 		dup2(input_save, STDIN_FILENO);
@@ -140,19 +140,19 @@ void	exec_builtin_redir(t_cmdline *cmd, t_env *envi, int exit_f)
 		if (handle_builtin_redir(cmd) == 0)
 			return ;
 	if (!ft_strcmp(cmd->args[0], "echo"))
-		g_exit_status = echo(cmd);
+		g_data.exit_status = echo(cmd);
 	if (!ft_strcmp(cmd->args[0], "pwd"))
-		g_exit_status = pwd(cmd, envi);
+		g_data.exit_status = pwd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "env"))
-		g_exit_status = ft_env(cmd, envi);
+		g_data.exit_status = ft_env(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "cd"))
-		g_exit_status = cd(cmd, envi);
+		g_data.exit_status = cd(cmd, envi);
 	if (!ft_strcmp(cmd->args[0], "exit"))
-		g_exit_status = ft_exit(cmd, exit_f);
+		g_data.exit_status = ft_exit(cmd, exit_f);
 	if (!ft_strcmp(cmd->args[0], "export"))
-		g_exit_status = ft_export(cmd, &envi);
+		g_data.exit_status = ft_export(cmd, &envi);
 	if (!ft_strcmp(cmd->args[0], "unset"))
-		g_exit_status = unset(cmd, &envi);
+		g_data.exit_status = unset(cmd, &envi);
 	if (cmd->redir)
 	{
 		(dup2(input_save, STDIN_FILENO), dup2(output_save, STDOUT_FILENO));

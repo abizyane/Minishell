@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+         #
+#    By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/10 10:38:17 by abizyane         ###   ########.fr        #
+#    Updated: 2023/08/14 07:31:27 by abizyane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,10 @@ SRC = minishell.c \
 	src/tokenizer_tools.c \
 	src/parse.c \
 	src/ft_lst.c \
+	src/ft_lst2.c \
 	src/lexical_analyzer.c \
 	src/expander.c \
+	src/expander2.c \
 	src/redir.c \
 	src/ft_heredoc.c \
 	exec/execution.c \

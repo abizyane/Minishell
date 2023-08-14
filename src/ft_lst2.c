@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 18:59:25 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/09 17:58:01 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/14 07:30:33 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-t_redir	*lstnew_redir(t_token *token)
-{
-	t_redir	*redir;
-
-	redir = ft_calloc(1, sizeof(t_redir));
-	if (!redir)
-		return (NULL);
-	redir->type = token->type;
-	redir->nxt = NULL;
-	return (redir);
-}
 
 void	lstadd_redir(t_redir **head, t_token *token)
 {
@@ -64,6 +52,8 @@ t_cmdline	*lstnew_command(char *cmd, int size)
 	command->prv = NULL;
 	command->redir = NULL;
 	command->args = NULL;
+	command->out = 1;
+	command->in = 0;
 	if (cmd)
 	{
 		command->args = ft_calloc(size, sizeof(char *));
@@ -77,7 +67,7 @@ t_cmdline	*last_command(t_cmdline *head)
 	t_cmdline	*tmp;
 
 	tmp = head;
-	if (!head || !tmp->nxt)
+	if (!tmp || !tmp->nxt)
 		return (head);
 	while (tmp && tmp->nxt)
 		tmp = tmp->nxt;
@@ -90,7 +80,8 @@ void	lstadd_command(t_cmdline **head, char *cmd, int size)
 	t_cmdline	*tmp;
 
 	new = lstnew_command(cmd, size);
-	if (!(*head))
+	tmp = *head;
+	if (!tmp)
 		(*head) = new;
 	else
 	{
