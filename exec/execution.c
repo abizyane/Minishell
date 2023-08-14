@@ -27,7 +27,7 @@ void	not_found(char *cmd)
 //TODO:signals fail when executing a subminishell
 void	local_binary(t_cmdline *cmd, char **envp)
 {
-	struct stat s;
+	struct stat	s;
 
 	stat(cmd->args[0], &s);
 	if (!cmd->args || !cmd->args[0])
@@ -38,7 +38,6 @@ void	local_binary(t_cmdline *cmd, char **envp)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd->args[0], 2);
-
 			if (S_ISDIR(s.st_mode))
 				ft_putstr_fd(": is a directory\n", 2);
 			else
@@ -116,7 +115,7 @@ int	handle_builtin_redir(t_cmdline *cmd)
 	{
 		if (tmp->type == redOut || tmp->type == redApp)
 		{
-			if (handle_outfile(tmp) == 0) 
+			if (handle_outfile(tmp) == 0)
 				return (0);
 		}
 		else if (tmp->type == redIn)
@@ -137,24 +136,23 @@ int	handle_builtin_redir(t_cmdline *cmd)
 void	execution(t_cmdline *cmd, t_env *env)
 {
 	int		input_save;
+	int		output_save;
 	int		status;
 	int		pid;
 	char	**envp;
 
 	envp = lst_to_arr(env);
 	g_rl = 1;
-	input_save = dup(STDIN_FILENO);
-	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1 && cmd->redir)
+	if (cmd->args && !cmd->nxt && ft_check_builtin(cmd->args[0]) == 1
+		&& cmd->redir)
 	{
 		exec_builtin_redir(cmd, env, 1);
-		free_arr(envp);
-		return ;
+		return (free_arr(envp));
 	}
 	if (execute_builtin2(cmd, env) == 1)
-	{
-		free_arr(envp);
-		return ;
-	}
+		return (free_arr(envp));
+	input_save = dup(STDIN_FILENO);
+	output_save = dup(STDOUT_FILENO);
 	while (cmd)
 	{
 		pid = execute_command(cmd, envp, env);
@@ -164,7 +162,8 @@ void	execution(t_cmdline *cmd, t_env *env)
 	while (waitpid(-1, NULL, 0) != -1)
 		;
 	get_exit_status(status);
-	dup2(input_save, STDIN_FILENO);
+	(dup2(input_save, STDIN_FILENO), dup2(output_save, STDOUT_FILENO));
+	(close(input_save), close(output_save));
 	g_rl = 0;
 	free_arr(envp);
 }

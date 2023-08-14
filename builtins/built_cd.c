@@ -93,7 +93,6 @@ void	update_pwd(t_env *env, char *nwd)
 	}
 	if (find_env(env, "PWD")->content)
 	{
-		puts("change old");
 		free(find_env(env, "OLDPWD")->content);
 		find_env(env, "OLDPWD")->content = ft_strdup(find_env(env, "PWD")->content);
 		free(find_env(env, "PWD")->content);

@@ -125,6 +125,7 @@ void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 	{
 		dup2(input_save, STDIN_FILENO);
 		dup2(output_save, STDOUT_FILENO);
+		(close(input_save), close(output_save));
 	}
 }
 
@@ -154,7 +155,7 @@ void	exec_builtin_redir(t_cmdline *cmd, t_env *envi, int exit_f)
 		g_exit_status = unset(cmd, &envi);
 	if (cmd->redir)
 	{
-		dup2(input_save, STDIN_FILENO);
-		dup2(output_save, STDOUT_FILENO);
+		(dup2(input_save, STDIN_FILENO), dup2(output_save, STDOUT_FILENO));
+		(close(input_save), close(output_save));
 	}
 }

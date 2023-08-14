@@ -45,8 +45,8 @@ char	*replace_var(char *env_var, char *line, int start, t_env *env_head)
 	}
 	else
 	{
-		while (line[++ijk[0]] && env_var[ijk[2]] && \
-			line[ijk[0]] == env_var[ijk[2]])
+		while (line[++ijk[0]] && env_var[ijk[2]]
+				&& line[ijk[0]] == env_var[ijk[2]])
 			ijk[2]++;
 		while (line[ijk[0]])
 			new_line[ijk[1]++] = line[ijk[0]++];
@@ -143,26 +143,34 @@ void	expand_env_var(t_token **head, t_env *env)
 	}
 }
 
-char	*expand_vars(char *line, t_env *env)
+int	norm(char **line, int *i, t_env	*env)
 {
 	char	*var;
-	int		i;
 	int		j;
+
+	j = 0;
+	(*i)++;
+	while ((*line)[*i + j] && (ft_isalnum((*line)[*i + j]) || (*line)[*i + j] == '_'))
+		j++;
+	var = ft_substr(*line, *i, j);
+	if (!var)
+		return (1) ;
+	*line = replace_var(var, *line, --(*i), env);
+	free (var);
+	return (0);
+}
+
+char	*expand_vars(char *line, t_env *env)
+{
+	int		i;
 
 	i = 0;
 	while (line && line[i])
 	{
 		if (line[i] == '$' && line[i + 1] && (ft_isalpha(line[i + 1]) || line[i + 1] == '_'))
 		{
-			j = 0;
-			i++;
-			while (line[i + j] && (ft_isalnum(line[i + j]) || line[i + j] == '_'))
-				j++;
-			var = ft_substr(line, i, j);
-			if (!var)
-				continue ;
-			line = replace_var(var, line, --i, env);
-			free (var);
+			if (norm(&line, &i, env) == 1)
+				continue;
 		}
 		else if (line[i] == '$' && line[i + 1] && (ft_isdigit(line[i + 1]) || line[i + 1] == '?'))
 			line = remove_ds(line, i);

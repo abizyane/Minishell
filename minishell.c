@@ -97,6 +97,22 @@ void	update_shlvl(t_env **env)
 	}
 }
 
+
+void	close_all_redirs(t_cmdline *cmd)
+{
+	t_redir	*tmp;
+
+	if (!cmd)
+		return ;
+	tmp = cmd->redir;
+	while (tmp)
+	{
+		close(tmp->fd);
+		tmp = tmp->nxt;
+	}
+	close_all_redirs(cmd->nxt);
+}
+
 int	main(int ac, char *av[], char **env)
 {
 	char		*line;
