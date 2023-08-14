@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:47:23 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 10:32:36 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 16:04:54 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**ft_arr_dup(char **arr)
 	i = 0;
 	while (arr[i])
 		i++;
-	new = ft_calloc(sizeof(char *) , (i + 1));
+	new = ft_calloc(sizeof(char *), (i + 1));
 	if (!new)
 		return (NULL);
 	i = 0;
@@ -61,4 +61,38 @@ int	array_len(char **arr)
 	while (arr[i])
 		i++;
 	return (i);
+}
+
+void	not_found(char *cmd)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	if (ft_strchr(cmd, '/'))
+	{
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	else
+		ft_putstr_fd(": command not found\n", 2);
+}
+
+void	local_binary(t_cmdline *cmd, char **envp)
+{
+	struct stat	s;
+
+	stat(cmd->args[0], &s);
+	if (!cmd->args || !cmd->args[0])
+		exit(EXIT_SUCCESS);
+	if (access(cmd->args[0], X_OK | F_OK) == 0)
+	{
+		if (execve(cmd->args[0], cmd->args, envp) == -1)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(cmd->args[0], 2);
+			if (S_ISDIR(s.st_mode))
+				ft_putstr_fd(": is a directory\n", 2);
+			else
+				ft_putstr_fd(": Permission denied\n", 2);
+			exit(126);
+		}
+	}
 }

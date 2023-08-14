@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 19:00:47 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/14 07:24:44 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:46:26 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,23 @@ void	open_heredoc(t_cmdline **head, t_env *env)
 		}
 		cmd = cmd->nxt;
 	}
+}
+
+int	check_spaces(const char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (!is_whitespace(str[i]))
+			j++;
+		i++;
+	}
+	if (i == (int)ft_strlen(str) && j == 0)
+		return (1);
+	else
+		return (0);
 }

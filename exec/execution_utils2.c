@@ -6,33 +6,11 @@
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:45:57 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/14 07:24:21 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 17:37:52 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*free_strjoin(char *s1, char *s2)
-{
-	size_t	i;
-	size_t	j;
-	size_t	l;
-	char	*dst;
-
-	i = -1;
-	j = -1;
-	if (!s1)
-		return (s2);
-	l = ft_strlen(s1) + ft_strlen(s2);
-	dst = ft_calloc((l + 2), sizeof(char));
-	if (!dst)
-		return (NULL);
-	while (s1[++i])
-		dst[i] = s1[i];
-	while (s2[++j])
-		dst[i + j] = s2[j];
-	return (freeptr(&s1), dst);
-}
 
 char	**get_paths_from_env(char **envp)
 {
@@ -79,23 +57,12 @@ char	*get_cmd_path(t_cmdline *cmd, t_env *envp)
 	return (path);
 }
 
-int	ft_check_builtin(char *cmd)
+void	close_dup(int in, int out)
 {
-	if (!ft_strcmp(cmd, "echo"))
-		return (1);
-	if (!ft_strcmp(cmd, "cd"))
-		return (1);
-	if (!ft_strcmp(cmd, "pwd"))
-		return (1);
-	if (!ft_strcmp(cmd, "export"))
-		return (1);
-	if (!ft_strcmp(cmd, "unset"))
-		return (1);
-	if (!ft_strcmp(cmd, "env"))
-		return (1);
-	if (!ft_strcmp(cmd, "exit"))
-		return (1);
-	return (0);
+		dup2(in, STDIN_FILENO);
+		dup2(out, STDOUT_FILENO);
+		close(in);
+		close(out);
 }
 
 void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
@@ -121,12 +88,8 @@ void	execute_builtin(t_cmdline *cmd, t_env *envi, int exit_f)
 		g_data.exit_status = ft_export(cmd, &envi);
 	if (!ft_strcmp(cmd->args[0], "unset"))
 		g_data.exit_status = unset(cmd, &envi);
-	if (cmd->redir)
-	{
-		dup2(input_save, STDIN_FILENO);
-		dup2(output_save, STDOUT_FILENO);
-		(close(input_save), close(output_save));
-	}
+	// if (cmd->redir)
+		close_dup(input_save, output_save);
 }
 
 void	exec_builtin_redir(t_cmdline *cmd, t_env *envi, int exit_f)
@@ -154,8 +117,5 @@ void	exec_builtin_redir(t_cmdline *cmd, t_env *envi, int exit_f)
 	if (!ft_strcmp(cmd->args[0], "unset"))
 		g_data.exit_status = unset(cmd, &envi);
 	if (cmd->redir)
-	{
-		(dup2(input_save, STDIN_FILENO), dup2(output_save, STDOUT_FILENO));
-		(close(input_save), close(output_save));
-	}
+		close_dup(input_save, output_save);
 }

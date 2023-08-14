@@ -3,39 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexical_analyzer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 20:43:31 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/10 13:36:11 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:35:31 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	get_type(t_token **head)
-{
-	t_token	*token;
-
-	token = (*head);
-	while (token)
-	{
-		if (ft_strncmp(token->line, "|", 1) == 0)
-			token->type = Pipe;
-		else if (ft_strncmp(token->line, "<<", 2) == 0)
-			token->type = Heredoc;
-		else if (ft_strncmp(token->line, ">>", 2) == 0)
-			token->type = redApp;
-		else if (ft_strncmp(token->line, "<", 1) == 0)
-			token->type = redIn;
-		else if (ft_strncmp(token->line, ">", 1) == 0)
-			token->type = redOut;
-		else if (is_whitespace(token->line[0]))
-			token->type = Space;
-		else
-			token->type = Word;
-		token = token->nxt;
-	}
-}
 
 void	clean_list(t_token **head)
 {

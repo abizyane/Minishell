@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:27:10 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/10 04:29:53 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/14 16:01:23 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	pwd(t_cmdline *cmd, t_env *env)
 {
 	char	*path;
-	(void)cmd;
 
+	(void)cmd;
 	path = getcwd(NULL, 1024);
 	if (path)
 	{

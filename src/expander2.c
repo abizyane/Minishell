@@ -6,11 +6,11 @@
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 07:14:29 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/14 07:26:21 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:36:00 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../minishell.h"
+#include "../minishell.h"
 
 void	change_var(char **line, t_env *env, t_tmp vars)
 {

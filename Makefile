@@ -6,7 +6,7 @@
 #    By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/14 07:31:27 by abizyane         ###   ########.fr        #
+#    Updated: 2023/08/14 17:28:15 by abizyane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = minishell.c \
 	src/tokenizer.c \
 	src/tokenizer_tools.c \
 	src/parse.c \
+	src/parse2.c \
 	src/ft_lst.c \
 	src/ft_lst2.c \
 	src/lexical_analyzer.c \
@@ -44,7 +45,11 @@ SRC = minishell.c \
 	builtins/built_pwd.c \
 	builtins/built_cd.c \
 	builtins/built_export.c \
-	builtins/built_unset.c
+	builtins/built_unset.c \
+	builtins/builtins_utils.c \
+	src/ft_free.c \
+	src/utils.c \
+	src/utils2.c
 
 
 OBJ = $(SRC:.c=.o)

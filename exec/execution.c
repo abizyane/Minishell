@@ -6,46 +6,11 @@
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:55:41 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/14 07:24:44 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 17:45:39 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	not_found(char *cmd)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd, 2);
-	if (ft_strchr(cmd, '/'))
-	{
-		ft_putstr_fd(": No such file or directory\n", 2);
-	}
-	else
-		ft_putstr_fd(": command not found\n", 2);
-}
-
-//TODO:signals fail when executing a subminishell
-void	local_binary(t_cmdline *cmd, char **envp)
-{
-	struct stat	s;
-
-	stat(cmd->args[0], &s);
-	if (!cmd->args || !cmd->args[0])
-		exit(EXIT_SUCCESS);
-	if (access(cmd->args[0], X_OK | F_OK) == 0)
-	{
-		if (execve(cmd->args[0], cmd->args, envp) == -1)
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(cmd->args[0], 2);
-			if (S_ISDIR(s.st_mode))
-				ft_putstr_fd(": is a directory\n", 2);
-			else
-				ft_putstr_fd(": Permission denied\n", 2);
-			exit(126);
-		}
-	}
-}
 
 void	child_execution(t_cmdline *cmd, char **envp, int *fd, t_env *env)
 {
@@ -162,8 +127,7 @@ void	execution(t_cmdline *cmd, t_env *env)
 	while (waitpid(-1, NULL, 0) != -1)
 		;
 	get_exit_status(status);
-	(dup2(input_save, STDIN_FILENO), dup2(output_save, STDOUT_FILENO));
-	(close(input_save), close(output_save));
+	close_dup(input_save, output_save);
 	g_data.rl = 0;
 	free_arr(envp);
 }

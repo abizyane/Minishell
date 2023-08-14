@@ -6,61 +6,11 @@
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:35 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/14 07:24:21 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:34:17 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	count_args(t_token *head)
-{
-	int	i;
-
-	i = 0;
-	if (head && head->nxt && head->type == Pipe)
-		head = head->nxt;
-	while (head && head->type != Pipe)
-	{
-		if (head->type == Arg || head->type == Cmd)
-			i++;
-		head = head->nxt;
-	}
-	return (i + 1);
-}
-
-void	add_redir_fname(t_cmdline **head, t_token *token)
-{
-	t_cmdline	*tmp;
-	t_redir		*r_tmp;
-
-	tmp = last_command(*head);
-	r_tmp = last_redir(tmp->redir);
-	r_tmp->filename = ft_strdup(token->line);
-	if (token->prv && token->prv->type == Heredoc && token->s == 1)
-		r_tmp->heredoc_flag = 1;
-}
-
-void	add_args(t_cmdline **head, t_token *token)
-{
-	t_cmdline	*tmp;
-	int			i;
-
-	tmp = last_command(*head);
-	i = 0;
-	if (!tmp->args)
-		tmp->args = ft_calloc(sizeof(char *), count_args(token));
-	while (tmp->args && tmp->args[i] != 0)
-		i++;
-	tmp->args[i] = ft_strdup(token->line);
-}
-
-void	add_redir(t_cmdline **head, t_token *token)
-{
-	t_cmdline	*tmp;
-
-	tmp = last_command(*head);
-	lstadd_redir(&tmp->redir, token);
-}
 
 void	add_commands(t_cmdline **head, t_token *token)
 {
@@ -107,7 +57,7 @@ void	get_token_type(t_token **head)
 					&& token->prv->type == Pipe)))
 			token->type = Cmd;
 		else if (token->type == Word && (token->prv->type == Cmd
-					|| token->prv->type == Arg || token->prv->type == Fname))
+				|| token->prv->type == Arg || token->prv->type == Fname))
 			token->type = Arg;
 		else if (token->type == Word)
 			token->type = Fname;
