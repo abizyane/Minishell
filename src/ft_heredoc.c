@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 19:00:47 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/14 15:46:26 by abizyane         ###   ########.fr       */
+/*   Updated: 2023/08/14 19:25:28 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	handler(int sig)
 {
 	(void)sig;
 	g_data.rl = 2;
+	g_data.exit_status = 1;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	ioctl(0, TIOCSTI, "\4");

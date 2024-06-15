@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:35 by abizyane          #+#    #+#             */
 /*   Updated: 2023/08/14 15:34:17 by abizyane         ###   ########.fr       */
-=======
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 15:00:35 by abizyane          #+#    #+#             */
-/*   Updated: 2023/06/10 20:26:37 by abizyane         ###   ########.fr       */
->>>>>>> ...
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-<<<<<<< HEAD
 void	add_commands(t_cmdline **head, t_token *token)
 {
 	t_cmdline	*tmp;
@@ -97,11 +89,3 @@ t_cmdline	*parse_line(char *line, t_env *env)
 	open_heredoc(&cmd, env);
 	return (lstclear_tokens(&token_head), cmd);
 }
-=======
-t_cmdline	*parse_tokens(t_token *token_head)
-{
-
-
-
-}
->>>>>>> ...

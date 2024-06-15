@@ -3,35 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-<<<<<<< HEAD
-#    By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+         #
+#    By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/14 17:51:28 by ahamrad          ###   ########.fr        #
-=======
-#    By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/06/10 20:52:14 by abizyane         ###   ########.fr        #
->>>>>>> ...
+#    Updated: 2023/08/14 20:02:08 by abizyane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-<<<<<<< HEAD
-CPPFLAGS = -I /goinfre/ahamrad/homebrew/opt/readline/include
-LDFLAGS = -L /goinfre/ahamrad/homebrew/opt/readline/lib
+CPPFLAGS = -I /goinfre/abizyane/homebrew/opt/readline/include
+LDFLAGS = -L /goinfre/abizyane/homebrew/opt/readline/lib
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g $(CPPFLAGS) #-fsanitize=address
-=======
-CC = cc -Wall -Wextra -Werror
->>>>>>> ...
+CFLAGS = -Wall -Wextra -Werror -g $(CPPFLAGS)
 
 HEADER = minishell.h
 
 SRC = minishell.c \
-<<<<<<< HEAD
 	src/tokenizer.c \
 	src/tokenizer_tools.c \
 	src/parse.c \
@@ -90,28 +78,3 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
-=======
-	src/init.c \
-	src/parse.c \
-	src/tokenizer.c \
-
-OBJ = $(SRC:.c=.o)
-
-all : $(NAME)
-
-$(NAME) = $(OBJ)
-	@$(CC) $^ -o $@
-
-%.o : %.c HEADER
-	@$(CC) -c $< -o $@
-
-clean : 
-	@rm -rf $(OBJ)
-
-fclean : clean
-	@rm -rf $(NAME)
-
-re : fclean all
-
-x : all clean
->>>>>>> ...

@@ -3,11 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/14 18:35:15 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/14 19:56:29 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,40 +87,8 @@ int	main(int ac, char *av[], char **env)
 		env = empty_env();
 	env_head = lst_env(env);
 	update_shlvl(&env_head);
+	g_data.rl = 0;
 	ft_minishell(&line, &env_head, &cmd_line);
 	free_env(&env_head);
+	close_all_redirs(cmd_line);
 }
-=======
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/06/10 20:29:28 by abizyane         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include"minishell.h"
-
-void	minishell(t_cmdline		*cmd_line)
-{
-
-
-}
-
-int main(int ac, char *av[])
-{
-	char		*line;
-	t_token		*token_head;
-	t_cmdline	*cmd_line;
-
-	line = readline("Minishell >");
-	token_head = tokenizer(line);
-	cmd_line = parse_tokens(token_head);
-	minishell(cmd_line);
-
-
-
-
-
-	return (0);
-}
->>>>>>> ...

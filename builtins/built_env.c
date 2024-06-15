@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:26:47 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/09 18:33:26 by ahamrad          ###   ########.fr       */
+/*   Updated: 2023/08/14 19:43:16 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_env(t_cmdline *cmd, t_env *env)
 	{
 		while (env)
 		{
-			if (env->content && env->content[i])
+			if (env->content)
 				printf("%s=%s\n", env->key, env->content);
 			env = env->nxt;
 		}

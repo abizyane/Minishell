@@ -3,24 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
-/*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/14 18:34:08 by ahamrad          ###   ########.fr       */
-=======
-/*   By: abizyane <abizyane@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/06/10 21:13:19 by abizyane         ###   ########.fr       */
->>>>>>> ...
+/*   Updated: 2023/08/14 19:59:39 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-<<<<<<< HEAD
 # include "Libft/libft.h"
 # include <dirent.h>
 # include <errno.h>
@@ -88,39 +80,10 @@ typedef struct s_env
 	int					p_flag;
 	struct s_env		*nxt;
 }						t_env;
-=======
-
-#include<unistd.h>
-#include<stdio.h>
-#include<signal.h>
-#include"Libft/libft.h"
-#include <readline/readline.h>
-#include<stdlib.h>
-#include<fcntl.h>
-#include<sys/types.h>
-#include<sys/wait.h>
-#include<sys/stat.h>
-#include<dirent.h>
-#include<string.h>
-#include<termios.h>
-#include<termcap.h>
-
-
-
-typedef struct s_token
-{
-	struct s_line	*prv;
-	char			*line;
-	int				type;
-	struct s_line	*nxt;
-
-}				t_token;
->>>>>>> ...
 
 typedef struct s_cmdline
 {
 	struct s_cmdline	*prv;
-<<<<<<< HEAD
 	char				*path;
 	char				**args;
 	int					in;
@@ -233,25 +196,3 @@ void					close_dup(int in, int out);
 int						execute_builtin_redir(t_cmdline *cmd, t_env *env);
 
 #endif
-=======
-	char				*line;
-	char				**flags;
-	int					ord;
-	struct s_cmdline	*nxt;
-
-}			t_cmdline;
-
-
-
-t_token		*tokenizer(char *input);
-t_cmdline	*parse_tokens(t_token *token_head);
-void	lstadd_token(t_token **head, char *line);
-t_token	*last_token(t_token *head);
-t_token	*lstnew_token(char *line);
-
-
-
-
-
-#endif
->>>>>>> ...

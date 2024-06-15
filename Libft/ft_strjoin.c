@@ -3,7 +3,6 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
 /*   By: ahamrad <ahamrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 19:00:31 by abizyane          #+#    #+#             */
@@ -14,18 +13,6 @@
 #include "libft.h"
 
 char	*ft_strjoin(char *s1, char *s2)
-=======
-/*   By: abizyane <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/26 19:00:31 by abizyane          #+#    #+#             */
-/*   Updated: 2022/10/26 19:14:45 by abizyane         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include"libft.h"
-
-char	*ft_strjoin(char const *s1, char const *s2)
->>>>>>> ...
 {
 	size_t	i;
 	size_t	j;
