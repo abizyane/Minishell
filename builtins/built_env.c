@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 02:26:47 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/14 19:43:16 by abizyane         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:05:00 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	ft_env(t_cmdline *cmd, t_env *env)
 {
-	int	i;
-
-	i = 0;
 	if (!cmd->args[1])
 	{
 		while (env)

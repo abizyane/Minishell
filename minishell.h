@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:32 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/14 19:59:39 by abizyane         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:43:36 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_global
 	int					rl;
 }						t_global;
 
-t_global				g_data;
+extern t_global				g_data;
 
 typedef enum e_type
 {
@@ -103,6 +103,13 @@ typedef struct s_tmp
 	int					k;
 
 }						t_tmp;
+
+#define BLK "\e[1;90m"
+#define RED "\e[1;91m"
+#define GRN "\e[3;92m"
+#define MAG "\e[1;95m"
+#define CYN "\e[3;96m"
+#define RST "\e[0m"
 
 t_token					*tokenizer(char *line);
 t_cmdline				*parse_line(char *line, t_env *env);

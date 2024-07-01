@@ -6,11 +6,13 @@
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:00:28 by abizyane          #+#    #+#             */
-/*   Updated: 2023/08/14 19:56:29 by abizyane         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:43:48 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_global g_data;
 
 void	update_shlvl(t_env **env)
 {
@@ -54,7 +56,7 @@ void	ft_minishell(char **line, t_env **env_head, t_cmdline **cmd_line)
 	while (1)
 	{
 		sig_handler();
-		*line = readline(" -> minishell ");
+		*line = readline(GRN" -> "CYN"Minishell "RST);
 		if (!(*line))
 			return (free_env(env_head), ft_putstr_fd("exit\n", 1));
 		if ((*line)[0] != '\0' && !check_spaces(*line))

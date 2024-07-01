@@ -6,7 +6,7 @@
 /*   By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 03:59:35 by ahamrad           #+#    #+#             */
-/*   Updated: 2023/08/14 17:42:50 by abizyane         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:02:22 by abizyane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,10 @@ void	create_lst(char **env, t_env **head, int *check)
 
 t_env	*lst_env(char **env)
 {
-	int		i;
 	t_env	*head;
 	char	*str[2];
 	int		check;
 
-	i = 0;
 	check = 0;
 	head = env_new(NULL, NULL);
 	create_lst(env, &head, &check);

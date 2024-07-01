@@ -6,17 +6,17 @@
 #    By: abizyane <abizyane@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/10 15:00:40 by abizyane          #+#    #+#              #
-#    Updated: 2023/08/14 20:02:08 by abizyane         ###   ########.fr        #
+#    Updated: 2024/07/01 17:10:49 by abizyane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CPPFLAGS = -I /goinfre/abizyane/homebrew/opt/readline/include
-LDFLAGS = -L /goinfre/abizyane/homebrew/opt/readline/lib
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g $(CPPFLAGS)
+CPPFLAGS="-I /usr/include/readline" 
+LDFLAGS="-L /usr/lib"
 
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
 HEADER = minishell.h
 
 SRC = minishell.c \
@@ -61,7 +61,7 @@ LIBFT_HEADER = $(LIBFT_PATH)/libft.h
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) -lreadline $(CFLAGS) $^ -o $@ -L./Libft -lft $(LDFLAGS)
+	$(CC) $(CFLAGS) $^ -L./Libft -lft -lreadline $(LDFLAGS) -o $@
 
 $(LIBFT):
 	make -C ./Libft
